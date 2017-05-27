@@ -9,11 +9,18 @@ class Start(tornado.web.RequestHandler):
 class Login(tornado.web.RequestHandler):
     def get(self):
         self.render('login.html',
-		)	
+		)
+
 class Register(tornado.web.RequestHandler):
     def get(self):
         self.render('register.html',
-		)	
+		)
+
+class Filter(tornado.web.RequestHandler):
+    def get(self):
+        self.render('filter.html',
+		)
+
 class HeaderModule(tornado.web.UIModule):
     def render(self):
         return self.render_string(

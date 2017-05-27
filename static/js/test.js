@@ -1,4 +1,4 @@
-function moves() {
+function find(bianlian) {
 	var username = $("#information").val();
 	$.ajax({
 		type:'GET',
@@ -8,6 +8,7 @@ function moves() {
 		success:function (result) {
 			if (result['state']=="true")
 			{
+				result['']
 				alert('666');
 				window.open('/shop');
 			}
@@ -56,3 +57,4 @@ function login() {
 		}
 	});
 }
+
