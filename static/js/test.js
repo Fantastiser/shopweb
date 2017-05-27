@@ -1,4 +1,22 @@
-function find(bianlian) {
+function AddFavorite(sURL, sTitle)
+{
+	try
+	{
+		window.external.addFavorite(sURL, sTitle);
+	}
+	catch(e)
+	{
+		try
+		{
+			window.sidebar.addPanel(sTitle, sURL, "");
+		}
+			catch (e)
+		{
+			alert("加入收藏失败，请使用Ctrl+D进行添加");
+		}
+	}
+}
+function moves() {
 	var username = $("#information").val();
 	$.ajax({
 		type:'GET',
@@ -8,7 +26,6 @@ function find(bianlian) {
 		success:function (result) {
 			if (result['state']=="true")
 			{
-				result['']
 				alert('666');
 				window.open('/shop');
 			}

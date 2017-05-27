@@ -2,20 +2,22 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>首页</title>
+<title>IShop</title>
 <link type="text/css" rel="stylesheet" href="../static/css/reset.css">
 <link type="text/css" rel="stylesheet" href="../static/css/main.css">
 <!--[if IE 6]>
 <script type="text/javascript" src="js/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript" src="js/ie6Fixpng.js"></script>
 <![endif]-->
-
+<!-- <script type="text/javascript" src="/static/js/ie6Fixpng.js"></script> -->
+<!-- <script type="text/javascript" src="/static/js/DD_belatedPNG_0.0.8a-min.js"></script> -->
 <script src="/static/js/test.js" type="text/javascript"></script>
 <script src="/static/js/jquery.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 function change()
 {
+		
         var reg = new RegExp("(^|&)" + 'user' + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
 		if (r!=null)
@@ -24,6 +26,44 @@ function change()
 		 }
 		 }
 </script>
+ <script type="text/javascript"> 
+ function fuck(id)
+ {
+	
+	if(id == 1)
+	{
+	document.getElementById("first").src = "../static/images/banner/banner_02.jpg";
+	document.getElementById("a1").className='active';
+	document.getElementById("a2").className='';
+	document.getElementById("a3").className='';
+	document.getElementById("a4").className='';
+	}
+	else if(id == 2)
+	{
+	document.getElementById("first").src = "../static/images/banner/banner_01.jpg";
+	document.getElementById("a2").className='active';
+	document.getElementById("a1").className='';
+	document.getElementById("a3").className='';
+	document.getElementById("a4").className='';
+	}
+	else if(id == 3)
+	{
+	document.getElementById("first").src = "../static/images/banner/banner_sm_01.jpg";
+	document.getElementById("a3").className='active';
+	document.getElementById("a2").className='';
+	document.getElementById("a1").className='';
+	document.getElementById("a4").className='';
+	}
+	else if(id == 4)
+	{
+	document.getElementById("first").src = "../static/images/banner/banner_sm_02.jpg";
+	document.getElementById("a4").className='active';
+	document.getElementById("a2").className='';
+	document.getElementById("a3").className='';
+	document.getElementById("a1").className='';
+	}
+ }
+ </script> 
 </head>
 
 <body onload="change()">
@@ -31,10 +71,10 @@ function change()
 	<div class="topBar">
 		<div class="comWidth">
 			<div class="leftArea">
-				<a href="#" class="collection">收藏慕课</a>
+				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏本站</a>
 			</div>
 			<div class="rightArea">
-				欢迎来到慕课网！<a  href="/login" id = "my">[登录] </a><a href="/register">[免费注册]</a>
+				欢迎来到IShop!    <a  href="/login" id = "my">   [登录]  </a><a href="/register">[免费注册]</a>
 			</div>
 		</div>
 	</div>
@@ -48,7 +88,7 @@ function change()
 				<input type="button" value="搜 索" class="search_btn fr" onClick="moves()">
 			</div>
 			<div class="shopCar fr">
-				<input type="button" value="购物车" class="shopText fl" onClick="moves()">
+				<input type="button" value="购物车" class="shopText fl" onClick="shops()">
 				<span class="shopNum fl">0</span>
 			</div>
 		</div>
@@ -131,11 +171,13 @@ function change()
 <div class="banner comWidth clearfix">
 	<div class="banner_bar banner_big">
 		<ul class="imgBox">
-			<li><a href="#"><img src="../static/images/banner/banner_01.jpg" alt="banner"></a></li>
-			<li><a href="#"><img src="../static/images/banner/banner_02.jpg" alt="banner"></a></li>
+			<li><a href="#"><img id = "first" src="../static/images/banner/banner_01.jpg" alt="banner"></a></li>
+			<li><a href="#"><img alt="banner"></a></li>
+			<li><a href="#"><img  alt="banner"></a></li>
+			<li><a href="#"><img  alt="banner"></a></li>
 		</ul>
 		<div class="imgNum">
-			<a href="#" class="active"></a><a href="#"></a><a href="#"></a><a href="#"></a>
+			<a href="#" onmouseover = 'fuck(1)'id = 'a1'></a><a href="#"onmouseover = 'fuck(2)'id = 'a2'></a><a href="#"onmouseover = 'fuck(3)'id = 'a3'></a><a href="#"onmouseover = 'fuck(4)'id = 'a4'></a>
 		</div>
 	</div>
 </div>
@@ -316,8 +358,8 @@ function change()
 <div class="hr_25"></div>
 
 <div class="footer">
-	<p><a href="#">慕课简介</a><i>|</i><a href="#">慕课公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
-	<p>Copyright &copy; 2006 - 2014 慕课版权所有&nbsp;&nbsp;&nbsp;京ICP备09037834号&nbsp;&nbsp;&nbsp;京ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
+	<p><a href="#">简介</a><i>|</i><a href="#">公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
+	<p>Copyright &copy; 2006 - 2014 IShop版权所有&nbsp;&nbsp;&nbsp;京ICP备09037834号&nbsp;&nbsp;&nbsp;京ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
 	<p class="web"><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a></p>
 </div>
 </body>

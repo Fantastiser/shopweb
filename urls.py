@@ -1,7 +1,7 @@
 import os
 import tornado.web
 from views import Start,Shops,Login,Register,Filter
-from webAPI import LoginWEB,move,Registerweb
+from webAPI import LoginWeb,move,RegisterWeb,FilterWeb
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 SETTINGS = {
@@ -12,12 +12,13 @@ SETTINGS = {
 HANDLERS = [
     (r"/", Start),
     (r"/login", Login),
-    (r"/ajax/login", LoginWEB),
+    (r"/ajax/login", LoginWeb),
 	(r"/shop", Start),
 	(r"/ajax/shop", move),
 	(r"/register",Register),
-	(r"/ajax/register",Registerweb),
+	(r"/ajax/register",RegisterWeb),
     (r"/filter",Filter),
+    (r"/ajax/filter",FilterWeb),
 ]
 
 UI_MODULES={
