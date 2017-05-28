@@ -41,7 +41,6 @@ class move(tornado.web.RequestHandler):
             if i =='cld':
                 kind = tools.searchDB('kinds',['id','kind'])[0]
                 print kind
-
         self.write(escape.json_decode(json.dumps(result)))
 		
 class RegisterWeb(tornado.web.RequestHandler):
@@ -101,7 +100,6 @@ class FilterWeb(tornado.web.RequestHandler):
                     for ges in data:
                         for it in range(0, len(list0)):
                             dict[list0[it]] = str(ges[it])
-                        # if dict not in list1:
                         if dict not in list1:
                             list1.append(dict)
         result['data'] = list1

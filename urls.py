@@ -1,6 +1,6 @@
 import os
 import tornado.web
-from views import Start,Shops,Login,Register,Filter
+from views import Start,HelloModule,Login,Register,Filter
 from webAPI import LoginWeb,move,RegisterWeb,FilterWeb
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -22,7 +22,7 @@ HANDLERS = [
 ]
 
 UI_MODULES={
-	'Shop': Shops
+	'Hello':HelloModule
 }
 
 application = tornado.web.Application(

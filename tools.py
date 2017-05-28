@@ -34,7 +34,7 @@ def searchDB(tableName, columns = [], where = None):
 		sql = "select {0} from {1} where {2}".format(columns, tableName, where)
 
 	cur = conn.cursor()
-	cur.execute(sql)
+	cur.execute(sql.decode('gbk').encode('utf-8') )
 	results = cur.fetchall()
 	return results
 
@@ -44,6 +44,6 @@ def deleteDB(tableName,where = None):
 	else:
 		sql = "delete * from {0} where {1}".format(tableName, where)
 	cur = conn.cursor()
-	cur.execute(sql)
+	cur.execute(sql.decode('gbk').encode('utf-8') )
 	results = cur.fetchall()
 	return results
