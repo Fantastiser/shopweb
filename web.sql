@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-05-27 22:49:39
+Date: 2017-05-29 02:15:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,32 +45,51 @@ CREATE TABLE `album` (
 -- ----------------------------
 -- Records of album
 -- ----------------------------
+INSERT INTO `album` VALUES ('1', '1', '../static/images/banner/banner_02.jpg');
+INSERT INTO `album` VALUES ('2', '2', '../static/images/banner/banner_01.jpg');
+INSERT INTO `album` VALUES ('3', '3', '../static/images/des_big.jpg');
+INSERT INTO `album` VALUES ('4', '4', '../static/images/pad.jpg');
 
 -- ----------------------------
 -- Table structure for item
 -- ----------------------------
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `pName` varchar(255) NOT NULL,
-  `pSn` varchar(50) NOT NULL,
-  `cld` smallint(5) NOT NULL,
-  `pNum` int(10) NOT NULL,
-  `mPrice` decimal(10,2) NOT NULL,
-  `iPrice` decimal(10,2) NOT NULL,
-  `pDesc` mediumtext,
-  `plmg` varchar(255) NOT NULL,
-  `pubTime` varchar(12) NOT NULL,
-  `isShow` tinyint(1) NOT NULL,
-  `isHot` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `id` varchar(10) DEFAULT NULL,
+  `pName` varchar(20) DEFAULT NULL,
+  `pSn` varchar(10) DEFAULT NULL,
+  `cld` varchar(5) DEFAULT NULL,
+  `pNum` varchar(10) DEFAULT NULL,
+  `mPrice` varchar(20) DEFAULT NULL,
+  `iPrice` varchar(20) DEFAULT NULL,
+  `pDesc` varchar(255) DEFAULT NULL,
+  `plmg` varchar(50) DEFAULT NULL,
+  `pubTime` varchar(30) DEFAULT NULL,
+  `isShow` varchar(1) DEFAULT NULL,
+  `isHot` varchar(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of item
 -- ----------------------------
-INSERT INTO `item` VALUES ('1', '索尼相机', '0001', '1', '200', '4800.00', '3800.00', '很时尚的数码相机', '../static/images/item/1.jpg', '2017-4-29', '1', '1');
-INSERT INTO `item` VALUES ('2', '耐克球鞋', '0002', '6', '100', '800.00', '600.00', '帅哥们都喜欢', '../static/images/logo.jpg', '2017-5-30', '1', '1');
+INSERT INTO `item` VALUES ('1', '《三体》', '1', '1', '49', '38.00', '29.88', '【2017新款iPad现货】港版，国行北京现货秒发！顺丰包邮！', '../static/images/goods/air2.jpg', '2014/10/17 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('2', '《史记》', '2', '4', '99', '40.00', '31.88', '华为mate9新品火热上市，官方发售时间为11月14日，本店与官网同步发售!', '../static/images/goods/mate9.jpg', '2016/11/17 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('3', '《考点》', '3', '5', '199', '78.50', '66.66', '铝合金车架 26寸27/30速 一体轮', '../static/images/goods/bicycle.jpg', '2015/3/27 00:00:00', '0', '0');
+INSERT INTO `item` VALUES ('4', '《五年高考三年模拟》', '4', '5', '999', '57.00', '50.68', '40L多功能徒步旅行运动双肩背包男女', '../static/images/goods/bag.jpg', '2015/3/1 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('5', '《相对论》', '5', '3', '999', '34.00', '26.66', '男潮流拼接撞色五分裤潮男士中裤', '../static/images/goods/shorts.jpg', '2017/4/23 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('6', '《时间简史》', '6', '3', '999', '40.00', '35.66', '翻领t恤青年珠地纯棉保罗体恤男韩版休闲修身', '../static/images/goods/polo.jpg', '2017/5/1 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('7', '《龙族4》', '7', '1', '99', '39.00', '30.00', 'RZ09-0195笔记本Blade Pro 14/17寸电脑美行正品', '../static/images/goods/razer.jpg', '2017/4/1 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('8', '《朝花夕拾》', '8', '2', '999', '23.00', '15.00', '小镇姗姗 芳影寻觅 原创自制优雅小性感修身显瘦', '../static/images/goods/dessert.jpg', '2017/5/1 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('9', '《家》', '9', '2', '999', '28.00', '20.00', '2017夏装新款韩版纯棉短袖T恤女显瘦打底衫白色t学生体恤修身上衣', '../static/images/goods/T-shirt.jpg', '2017/5/1 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('10', '《资治通鉴》', '10', '4', '999', '30.00', '24.00', '全网通新品小米6手机尊享版', '../static/images/goods/mi6.jpg', '2017/4/11 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('11', '《资本论》', '11', '6', '999', '28.00', '19.00', '2017夏季新款女士凉鞋中跟粗跟一字带简约通勤凉鞋女', '../static/images/goods/womanshoe.jpg', '2017/5/1 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('12', '《经济学人》', '12', '6', '999', '30.00', '22.00', '男复古靴低帮英伦大头皮鞋韩版潮流男鞋百搭工装鞋', '../static/images/goods/manshoe.jpg', '2017/4/1 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('13', '《知音漫客》', '13', '9', '999', '10.00', '6.00', '傻子王香辣原味零食 正宗手撕风干肉250g*2袋', '../static/images/goods/charqui.jpg', '2017/4/15 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('14', '《漫画party》', '14', '9', '999', '5.00', '4.00', '四川正宗丑橘 丑柑 不知火 丑八怪桔子', '../static/images/goods/uglyorange.jpg', '2017/5/25 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('15', '《完美世界》', '15', '10', '999', '20.00', '18.88', '辰东作品', null, '2017/1/1', '1', '1');
+INSERT INTO `item` VALUES ('16', '《龙王传说》', '16', '10', '999', '22.00', '19.99', '好看的小说', '', '2017/1/1', '1', '1');
+INSERT INTO `item` VALUES ('17', '《去旅行》', '17', '7', '999', '73.44', '52.90', '入选法国教育部向5-8岁儿童推荐书目，被赞“了解世界的旅行百科书”！傅雷翻译奖大师翻译,《博物》《环球科学》主编推荐！人文、地理、历史、政治尽在其中！赠情景模拟硫酸纸卡，开拓孩子眼界的12种有趣方式', '../static/images/goods/去旅行.jpg', '2017/5/25 00:00:00', '1', '1');
+INSERT INTO `item` VALUES ('18', '《生活家》', '18', '7', '999', '32.30', '26.86', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for kinds
@@ -85,13 +104,39 @@ CREATE TABLE `kinds` (
 -- ----------------------------
 -- Records of kinds
 -- ----------------------------
-INSERT INTO `kinds` VALUES ('1', '数码');
-INSERT INTO `kinds` VALUES ('2', '运动');
-INSERT INTO `kinds` VALUES ('3', '男装');
-INSERT INTO `kinds` VALUES ('4', '女装');
-INSERT INTO `kinds` VALUES ('5', '手机');
-INSERT INTO `kinds` VALUES ('6', '鞋靴');
-INSERT INTO `kinds` VALUES ('7', '零食');
+INSERT INTO `kinds` VALUES ('1', '小说');
+INSERT INTO `kinds` VALUES ('2', '人文');
+INSERT INTO `kinds` VALUES ('3', '科学');
+INSERT INTO `kinds` VALUES ('4', '历史');
+INSERT INTO `kinds` VALUES ('5', '教育');
+INSERT INTO `kinds` VALUES ('6', '经济');
+INSERT INTO `kinds` VALUES ('7', '生活');
+INSERT INTO `kinds` VALUES ('8', '传记');
+INSERT INTO `kinds` VALUES ('9', '漫画书');
+INSERT INTO `kinds` VALUES ('10', '电子书');
+
+-- ----------------------------
+-- Table structure for order
+-- ----------------------------
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `id` int(10) NOT NULL,
+  `itemname` varchar(30) DEFAULT NULL,
+  `username` varchar(30) DEFAULT NULL,
+  `num` int(5) DEFAULT NULL,
+  `regtime` varchar(20) DEFAULT NULL,
+  `price` varchar(5) DEFAULT NULL,
+  `amount` varchar(10) DEFAULT NULL,
+  `shuxing1` varchar(10) DEFAULT NULL,
+  `shuxing2` varchar(10) DEFAULT NULL,
+  `shuxing3` varchar(10) DEFAULT NULL,
+  `shuxing4` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of order
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for picture
@@ -118,8 +163,8 @@ CREATE TABLE `users` (
   `username` varchar(20) DEFAULT NULL,
   `password` varchar(30) DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
+  `phonenum` varchar(30) DEFAULT NULL,
   `address` varchar(50) DEFAULT NULL,
-  `shopcart` varchar(100) DEFAULT NULL,
   `regtime` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -127,5 +172,3 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '赵博宇', '123', '123', 'None', 'None', '2017-05-27');
-INSERT INTO `users` VALUES ('2', '1', '1', '1', 'None', 'None', '2017-05-27');
