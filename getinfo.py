@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import tools
 import sys
+import random
 reload(sys)
 sys.setdefaultencoding('utf8')
 def filter(name):
@@ -37,36 +38,24 @@ def filter(name):
 def index_find():
     list = []
     list2 = []
-    for i in range(1, 9):
-        list0 = []
+    for i in range(1, 11):
         kind = tools.searchDB('kinds', ['kind'], where="id = '" + str(i) + "'")[0][0]
         list.append(kind)
-        item = tools.searchDB('item', ['pName'], where="cld = '" + str(i) + "'")
+        item = tools.searchDB('item', ['pName','min(isHot)'], where="cld = '" + str(i) + "'")
         if item != ():
-            for j in item:
-                list0.append(j[0])
-        list1 = sorted(set(list0), key=list0.index)
-        list2.append(list1)
+            list2.append(item[0][0])
+    print list2
 
-    print list[0]
-    print list[1]
-    print list2[0][0]
-    print list2[1][0]
-    print list[2]
-    print list[3]
-    print list2[2][0]
-    print list2[3][0]
-    print list[4]
-    print list[5]
-    print list2[4][0]
-    print list2[5][0]
-    print list[6]
-    print list[7]
-    print list2[6][0]
-    print list2[7][0]
 
-index_find()
-
+a = random.randint(1, 10)
+if a > 5:
+    b = random.randint(1, a - 1)
+else:
+    b = random.randint(a + 1, 10)
+titlename1 = tools.searchDB('kinds', ['kind'], where="id = '" + str(a) + "'")[0][0]
+print a
+titlename2 = tools.searchDB('kinds', ['kind'], where="id = '" + str(b) + "'")[0][0]
+item = tools.searchDB(sql='select pName,mPrice,iPrice,plmg from item where cld = {0} ORDER BY isHot DESC '.format(str(a)))
 # 插入图片
 # import MySQLdb as mdb
 #

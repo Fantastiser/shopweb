@@ -21,21 +21,26 @@ def insertDB(tableName = None, listOfColumns = [], listOfValues = [], sql = None
 		conn.commit()
 		cur.close()
 
-def searchDB(tableName, columns = [], where = None):
-	if where == None and columns == None:
-		sql = "select * from {0}".format(tableName) 
-	elif where == None and columns != []:
-		columns = ",".join(columns)
-		sql = "select {0} from {1}".format(columns, tableName)
-	elif where != None and columns == []:
-		sql = "select * from {0} where {1}".format(tableName, where)
+def searchDB(tableName=None, columns = [], where = None,sql =None):
+	if sql != None:
+		cur = conn.cursor()
+		cur.execute(sql.decode('gbk').encode('utf-8'))
+		results = cur.fetchall()
 	else:
-		columns = ",".join(columns)
-		sql = "select {0} from {1} where {2}".format(columns, tableName, where)
+		if where == None and columns == None:
+			sql = "select * from {0}".format(tableName)
+		elif where == None and columns != []:
+			columns = ",".join(columns)
+			sql = "select {0} from {1}".format(columns, tableName)
+		elif where != None and columns == []:
+			sql = "select * from {0} where {1}".format(tableName, where)
+		else:
+			columns = ",".join(columns)
+			sql = "select {0} from {1} where {2}".format(columns, tableName, where)
 
-	cur = conn.cursor()
-	cur.execute(sql.decode('gbk').encode('utf-8') )
-	results = cur.fetchall()
+		cur = conn.cursor()
+		cur.execute(sql.decode('gbk').encode('utf-8') )
+		results = cur.fetchall()
 	return results
 
 def deleteDB(tableName,where = None):
