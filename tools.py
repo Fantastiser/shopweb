@@ -6,7 +6,7 @@ conn= MySQLdb.connect(host='localhost',user='root',passwd='chenanzhe',db='web',p
 def insertDB(tableName = None, listOfColumns = [], listOfValues = [], sql = None):
 	if sql != None:
 		cur = conn.cursor()
-		cur.execute(sql.decode('gbk').encode('utf-8') )
+		cur.execute(sql)
 		conn.commit()
 		cur.close()
 	else:
@@ -24,7 +24,7 @@ def insertDB(tableName = None, listOfColumns = [], listOfValues = [], sql = None
 def searchDB(tableName=None, columns = [], where = None,sql =None):
 	if sql != None:
 		cur = conn.cursor()
-		cur.execute(sql.decode('gbk').encode('utf-8'))
+		cur.execute(sql)
 		results = cur.fetchall()
 	else:
 		if where == None and columns == None:
@@ -39,7 +39,7 @@ def searchDB(tableName=None, columns = [], where = None,sql =None):
 			sql = "select {0} from {1} where {2}".format(columns, tableName, where)
 
 		cur = conn.cursor()
-		cur.execute(sql.decode('gbk').encode('utf-8') )
+		cur.execute(sql)
 		results = cur.fetchall()
 	return results
 
@@ -49,6 +49,6 @@ def deleteDB(tableName,where = None):
 	else:
 		sql = "delete * from {0} where {1}".format(tableName, where)
 	cur = conn.cursor()
-	cur.execute(sql.decode('gbk').encode('utf-8') )
+	cur.execute(sql)
 	results = cur.fetchall()
 	return results

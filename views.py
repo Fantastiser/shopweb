@@ -13,16 +13,13 @@ class Start(tornado.web.RequestHandler):
         titlename2 = tools.searchDB('kinds', ['kind'], where="id = '" + str(b) + "'")[0][0]
         theme1 = tools.searchDB(sql='select pName,mPrice,iPrice,plmg from item where cld = {0} ORDER BY isHot DESC '.format(str(a)))
         theme2 = tools.searchDB(sql='select pName,mPrice,iPrice,plmg from item where cld = {0} ORDER BY isHot DESC '.format(str(b)))
-        pic_url = tools.searchDB(sql='select itemid,albumpath from album  ')
+        pic_url = tools.searchDB(sql='select itemid,albumpath from album ')
+        pic_ul = random.sample(pic_url, 4)
         self.render('index.html',
-            url1='',
-            url2='',
-            url3='',
-            url4='',
-            pic_url1=,
-            pic_url2 = ,
-            pic_url3=,
-            pic_url4=,
+            pic_url1= pic_ul[0][1],
+            pic_url2 = pic_ul[1][1],
+            pic_url3=pic_ul[2][1],
+            pic_url4=pic_ul[3][1],
             titlename1=titlename1,
             background1 = '../static/images/goods/mi6.jpg',
             part1_src1=theme1[0][3],
@@ -79,35 +76,37 @@ class Filter(tornado.web.RequestHandler):
 class HelloModule(tornado.web.UIModule):
     def render(self):
         list = []
+        list1 = []
         list2 = []
         for i in range(1, 11):
             kind = tools.searchDB('kinds', ['kind'], where="id = '" + str(i) + "'")[0][0]
             list.append(kind)
-            item = tools.searchDB('item', ['pName', 'min(isHot)'], where="cld = '" + str(i) + "'")
+            item = tools.searchDB(sql='select pName,id from item where cld = {0} ORDER BY isHot DESC '.format(str(i)))
             if item != ():
+                list1.append(item[0][1])
                 list2.append(item[0][0])
         return '''<dl class="shopClass_item">
-            				<dt><a href="#" class="b">{0}</a> <a href="#" class="b">{1}</a></dt>
-            						<dd><a href="#">{2}</a> <a href="#">{3}</a> </dd>
+            				<dt><a id="varity1"  href="#" class="b" >{0}</a> <a id="varity2" href="#" class="b">{1}</a></dt>
+            						<dd><a id="good1" href="{20}" >{2}</a> <a id="good2" href="{21}">{3}</a> </dd>
             					</dl>
             					<dl class="shopClass_item">
-            				<dt><a href="#" class="b">{4}</a> <a href="#" class="b">{5}</a></dt>
-            						<dd><a href="#">{6}</a> <a href="#">{7}</a> </dd>
+            				<dt><a id="varity3" href="#" class="b">{4}</a> <a id="varity4" href="#" class="b">{5}</a></dt>
+            						<dd><a id="good3" href="{22}">{6}</a> <a id="good4" href="{23}">{7}</a> </dd>
             					</dl>
             					<dl class="shopClass_item">
-            				<dt><a href="#" class="b">{8}</a> <a href="#" class="b">{9}</a></dt>
-            						<dd><a href="#">{10}</a> <a href="#">{11}</a> </dd>
+            				<dt><a id="varity5" href="#" class="b">{8}</a> <a id="varity6" href="#" class="b">{9}</a></dt>
+            						<dd><a id="good5" href="{24}">{10}</a> <a id="good6" href="{25}">{11}</a> </dd>
             					</dl>
             					<dl class="shopClass_item">
-            				<dt><a href="#" class="b">{12}</a> <a href="#" class="b">{13}</a></dt>
-            						<dd><a href="#">{14}</a> <a href="#">{15}</a> </dd>
+            				<dt><a id="varity7" href="#" class="b">{12}</a> <a id="varity8" href="#" class="b">{13}</a></dt>
+            						<dd><a id="good7" href="{26}">{14}</a> <a id="good8" href="{27}">{15}</a> </dd>
             					</dl>
             					<dl class="shopClass_item">
-            				<dt><a href="#" class="b">{16}</a> <a href="#" class="b">{17}</a></dt>
-            						<dd><a href="#">{18}</a> <a href="#">{19}</a> </dd>
+            				<dt><a id="varity9" href="#" class="b">{16}</a> <a id="varity10" href="#" class="b">{17}</a></dt>
+            						<dd><a id="good9" href="{28}">{18}</a> <a id="good10" href="{29}">{19}</a> </dd>
             					</dl>'''.format(list[0], list[1], list2[0], list2[1], list[2], list[3], list2[2],
                                                 list2[3], list[4], list[5], list2[4], list2[5], list[6], list[7],
-                                                list2[6], list2[7], list[8], list[9], list2[8], list2[9])
+                                                list2[6], list2[7], list[8], list[9], list2[8], list2[9],list1[0],list1[1],list1[2],list1[3],list1[4],list1[5],list1[6],list1[7],list1[8],list1[9])
             # list = []
             # list2 = []
             # for i in range(1, 9):

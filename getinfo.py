@@ -6,35 +6,32 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 def filter(name):
     result = {}
-    dict={}
-    list1=[]
-    list0=['id','pName','pSn','cld','pNum','mPrice','iPrice','pDesc','plmg','pubTime','ishow','isHot']
-    list= ['pName','cld','pSn','PDesc']
+    list1 = []
+    list0 = ['id', 'pName', 'writer', 'pSn', 'cld', 'pNum', 'mPrice', 'iPrice', 'pDesc', 'plmg', 'publisher', 'pubTime',
+             'descpic', 'isHot']
+    list = ['pName', 'cld', 'pSn', 'PDesc']
     for i in list:
-        if i =='cld':
-            kinds = tools.searchDB('kinds',['id','kind'])
+        if i == 'cld':
+            kinds = tools.searchDB('kinds', ['id', 'kind'])
             for kind in kinds:
                 if name == str(kind[1]):
-                    get = tools.searchDB(tableName='item',columns=[],where="cld ='"+str(kind[0])+"'" )
+                    get = tools.searchDB(tableName='item', columns=[], where="cld ='" + str(kind[0]) + "'")
                     for ges in get:
                         for it in range(0, len(list0)):
-                            dict[list0[it]]=str(ges[it])
+                            dict[list0[it]] = str(ges[it])
                         if dict not in list1:
                             list1.append(dict)
-
-
         else:
-
-            data = tools.searchDB('item',columns=[],where = str(i) +" like'%" +str(name)+"%'")
-            if data!=():
+            data = tools.searchDB('item', columns=[], where=str(i) + " like'%" + str(name) + "%'")
+            if data != ():
                 for ges in data:
+                    dict = {}
                     for it in range(0, len(list0)):
                         dict[list0[it]] = str(ges[it])
-                    # if dict not in list1:
                     if dict not in list1:
                         list1.append(dict)
+
     result['data'] = list1
-    print result
 def index_find():
     list = []
     list2 = []
@@ -47,15 +44,10 @@ def index_find():
     print list2
 
 
-a = random.randint(1, 10)
-if a > 5:
-    b = random.randint(1, a - 1)
-else:
-    b = random.randint(a + 1, 10)
-titlename1 = tools.searchDB('kinds', ['kind'], where="id = '" + str(a) + "'")[0][0]
-print a
-titlename2 = tools.searchDB('kinds', ['kind'], where="id = '" + str(b) + "'")[0][0]
-item = tools.searchDB(sql='select pName,mPrice,iPrice,plmg from item where cld = {0} ORDER BY isHot DESC '.format(str(a)))
+for i in range(1, 11):
+    kind = tools.searchDB('kinds', ['kind'], where="id = '" + str(i) + "'")[0][0]
+    item = tools.searchDB('item', ['pName', 'min(isHot)'], where="cld = '" + str(i) + "'")
+    print item
 # 插入图片
 # import MySQLdb as mdb
 #

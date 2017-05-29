@@ -17,22 +17,12 @@ function AddFavorite(sURL, sTitle)
 	}
 }
 function moves() {
-	var username = $("#information").val();
-	$.ajax({
-		type:'GET',
-		data:{"information":username},
-		url:'/ajax/shop',
-		dataType:'json',
-		success:function (result) {
-			if (result['state']=="true")
-			{
-				alert('666');
-				window.open('/shop');
-			}
-				
-		}
-	});
+	var name = $("#information").val();
+	var a;
+	a = document.URL.replace(window.location.pathname,'/filter');
+	window.open(a+'&items='+name);
 }
+
 function registers() {
 	var username = $("#username").val();
 	var password1 = $("#password1").val();
@@ -74,4 +64,5 @@ function login() {
 		}
 	});
 }
+
 

@@ -33,16 +33,40 @@ class LoginWeb(tornado.web.RequestHandler):
             result = {"state": "false", "text": "请填写完整用户名和密码"}
         self.write(escape.json_decode(json.dumps(result)))
 		
-class move(tornado.web.RequestHandler):
+class Move(tornado.web.RequestHandler):
     def get(self):
         name = self.get_argument("information")
-        list= ['pName','cld','pSn','PDesc']
+        result = {}
+        list1 = []
+        list0 = ['id', 'pName', 'writer', 'pSn', 'cld', 'pNum', 'mPrice', 'iPrice', 'pDesc', 'plmg', 'publisher',
+                 'pubTime',
+                 'descpic', 'isHot']
+        list = ['pName', 'cld', 'pSn', 'PDesc']
         for i in list:
-            if i =='cld':
-                kind = tools.searchDB('kinds',['id','kind'])[0]
-                print kind
+            if i == 'cld':
+                kinds = tools.searchDB('kinds', ['id', 'kind'])
+                for kind in kinds:
+                    if name == str(kind[1]):
+                        get = tools.searchDB(tableName='item', columns=[], where="cld ='" + str(kind[0]) + "'")
+                        for ges in get:
+                            for it in range(0, len(list0)):
+                                dict[list0[it]] = str(ges[it])
+                            if dict not in list1:
+                                list1.append(dict)
+            else:
+                data = tools.searchDB('item', columns=[], where=str(i) + " like'%" + str(name) + "%'")
+                if data != ():
+                    for ges in data:
+                        dict = {}
+                        for it in range(0, len(list0)):
+                            dict[list0[it]] = str(ges[it])
+                        if dict not in list1:
+                            list1.append(dict)
+        result['data'] = list1
         self.write(escape.json_decode(json.dumps(result)))
-		
+
+
+
 class RegisterWeb(tornado.web.RequestHandler):
     def get(self):
         username = self.get_argument("username")
@@ -91,8 +115,6 @@ class FilterWeb(tornado.web.RequestHandler):
                                 dict[list0[it]] = str(ges[it])
                             if dict not in list1:
                                 list1.append(dict)
-
-
             else:
 
                 data = tools.searchDB('item', columns=[], where=str(i) + " like'%" + str(name) + "%'")
