@@ -39,18 +39,17 @@ function change()
 		 document.getElementById("varity8").href=a+"&find="+document.getElementById("varity8").innerHTML;
 		 document.getElementById("varity9").href=a+"&find="+document.getElementById("varity9").innerHTML;
 		 document.getElementById("varity10").href=a+"&find="+document.getElementById("varity10").innerHTML;
-		 b0 = document.URL.replace(window.location.pathname,'/items');
-		 b = b0.replace("#",'');
-		 document.getElementById("good1").href=b+"&itemid="+document.getElementById("good1").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good2").href=b+"&itemid="+document.getElementById("good2").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good3").href=b+"&itemid="+document.getElementById("good3").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good4").href=b+"&itemid="+document.getElementById("good4").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good5").href=b+"&itemid="+document.getElementById("good5").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good6").href=b+"&itemid="+document.getElementById("good6").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good7").href=b+"&itemid="+document.getElementById("good7").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good8").href=b+"&itemid="+document.getElementById("good8").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good9").href=b+"&itemid="+document.getElementById("good9").href.replace(window.location.protocol+"//"+window.location.host+'/','')
-		 document.getElementById("good10").href=b+"&itemid="+document.getElementById("good10").href.replace(window.location.protocol+"//"+window.location.host+'/','')
+		 document.getElementById("good1").href=changeUrlArg('itemid',document.getElementById("good1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good2").href=changeUrlArg('itemid',document.getElementById("good2").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good3").href=changeUrlArg('itemid',document.getElementById("good3").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good4").href=changeUrlArg('itemid',document.getElementById("good4").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good5").href=changeUrlArg('itemid',document.getElementById("good5").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good6").href=changeUrlArg('itemid',document.getElementById("good6").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good7").href=changeUrlArg('itemid',document.getElementById("good7").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good8").href=changeUrlArg('itemid',document.getElementById("good8").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good9").href=changeUrlArg('itemid',document.getElementById("good9").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		 document.getElementById("good10").href=changeUrlArg('itemid',document.getElementById("good10").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
+		
 		
 }	 
 	<!-- function turn() -->
@@ -127,10 +126,10 @@ function change()
 			</div>
 			<div class="search_box fl">
 				<input type="text" class="search_text fl" id="information">
-				<input type="button" value="搜 索" class="search_btn fr" onClick="moves()"alt="banner">
+				<input type="button" value="搜 索" class="search_btn fr" onClick="moves()"alt="banner" style="cursor:pointer">
 			</div>
 			<div class="shopCar fr">
-				<input type="button" value="购物车" class="shopText fl" onClick="shops()"alt="banner">
+				<input type="button" value="购物车" class="shopText fl" onClick="shops()"alt="banner"  style="cursor:pointer">
 				<span class="shopNum fl">0</span>
 			</div>
 		</div>
@@ -189,7 +188,7 @@ function change()
 <div class="banner comWidth clearfix">
 	<div class="banner_bar banner_big">
 		<ul class="imgBox">
-			<li><a href="#"id = "first1"><img id = "first" src = {{pic_url1}} alt="banner"></a></li>
+			<li><a href="#"id = "first1"><img  id = "first" src = {{pic_url1}} alt="banner"></a></li>
 		</ul>
 		<div class="imgNum">
 			<a href="#" onmouseover = 'fuck(1,"{{pic_url1}}","first","a1","a2","a3","a4")'id = 'a1'></a><a href="#"onmouseover = 'fuck(2,"{{pic_url2}}","first","a1","a2","a3","a4")'id = 'a2'></a><a href="#"onmouseover = 'fuck(3,"{{pic_url3}}","first","a1","a2","a3","a4")'id = 'a3'></a><a href="#"onmouseover = 'fuck(4,"{{pic_url4}}","first","a1","a2","a3","a4")'id = 'a4'></a>
@@ -212,28 +211,28 @@ function change()
 		<div class="shopList_top clearfix">
 			<div class="shop_item">
 				<div class="shop_img">
-					<a href="/item?goods={{part1_name1}}"><img src="{{part1_src1}}" alt={{part1_name1}}></a>
+					<a  href="/items?itemid={{part1_namesrc1}}"><img src="{{part1_src1}}" title={{part1_name1}}></a>
 				</div>
 				<h3>{{part1_name1}}</h3>
 				<p>BS价格:{{part1_iprice1}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
-					<a href="/item?goods={{part1_name2}}"><img src="{{part1_src2}}" alt={{part1_name2}}></a>
+					<a href="/items?itemid={{part1_namesrc2}}"><img src="{{part1_src2}}" title={{part1_name2}}></a>
 				</div>
 				<h3>{{part1_name2}}</h3>
 				<p>BS价格:{{part1_iprice2}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
-					<a href="/item?goods={{part1_name3}}"><img src="{{part1_src3}}" alt={{part1_name2}}></a>
+					<a href="/items?itemid={{part1_namesrc3}}"><img src="{{part1_src3}}" title={{part1_name3}}></a>
 				</div>
 				<h3>{{part1_name3}}</h3>
 				<p>BS价格:{{part1_iprice3}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
-					<a href="/item?goods={{part1_name4}}"><img src="{{part1_src4}}" alt={{part1_name4}}></a>
+					<a href="/items?itemid={{part1_namesrc4}}"><img src="{{part1_src4}}" title={{part1_name4}}></a>
 				</div>
 				<h3>{{part1_name4}}</h3>
 				<p>BS价格:{{part1_iprice4}}</p>
@@ -242,7 +241,7 @@ function change()
 		<div class="shopList_sm clearfix">
 			<div class="shopItem_sm">
 				<div class="shopItem_smImg">
-				<a href="/item?goods={{part1_name1}}"><img src="{{part1_src1}}" alt=""></a>
+				<a href="/items?itemid={{part1_namesrc1}}"><img src="{{part1_src1}}" title={{part1_name1}}></a>
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
@@ -251,7 +250,7 @@ function change()
 			</div>
 			<div class="shopItem_sm">
 				<div class="shopItem_smImg">
-				<a href="/item?goods={{part1_name2}}"><img src="{{part1_src2}}" alt=""></a>
+				<a href="/items?itemid={{part1_namesrc2}}"><img src="{{part1_src2}}" title={{part1_name2}}></a>
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
@@ -260,7 +259,7 @@ function change()
 			</div>
 			<div class="shopItem_sm">
 				<div class="shopItem_smImg">
-					<a href="/item?goods={{part1_name3}}"><img src="{{part1_src3}}" alt=""></a>
+					<a href="/items?itemid={{part1_namesrc3}}"><img src="{{part1_src3}}" title={{part1_name3}}></a>
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
@@ -269,7 +268,7 @@ function change()
 			</div>
 			<div class="shopItem_sm">
 				<div class="shopItem_smImg">
-					<a href="/item?goods={{part1_name4}}"><img src="{{part1_src4}}" alt=""></a>
+					<a href="/items?itemid={{part1_namesrc4}}"><img src="{{part1_src4}}" title={{part1_name4}}></a>
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
@@ -295,14 +294,14 @@ function change()
 		<div class="shopList_top clearfix">
 			<div class="shop_item">
 				<div class="shop_img">
-					<a href="/item?goods={{part2_name1}}"><img src="{{part2_src1}}" alt=""></a>
+					<a href="/items?itemid={{part2_namesrc1}}"><img src="{{part2_src1}}" title={{part2_name1}}></a>
 				</div>
 				<h3>{{part1_name2}}</h3>
 				<p>BS价格:{{part2_iprice1}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
-					<a href="/item?goods={{part2_name2}}"><img src="{{part2_src2}}" alt=""></a>
+					<a href="/items?itemid={{part2_namesrc2}}"><img src="{{part2_src2}}" title={{part2_name2}}></a>
 				</div>
 				<h3>{{part2_name2}}</h3>
 				<p>BS价格:{{part2_iprice2}}</p>
@@ -310,14 +309,14 @@ function change()
 		
 			<div class="shop_item">
 				<div class="shop_img">
-					<a href="/item?goods={{part2_name3}}"><img src="{{part2_src3}}" alt=""></a>
+					<a href="/items?itemid={{part2_namesrc3}}"><img src="{{part2_src3}}" title={{part2_name3}}></a>
 				</div>
 				<h3>{{part2_name3}}</h3>
 				<p>BS价格:{{part2_iprice3}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
-					<a href="/item?goods={{part2_name4}}"><img src="{{part2_src4}}" alt=""></a>
+					<a href="/items?itemid={{part2_namesrc4}}"><img src="{{part2_src4}}" title={{part2_name4}}></a>
 				</div>
 				<h3>{{part2_name4}}</h3>
 				<p>BS价格:{{part2_iprice4}}</p>
@@ -326,7 +325,7 @@ function change()
 		<div class="shopList_sm clearfix">
 			<div class="shopItem_sm">
 				<div class="shopItem_smImg">
-				<a href="/item?goods={{part2_name1}}"><img src="{{part2_src1}}" alt=""></a>
+				<a href="/items?itemid={{part2_namesrc1}}"><img src="{{part2_src1}}" title={{part2_name1}}></a>
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
@@ -335,7 +334,7 @@ function change()
 			</div>
 			<div class="shopItem_sm">
 				<div class="shopItem_smImg">
-				<a href="/item?goods={{part2_name2}}"><img src="{{part2_src2}}" alt=""></a>
+				<a href="/items?itemid={{part2_namesrc2}}"><img src="{{part2_src2}}"  title={{part2_name2}}></a>
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
@@ -344,7 +343,7 @@ function change()
 			</div>
 			<div class="shopItem_sm">
 				<div class="shopItem_smImg">
-					<a href="/item?goods={{part2_name3}}"><img src="{{part2_src3}}" alt=""></a>
+					<a href="/items?itemid={{part2_namesrc3}}"><img src="{{part2_src3}}"  title={{part2_name3}}></a>
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
@@ -353,7 +352,7 @@ function change()
 			</div>
 			<div class="shopItem_sm">
 				<div class="shopItem_smImg">
-					<a href="/item?goods={{part2_name4}}"><img src="{{part2_src4}}" alt=""></a>
+					<a href="/items?itemid={{part2_namesrc4}}"><img src="{{part2_src4}}"  title={{part2_name4}}></a>
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>

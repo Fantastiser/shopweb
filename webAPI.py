@@ -32,7 +32,7 @@ class LoginWeb(tornado.web.RequestHandler):
         else:
             result = {"state": "false", "text": "请填写完整用户名和密码"}
         self.write(escape.json_decode(json.dumps(result)))
-		
+
 class Move(tornado.web.RequestHandler):
     def get(self):
         name = self.get_argument("information")
@@ -98,31 +98,110 @@ class RegisterWeb(tornado.web.RequestHandler):
 
 class FilterWeb(tornado.web.RequestHandler):
     def get(self):
-        name = self.get_argument("information")
+        # SELECT
+        # pName, writer, iprice, plmg, item.id, pubTime
+        # from item, kinds
+        # where
+        # kinds.kind = "小说" and item.cld = kinds.id and 20 <= iprice <= 50
+
+        # 关键字
+        name = self.get_argument("itemid")
+        # 书的类型
+        vary =  self.get_argument("find")
+        # 排序方式
+        sort = self.get_argument("sort")
+        minprice = self.get_argument("minprice")
+        maxprice = self.get_argument("maxprice")
+
         result = {}
-        dict = {}
+        list0_1 = ['itemid', 'name', 'author', 'iPrice', 'plmg', 'pubTime']
         list1 = []
-        list0 = ['id', 'pName', 'pSn', 'cld', 'pNum', 'mPrice', 'iPrice', 'pDesc', 'plmg', 'pubTime', 'ishow', 'isHot']
-        list = ['pName', 'cld', 'pSn', 'PDesc']
-        for i in list:
-            if i == 'cld':
-                kinds = tools.searchDB('kinds', ['id', 'kind'])
-                for kind in kinds:
-                    if name == str(kind[1]):
-                        get = tools.searchDB(tableName='item', columns=[], where="cld ='" + str(kind[0]) + "'")
-                        for ges in get:
+        if vary == "":
+            list0 = ['id', 'pName', 'writer', 'iPrice', 'plmg', 'pubTime']
+            list = ['pName', 'cld', 'pSn', 'PDesc']
+            for i in list:
+                if i == 'cld':
+                    sql = "SELECT item.id, pName, writer, iPrice, plmg, pubTime from item, kinds where kinds.kind = '" + str(
+                        name) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice)
+                    get = tools.searchDB(sql=sql)
+                    for ges in get:
+                        dict = {}
+                        for it in range(0, len(list0)):
+                            dict[list0_1[it]] = str(ges[it])
+                        list1.append(dict)
+                elif i == 'pName':
+                    data = tools.searchDB('item', columns=list0,
+                                          where=str(i) + " like'%" + str(name) + "%'" + "and " + str(
+                                              minprice) + "<iPrice<" + str(maxprice))
+                    if data != ():
+                        for ges in data:
+                            dict = {}
                             for it in range(0, len(list0)):
-                                dict[list0[it]] = str(ges[it])
+                                dict[list0_1[it]] = str(ges[it])
                             if dict not in list1:
                                 list1.append(dict)
-            else:
+                else:
+                    data = tools.searchDB('item', columns=list0,
+                                          where=str(i) + " ='" + str(name) + "'and " + str(minprice) + "<iPrice<" + str(
+                                              maxprice))
+                    if data != ():
+                        for ges in data:
+                            dict = {}
+                            for it in range(0, len(list0)):
+                                dict[list0_1[it]] = str(ges[it])
+                            if dict not in list1:
+                                list1.append(dict)
 
-                data = tools.searchDB('item', columns=[], where=str(i) + " like'%" + str(name) + "%'")
+        else:
+            k = ['pName', 'PDec']
+            for i in k:
+                sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '" + str(
+                    vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice) + "and" + str(
+                    i) + " like'%" + str(name) + "%'"
+                data = tools.searchDB(sql=sql)
                 if data != ():
                     for ges in data:
-                        for it in range(0, len(list0)):
-                            dict[list0[it]] = str(ges[it])
+                        dict = {}
+                        for it in range(0, len(list0_1)):
+                            dict[list0_1[it]] = str(ges[it])
                         if dict not in list1:
                             list1.append(dict)
-        result['data'] = list1
+        if sort == '0':
+            result['data'] = list1
+        elif sort == '3':
+            result['data'] = sorted(list1, key=lambda list1: list1['iPrice'])
+        elif sort == '4':
+            result['data'] = sorted(list1, key=lambda list1: list1['iPrice'], reverse=True)
+        elif sort == '1':
+            result['data'] = sorted(list1, key=lambda list1: list1['pubTime'])
+        elif sort == '2':
+            result['data'] = sorted(list1, key=lambda list1: list1['pubTime'], reverse=True)
         self.write(escape.json_decode(json.dumps(result)))
+
+class ItemsWeb(tornado.web.RequestHandler):
+    def get(self):
+        id = self.get_argument("itemid")
+        result = {'data': {}}
+        sqlresult = tools.searchDB('item',
+                                   ['pName', 'pSn', 'cld', 'mPrice', 'iPrice', 'writer', 'publisher', 'pubTime', 'plmg',
+                                    'descpic', 'pDesc'], where="id='" + str(id) + "'")
+        if sqlresult != ():
+            result['state'] = 'success'
+            result['itemname']=str(sqlresult[0][0])
+            result['data']['itemname'] = str(sqlresult[0][0])
+            result['data']['itemid'] = str(sqlresult[0][1])
+            result['data']['itemcategory'] = str(tools.searchDB('kinds', ['kind'], where="id=" + str(sqlresult[0][2]))[0][0])
+            result['data']['mprice'] = str(sqlresult[0][3])
+            result['data']['iprice'] = str(sqlresult[0][4])
+            result['data']['author'] = str(sqlresult[0][5])
+            result['data']['publisher'] = str(sqlresult[0][6])
+            result['data']['pubTime'] = str(sqlresult[0][7])
+            result['data']['itempic'] = str(sqlresult[0][8])
+            result['data']['descpic'] = str(sqlresult[0][9])
+            result['data']['description'] = str(sqlresult[0][10])
+        else:
+            result['state'] = 'fail'
+        self.write(escape.json_decode(json.dumps(result)))
+#
+# class addorder(tornado.web.RequestHandler):
+#

@@ -64,5 +64,20 @@ function login() {
 		}
 	});
 }
+function changeUrlArg(arg, val){
+	url=document.URL;
+    var pattern = arg+'=([^&]*)';
+    var replaceText = arg+'='+val;
+    return url.match(pattern) ? url.replace(eval('/('+ arg+'=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url+'&'+replaceText : url+'?'+replaceText);
+}
 
+
+function GetQueryString(arg)
+{
+    var reg = new RegExp("(^|&)" + arg + "=([^&]*)(&|$)", "i");  
+    var l = decodeURI(window.location.search);  
+    var r = l.substr(1).match(reg);  
+    if (r != null) return unescape(r[2]);  
+    return null;  
+}
 

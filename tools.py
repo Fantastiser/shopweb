@@ -37,7 +37,6 @@ def searchDB(tableName=None, columns = [], where = None,sql =None):
 		else:
 			columns = ",".join(columns)
 			sql = "select {0} from {1} where {2}".format(columns, tableName, where)
-
 		cur = conn.cursor()
 		cur.execute(sql)
 		results = cur.fetchall()
