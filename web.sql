@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-05-31 20:02:58
+Date: 2017-06-01 02:09:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -141,23 +141,26 @@ INSERT INTO `kinds` VALUES ('9', '漫画书', '../static/images/kinds/comic.jpg'
 INSERT INTO `kinds` VALUES ('10', '电子书', '../static/images/kinds/ebook.jpg');
 
 -- ----------------------------
--- Table structure for order
+-- Table structure for orders
 -- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
-  `id` int(10) NOT NULL,
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` varchar(10) NOT NULL,
+  `itemid` varchar(10) DEFAULT NULL,
   `itemname` varchar(30) DEFAULT NULL,
   `username` varchar(30) DEFAULT NULL,
-  `num` int(5) DEFAULT NULL,
+  `num` varchar(5) DEFAULT NULL,
   `regtime` varchar(20) DEFAULT NULL,
   `price` varchar(5) DEFAULT NULL,
   `amount` varchar(10) DEFAULT NULL,
+  `conditions` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of order
+-- Records of orders
 -- ----------------------------
+INSERT INTO `orders` VALUES ('8', '18', '《外婆的道歉信》', '赵博宇', '1', '2017-06-01', '27.0', '27.0', '0');
 
 -- ----------------------------
 -- Table structure for picture
