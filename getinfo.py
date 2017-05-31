@@ -55,7 +55,7 @@ def filter():
         k = ['pName', 'PDesc']
         if name != '':
             for i in k:
-                sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '{0} 'and item.cld = kinds.id and {1}<iPrice< {2} and {3} like'%{4}%'".format(
+                sql = "SELECT item.id, pName, writer, iPrice, plmg, pubTime from item, kinds where kinds.kind = '{0} 'and item.cld = kinds.id and {1}<iPrice< {2} and {3} like'%{4}%'".format(
                      str(vary), str(minprice), str(maxprice), str(i), str(name))
                 data= tools.searchDB(sql=sql.decode('utf8'))
                 if data != ():
@@ -66,7 +66,7 @@ def filter():
                         if dict not in list1:
                             list1.append(dict)
         else:
-            sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '" + str(
+            sql = "SELECT item.id, pName, writer, iPrice, plmg, pubTime from item, kinds where kinds.kind = '" + str(
                 vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice)
 
             data = tools.searchDB(sql=sql)
@@ -77,7 +77,7 @@ def filter():
                         dict[list0_1[it]] = str(ges[it])
                     if dict not in list1:
                         list1.append(dict)
-    print list1
+
     if sort =='0':
         result ['data'] =list1
     elif sort == '3':
@@ -88,8 +88,9 @@ def filter():
         result['data'] = sorted(list1, key=lambda list1: list1['pubTime'])
     elif sort == '2':
         result['data'] = sorted(list1, key=lambda list1: list1['pubTime'],reverse=True)
+    print result
 
-
+# filter()
 
  # sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '小说 'and item.cld = kinds.id and 20<iPrice<50 and pName like'%小说%'"
 # data = tools.searchDB(sql=sql)

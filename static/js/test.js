@@ -20,7 +20,14 @@ function moves() {
 	var name = $("#information").val();
 	var a;
 	a = document.URL.replace(window.location.pathname,'/filter');
-	window.open(a+'&items='+name);
+	if(a.indexOf("?") == 0 ){
+	window.open(a+'&itemid='+name);
+	} else{
+		window.open(a+'?&itemid='+name);
+		
+	}
+
+	
 }
 
 function registers() {
@@ -80,4 +87,11 @@ function GetQueryString(arg)
     if (r != null) return unescape(r[2]);  
     return null;  
 }
+function loader(){
+		if(GetQueryString("user")!=null) {
+			document.getElementById("login").style.display="none";
+			document.getElementById("register").style.display="none";
+		}
+	}
 
+	

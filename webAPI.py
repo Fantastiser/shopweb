@@ -82,7 +82,7 @@ class RegisterWeb(tornado.web.RequestHandler):
                 else:
                     max1 = max
                 today = datetime.date.today()
-                listOfvalues = [str(max1+1),username, password1, password2,str(None),str(None),str(today)]
+                listOfvalues = [str(max1+1),username, password1, email,str(None),str(None),str(today)]
                 listOfColumns = ['id', 'username', 'password', 'email', 'phonenum','address','regtime']
                 if password1==password2 :
                     tools.insertDB('users',listOfColumns,listOfvalues)
@@ -98,13 +98,9 @@ class RegisterWeb(tornado.web.RequestHandler):
 
 class FilterWeb(tornado.web.RequestHandler):
     def get(self):
-        # SELECT
-        # pName, writer, iprice, plmg, item.id, pubTime
-        # from item, kinds
-        # where
-        # kinds.kind = "小说" and item.cld = kinds.id and 20 <= iprice <= 50
 
         # 关键字
+
         name = self.get_argument("itemid")
         # 书的类型
         vary =  self.get_argument("find")
@@ -122,62 +118,76 @@ class FilterWeb(tornado.web.RequestHandler):
             for i in list:
                 if i == 'cld':
                     sql = "SELECT item.id, pName, writer, iPrice, plmg, pubTime from item, kinds where kinds.kind = '" + str(
-                        name) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice)
+                        name) + " 'and item.cld = kinds.id and " + str(minprice) + "<=iPrice and iPrice<="+str(maxprice)
                     get = tools.searchDB(sql=sql)
                     for ges in get:
                         dict = {}
                         for it in range(0, len(list0)):
-                            dict[list0_1[it]] = str(ges[it])
+                            if list0_1[it] == "iPrice":
+                                dict[list0_1[it]] = float(ges[it])
+                            else:
+                                dict[list0_1[it]] = str(ges[it])
                         list1.append(dict)
                 elif i == 'pName':
                     data = tools.searchDB('item', columns=list0,
-                                          where=str(i) + " like'%" + str(name) + "%'" + "and " + str(
-                                              minprice) + "<iPrice<" + str(maxprice))
+                                          where=str(i) + " like'%" + str(name) + "%'" + "and " + str(minprice) + "<=iPrice and iPrice<="+str(maxprice))
                     if data != ():
                         for ges in data:
                             dict = {}
                             for it in range(0, len(list0)):
-                                dict[list0_1[it]] = str(ges[it])
+                                if list0_1[it] == "iPrice":
+                                    dict[list0_1[it]] = float(ges[it])
+                                else:
+                                    dict[list0_1[it]] = str(ges[it])
                             if dict not in list1:
                                 list1.append(dict)
                 else:
                     data = tools.searchDB('item', columns=list0,
-                                          where=str(i) + " ='" + str(name) + "'and " + str(minprice) + "<iPrice<" + str(
-                                              maxprice))
+                                          where=str(i) + " ='" + str(name) + "'and " +str(minprice) + "<=iPrice and iPrice<="+str(maxprice))
                     if data != ():
                         for ges in data:
                             dict = {}
                             for it in range(0, len(list0)):
-                                dict[list0_1[it]] = str(ges[it])
+                                if list0_1[it] == "iPrice":
+                                    dict[list0_1[it]] = float(ges[it])
+                                else:
+                                    dict[list0_1[it]] = str(ges[it])
                             if dict not in list1:
                                 list1.append(dict)
 
         else:
             k = ['pName', 'PDesc']
-            if name!='':
+            if name != '':
                 for i in k:
-                    sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '" + str(
-                        vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice) + "and" + str(
-                        i) + " like'%" + str(name) + "%'"
-                    data = tools.searchDB(sql=sql)
+                    sql = "SELECT item.id, pName, writer, iPrice, plmg, pubTime from item, kinds where kinds.kind = '{0} 'and item.cld = kinds.id and {1}<=iPrice and iPrice<= {2} and {3} like'%{4}%'".format(
+                        str(vary), str(minprice), str(maxprice), str(i), str(name))
+                    data = tools.searchDB(sql=sql.decode('utf8'))
                     if data != ():
                         for ges in data:
                             dict = {}
                             for it in range(0, len(list0_1)):
-                                dict[list0_1[it]] = str(ges[it])
+                                if list0_1[it] == "iPrice":
+                                    dict[list0_1[it]] = float(ges[it])
+                                else:
+                                    dict[list0_1[it]] = str(ges[it])
                             if dict not in list1:
                                 list1.append(dict)
             else:
-                sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '" + str(
-                    vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice)
+                sql = "SELECT item.id, pName, writer, iPrice, plmg, pubTime from item, kinds where kinds.kind = '" + str(
+                    vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<=iPrice and iPrice<="+str(maxprice)
+
                 data = tools.searchDB(sql=sql)
                 if data != ():
                     for ges in data:
                         dict = {}
                         for it in range(0, len(list0_1)):
-                            dict[list0_1[it]] = str(ges[it])
+                            if list0_1[it] =="iPrice":
+                                dict[list0_1[it]] = int(ges[it])
+                            else:
+                                dict[list0_1[it]] = str(ges[it])
                         if dict not in list1:
                             list1.append(dict)
+
         if sort == '0':
             result['data'] = list1
         elif sort == '3':
@@ -207,13 +217,42 @@ class ItemsWeb(tornado.web.RequestHandler):
             result['data']['iprice'] = str(sqlresult[0][4])
             result['data']['author'] = str(sqlresult[0][5])
             result['data']['publisher'] = str(sqlresult[0][6])
-            result['data']['pubTime'] = str(sqlresult[0][7])
+            result['data']['pubdate'] = str(sqlresult[0][7])
             result['data']['itempic'] = str(sqlresult[0][8])
             result['data']['descpic'] = str(sqlresult[0][9])
             result['data']['description'] = str(sqlresult[0][10])
         else:
             result['state'] = 'fail'
         self.write(escape.json_decode(json.dumps(result)))
-#
-# class addorder(tornado.web.RequestHandler):
-#
+
+
+class shopcartnum(tornado.web.RequestHandler):
+    def get(self):
+        result={}
+        username =  self.get_argument("username")
+        num = tools.searchDB('orders',['username'],where = "username='{0}' and conditions={1}".format(username,str('0')))
+        if num!=():
+            result['num'] =len(num)
+        else:
+            result['num'] = 0
+        self.write(escape.json_decode(json.dumps(result)))
+class addorder(tornado.web.RequestHandler):
+    def get(self):
+        result={}
+        itemid = self.get_argument("itemid")
+        name = self.get_argument("itemname")
+        user = self.get_argument("user")
+        num = self.get_argument("num")
+        regtime = datetime.date.today()
+        price = self.get_argument("price")
+        condition = self.get_argument("condition")
+        amount = float(num)*float(price)
+        max = tools.searchDB('orders', ['max(id)'])[0][0]
+        if max == None:
+            max1 = 0
+        else:
+            max1 = max
+        sql = "insert  into orders (id,itemid,itemname,username,num,regtime,price,amount,conditions) values ('%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(str(int(max1)+1),str(itemid),str(name),str(user),str(num),str(regtime),str(price),str(amount),str(condition))
+        tools.insertDB(sql=sql)
+        result["msg"]="true"
+        self.write(escape.json_decode(json.dumps(result)))

@@ -14,16 +14,11 @@ class Start(tornado.web.RequestHandler):
         theme1 = tools.searchDB(sql='select pName,mPrice,iPrice,plmg ,id from item where cld = {0} ORDER BY isHot DESC '.format(str(a)))
         theme2 = tools.searchDB(sql='select pName,mPrice,iPrice,plmg ,id from item where cld = {0} ORDER BY isHot DESC '.format(str(b)))
         pic_url = tools.searchDB(sql='select itemid,albumpath from album ')
-        pic_ul = random.sample(pic_url, 4)
+        pic_ul = random.sample(pic_url, 3)
         self.render('index.html',
             pic_url1= pic_ul[0][1],
             pic_url2 = pic_ul[1][1],
             pic_url3=pic_ul[2][1],
-            pic_url4=pic_ul[3][1],
-            pic_id1=pic_ul[0][0],
-            pic_id2=pic_ul[1][0],
-            pic_id3=pic_ul[2][0],
-            pic_id4=pic_ul[3][0],
             titlename1=titlename1[0],
             background1 = titlename1[1],
             part1_src1=theme1[0][3],

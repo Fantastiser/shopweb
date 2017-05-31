@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8">
 <title>BookShop</title>
+<link type="text/css" rel="stylesheet" href="../static/css/carousel.css">
 <link type="text/css" rel="stylesheet" href="../static/css/reset.css">
 <link type="text/css" rel="stylesheet" href="../static/css/main.css">
 <!--[if IE 6]>
@@ -22,7 +23,16 @@ function change()
         var r = window.location.search.substr(1).match(reg);
 		if (r!=null)
 		{
-         document.getElementById("my").innerHTML =unescape(r[2]);
+		 $.ajax({
+		type:'GET',
+		data:{"username":unescape(r[2])},
+		url:'/ajax/shopcartnum',
+		dataType:'json',
+		success:function (result) {
+			document.getElementById("shopcart").innerHTML=result["num"];
+		}
+	});
+		loader();
 		 }
 		 a = document.URL.replace('?','').replace('#','').replace(window.location.pathname,'/filter?');
 		 
@@ -50,23 +60,18 @@ function change()
 		 document.getElementById("good8").href=changeUrlArg('itemid',document.getElementById("good8").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		 document.getElementById("good9").href=changeUrlArg('itemid',document.getElementById("good9").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		 document.getElementById("good10").href=changeUrlArg('itemid',document.getElementById("good10").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
-		document.getElementById("first1").href =changeUrlArg('itemid',document.getElementById("first1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		document.getElementById("a1").href =changeUrlArg('itemid',document.getElementById("a1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		document.getElementById("a2").href =changeUrlArg('itemid',document.getElementById("a2").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		document.getElementById("a3").href =changeUrlArg('itemid',document.getElementById("a3").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		document.getElementById("a4").href =changeUrlArg('itemid',document.getElementById("a4").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
-}	 
-	<!-- function turn() -->
-	<!-- {var i=1; -->
-	<!-- while(i<5) -->
-	<!-- { -->
-	<!-- setTimeout("alert("111")", 5000); -->
-	<!-- i++; -->
-	
-	<!-- } -->
-		
-	<!-- } -->
 
+		}	 
+
+function  shopcart(){
+		var href="shopcart?user="+GetQueryString("user");
+		if(GetQueryString("user")==null)  href="login";
+		location.href=href;	
+	}
 </script>
  <script type="text/javascript"> 
 
@@ -117,7 +122,7 @@ function change()
 				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏本站</a>
 			</div>
 			<div class="rightArea">
-				欢迎来到BookShop!    <a  href="/login" id = "my">   [登录]  </a><a href="/register">[免费注册]</a>
+					欢迎来到BookShop！<a href="/login" id="login">[登录]</a><a href="/register" id="register">[免费注册]</a>
 			</div>
 		</div>
 	</div>
@@ -128,11 +133,11 @@ function change()
 			</div>
 			<div class="search_box fl">
 				<input type="text" class="search_text fl" id="information">
-				<input type="button" value="搜 索" class="search_btn fr" onClick="moves()"alt="banner" style="cursor:pointer">
+				<input type="button" value="搜 索" class="search_btn fr" onClick="moves('/filter')"alt="banner" style="cursor:pointer">
 			</div>
 			<div class="shopCar fr">
-				<span   class="shopText fl" onClick="shops()" alt="banner"  style="cursor:pointer">购物车</span>
-				<span class="shopNum fl">0</span>
+				<span class="shopText fl" style="cursor:pointer" onclick="shopcart()">购物车</span>
+					<span class="shopNum fl" id="shopcart">0</span>
 			</div>
 		</div>
 	</div>
@@ -143,43 +148,6 @@ function change()
 				<div class="shopClass_show">
 					{% block body %}{% end %}
 				</div>
-				<div class="shopClass_list hide">
-					<div class="shopClass_cont">
-						<dl class="shopList_item">
-							<dt>电脑装机</dt>
-							<dd>
-								<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-							</dd>
-						</dl>
-						<dl class="shopList_item">
-							<dt>电脑装机</dt>
-							<dd>
-								<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a><a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a><a href="#">文字啊</a>
-							</dd>
-						</dl>
-						<dl class="shopList_item">
-							<dt>电脑装机</dt>
-							<dd>
-								<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a><a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a><a href="#">文字啊</a>
-							</dd>
-						</dl>
-						<dl class="shopList_item">
-							<dt>电脑装机</dt>
-							<dd>
-								<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a><a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a><a href="#">文字啊</a>
-							</dd>
-						</dl>
-						<dl class="shopList_item">
-							<dt>电脑装机</dt>
-							<dd>
-								<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a><a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a><a href="#">文字啊</a>
-							</dd>
-						</dl>
-						<div class="shopList_links">
-							<a href="#">文字测试内容等等<span></span></a><a href="#">文字容等等<span></span></a>
-						</div>
-					</div>
-				</div>
 			</div>
 			<ul class="nav fl">
 				<li><a href="" class="active">热 卖 图 书 ，新 品 上 架，火 爆 热 销 中！</a></li>
@@ -188,14 +156,35 @@ function change()
 	</div>
 </div>
 <div class="banner comWidth clearfix">
-	<div class="banner_bar banner_big">
-		<ul class="imgBox">
-			<li><a href={{pic_id1}} id = "first1"><img  id = "first" src = {{pic_url1}} alt="banner"></a></li>
-		</ul>
-		<div class="imgNum">
-			<a href="{{pic_id1}}" onmouseover = 'fuck(1,"{{pic_id1}}","{{pic_url1}}","first","a1","a2","a3","a4")'id = 'a1'></a><a href="{{pic_id2}}"onmouseover = 'fuck(2,"{{pic_id2}}","{{pic_url2}}","first","a1","a2","a3","a4")'id = 'a2'></a><a href="{{pic_id3}}"onmouseover = 'fuck(3,"{{pic_id3}}","{{pic_url3}}","first","a1","a2","a3","a4")'id = 'a3'></a><a href="{{pic_id4}}"onmouseover = 'fuck(4,"{{pic_id4}}","{{pic_url4}}","first","a1","a2","a3","a4")'id = 'a4'></a>
+	
+	
+	<div class="shopList rightArea">
+	<div class = "caroursel poster-main" data-setting = '{
+	        "width":790,
+	        "height":330,
+	        "posterWidth":330,
+	        "posterHeight":330,
+	        "scale":0.7,
+	        "dealy":"2000",
+	        "algin":"center"
+	    }'>
+	        <ul class = "poster-list">
+	            <li class = "poster-item"><img src = {{pic_url1}} width = "100%" height="100%"></li>
+	            <li class = "poster-item"><img src= {{pic_url2}} width = "100%" height="100%"></li>
+	            <li class = "poster-item"><img src= {{pic_url3}} width = "100%" height="100%"></li>
+	            
+	        
+	            
+	        </ul>
+	        
+            
+	        <div class = "poster-btn poster-prev-btn"></div>
+	        <div class = "poster-btn poster-next-btn"></div>
+
+	    </div>
+		
 		</div>
-	</div>
+	
 </div>
 <div class="shopTit comWidth">
 	<span class="icon"></span><h3 id = "titlename1">{{titlename1}}</h3>
@@ -216,28 +205,28 @@ function change()
 					<a  href="/items?itemid={{part1_namesrc1}}"><img src="{{part1_src1}}" title={{part1_name1}}></a>
 				</div>
 				<h3>{{part1_name1}}</h3>
-				<p>BS价格:{{part1_iprice1}}</p>
+				<p>BS价格:￥{{part1_iprice1}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
 					<a href="/items?itemid={{part1_namesrc2}}"><img src="{{part1_src2}}" title={{part1_name2}}></a>
 				</div>
 				<h3>{{part1_name2}}</h3>
-				<p>BS价格:{{part1_iprice2}}</p>
+				<p>BS价格:￥{{part1_iprice2}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
 					<a href="/items?itemid={{part1_namesrc3}}"><img src="{{part1_src3}}" title={{part1_name3}}></a>
 				</div>
 				<h3>{{part1_name3}}</h3>
-				<p>BS价格:{{part1_iprice3}}</p>
+				<p>BS价格:￥{{part1_iprice3}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
 					<a href="/items?itemid={{part1_namesrc4}}"><img src="{{part1_src4}}" title={{part1_name4}}></a>
 				</div>
 				<h3>{{part1_name4}}</h3>
-				<p>BS价格:{{part1_iprice4}}</p>
+				<p>BS价格:￥{{part1_iprice4}}</p>
 			</div>
 		</div>
 		<div class="shopList_sm clearfix">
@@ -247,7 +236,7 @@ function change()
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
-					<h3>{{part1_mprice1}}</h3>
+					<h3>￥{{part1_mprice1}}</h3>
 				</div>
 			</div>
 			<div class="shopItem_sm">
@@ -256,7 +245,7 @@ function change()
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
-					<h3>{{part1_mprice2}}</h3>
+					<h3>￥{{part1_mprice2}}</h3>
 				</div>
 			</div>
 			<div class="shopItem_sm">
@@ -265,7 +254,7 @@ function change()
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
-					<h3>{{part1_mprice3}}</h3>
+					<h3>￥{{part1_mprice3}}</h3>
 				</div>
 			</div>
 			<div class="shopItem_sm">
@@ -274,7 +263,7 @@ function change()
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
-					<h3>{{part1_mprice4}}</h3>
+					<h3>￥{{part1_mprice4}}</h3>
 				</div>
 			</div>
 		</div>
@@ -299,14 +288,14 @@ function change()
 					<a href="/items?itemid={{part2_namesrc1}}"><img src="{{part2_src1}}" title={{part2_name1}}></a>
 				</div>
 				<h3>{{part1_name2}}</h3>
-				<p>BS价格:{{part2_iprice1}}</p>
+				<p>BS价格:￥{{part2_iprice1}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
 					<a href="/items?itemid={{part2_namesrc2}}"><img src="{{part2_src2}}" title={{part2_name2}}></a>
 				</div>
 				<h3>{{part2_name2}}</h3>
-				<p>BS价格:{{part2_iprice2}}</p>
+				<p>BS价格:￥{{part2_iprice2}}</p>
 			</div>
 		
 			<div class="shop_item">
@@ -314,14 +303,14 @@ function change()
 					<a href="/items?itemid={{part2_namesrc3}}"><img src="{{part2_src3}}" title={{part2_name3}}></a>
 				</div>
 				<h3>{{part2_name3}}</h3>
-				<p>BS价格:{{part2_iprice3}}</p>
+				<p>BS价格:￥{{part2_iprice3}}</p>
 			</div>
 			<div class="shop_item">
 				<div class="shop_img">
 					<a href="/items?itemid={{part2_namesrc4}}"><img src="{{part2_src4}}" title={{part2_name4}}></a>
 				</div>
 				<h3>{{part2_name4}}</h3>
-				<p>BS价格:{{part2_iprice4}}</p>
+				<p>BS价格:￥{{part2_iprice4}}</p>
 			</div>
 		</div>
 		<div class="shopList_sm clearfix">
@@ -331,7 +320,7 @@ function change()
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
-					<h3>{{part2_mprice1}}</h3>
+					<h3>￥{{part2_mprice1}}</h3>
 				</div>
 			</div>
 			<div class="shopItem_sm">
@@ -340,7 +329,7 @@ function change()
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
-					<h3>{{part2_mprice2}}</h3>
+					<h3>￥{{part2_mprice2}}</h3>
 				</div>
 			</div>
 			<div class="shopItem_sm">
@@ -349,7 +338,7 @@ function change()
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
-					<h3>{{part2_mprice3}}</h3>
+					<h3>￥{{part2_mprice3}}</h3>
 				</div>
 			</div>
 			<div class="shopItem_sm">
@@ -358,7 +347,7 @@ function change()
 				</div>
 				<div class="shopItem_text">
 					<p>市场价格</p>
-					<h3>{{part2_mprice4}}</h3>
+					<h3>￥{{part2_mprice4}}</h3>
 				</div>
 			</div>
 		</div>
@@ -366,9 +355,13 @@ function change()
 </div>
 <div class="hr_25"></div>
 <div class="footer">
-	<p><a href="#">简介</a><i>|</i><a href="#">公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
-	<p>Copyright &copy; 2006 - 2014 BookShop版权所有&nbsp;&nbsp;&nbsp;京ICP备09037834号&nbsp;&nbsp;&nbsp;京ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
+	<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
+	<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
 	<p class="web"><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a></p>
 </div>
+<script src="../static/js/jquery.carousel.js"></script>
+    <script>
+        Caroursel.init($('.caroursel'))
+    </script>
 </body>
 </html>

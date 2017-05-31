@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-05-31 13:44:02
+Date: 2017-05-31 20:02:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -130,15 +130,15 @@ CREATE TABLE `kinds` (
 -- Records of kinds
 -- ----------------------------
 INSERT INTO `kinds` VALUES ('1', '小说', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('2', '人文', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('3', '科学', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('4', '历史', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('5', '教育', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('6', '经济', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('7', '生活', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('8', '传记', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('9', '漫画书', '../static/images/kinds/novel.jpg');
-INSERT INTO `kinds` VALUES ('10', '电子书', null);
+INSERT INTO `kinds` VALUES ('2', '人文', '../static/images/kinds/human.jpg');
+INSERT INTO `kinds` VALUES ('3', '科学', '../static/images/kinds/science.jpg');
+INSERT INTO `kinds` VALUES ('4', '历史', '../static/images/kinds/history.jpg');
+INSERT INTO `kinds` VALUES ('5', '教育', '../static/images/kinds/education.jpg');
+INSERT INTO `kinds` VALUES ('6', '经济', '../static/images/kinds/economic.jpg');
+INSERT INTO `kinds` VALUES ('7', '生活', '../static/images/kinds/life.jpg');
+INSERT INTO `kinds` VALUES ('8', '传记', '../static/images/kinds/biography.jpg');
+INSERT INTO `kinds` VALUES ('9', '漫画书', '../static/images/kinds/comic.jpg');
+INSERT INTO `kinds` VALUES ('10', '电子书', '../static/images/kinds/ebook.jpg');
 
 -- ----------------------------
 -- Table structure for order

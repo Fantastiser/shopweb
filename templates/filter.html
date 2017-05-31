@@ -19,7 +19,24 @@ function changeUrlArg(arg, val){
     var replaceText = arg+'='+val;
     return url.match(pattern) ? url.replace(eval('/('+ arg+'=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url+'&'+replaceText : url+'?'+replaceText);
 }
- 
+function AddFavorite(sURL, sTitle)
+{
+	try
+	{
+		window.external.addFavorite(sURL, sTitle);
+	}
+	catch(e)
+	{
+		try
+		{
+			window.sidebar.addPanel(sTitle, sURL, "");
+		}
+			catch (e)
+		{
+			alert("加入收藏失败，请使用Ctrl+D进行添加");
+		}
+	}
+}
 function GetQueryString(arg)
 {
     var reg = new RegExp("(^|&)" + arg + "=([^&]*)(&|$)", "i");  
@@ -28,13 +45,27 @@ function GetQueryString(arg)
     if (r != null) return unescape(r[2]);  
     return null;  
 }
+function loader(){
+		if(GetQueryString("user")!=null) {
+			document.getElementById("login").style.display="none";
+			document.getElementById("register").style.display="none";
+		}
+	}
 function fiter()
 {	
+		//init
+		loader();
+		for(var i=0;i<9;i++)
+		{
+			document.getElementById("box"+i).style.display="none";				
+		}
+		document.getElementById("swappage").value=1;
+		document.getElementById("shopnumber").innerHTML=0;
 		//kind
 		var kinds=new Array("小说","人文","科学","历史","教育","经济","生活","传记","漫画书","电子书","null");
 		
 		var prices=new Array(0,1,2,3,4,5);
-		var t=0;
+		var t=0,k=0;
 		var kind=GetQueryString("find");
 		for(var i=0;i<kinds.length;i++){
 			if(kind==kinds[i]){
@@ -43,9 +74,7 @@ function fiter()
 			}
 			document.getElementById("kind"+i).href=changeUrlArg("find", kinds[i]);
 		}
-		if(!t) location.href=changeUrlArg("find",null);
-		
-		
+		if(!t) {location.href=changeUrlArg("find",null);k++;}
 		//price
 		var prices=new Array(0,1,2,3,4,5);
 		t=0;
@@ -57,7 +86,7 @@ function fiter()
 			}
 			document.getElementById("qprice"+i).href=changeUrlArg("price", prices[i]);
 		}
-		if(!t) location.href=changeUrlArg("price",0);
+		if(!t) {location.href=changeUrlArg("price",0);k++;}
 		
 		//sort
 		var sort=new Array(0,1,2,3,4);
@@ -70,12 +99,11 @@ function fiter()
 			}
 			document.getElementById("sort"+i).href=changeUrlArg("sort", sort[i]);
 		}
-		if(!t) location.href=changeUrlArg("sort",0);
-		
+		if(!t) {location.href=changeUrlArg("sort",0);k++;}
 		
 		//view
 		if(GetQueryString("itemid")!=null) document.getElementById("items").value=GetQueryString("itemid");
-		if(GetQueryString("page")==null) location.href=changeUrlArg("page", 1);
+		if(GetQueryString("page")==null) {location.href=changeUrlArg("page", 1);k++};
 		//price
 		var minprice=0,maxprice=0;
 		var price=GetQueryString("price");
@@ -88,31 +116,44 @@ function fiter()
 			case 5: minprice=1000 ;maxprice=1000000 ;break;
 		}
 		
-		$.ajax({
-			type:'GET',
-			data:{"itemid":GetQueryString("itemid"),"find":GetQueryString("find"),
-			"sort":GetQueryString("sort"),"minprice":minprice,"maxprice":maxprice},
-			url:'/ajax/filter',
-			<!-- async:false, -->
-			dataType:'json',
-			success:function (result) {
-				alert('1');
-			}
-		});
+	
+		if(!k){
+			$.ajax({
+				type:'GET',
+				data:{"itemid":GetQueryString("itemid"),"find":GetQueryString("find"),
+				"sort":GetQueryString("sort"),"minprice":minprice,"maxprice":maxprice},
+				url:'/ajax/filter',
+				dataType:'json',
+				success:function (result) {
+					var maxpage=parseInt((result['data'].length-1)/9)+1;
+					document.getElementById("shopnumber").innerHTML=result['data'].length;
+					var page;
+					if(GetQueryString("page")>maxpage||GetQueryString("page")<1) location.href=changeUrlArg("page", 1);
+					else page=parseInt(GetQueryString("page"));
+					document.getElementById("swappage").value=page;
+					for(var i=0;i<9;i++)
+					{
+						var temp=(page-1)*9+i;
+						if(temp>=result['data'].length) document.getElementById("box"+i).style.display="none";
+						else{
+							document.getElementById("name"+i).innerHTML=result['data'][temp]['name'];
+							if(GetQueryString("user")==null)document.getElementById("name"+i).href="items?itemid="+result['data'][temp]['itemid'];
+							else document.getElementById("name"+i).href="items?itemid="+result['data'][temp]['itemid']+"&user="+GetQueryString("user");
+							document.getElementById("author"+i).innerHTML=result['data'][temp]['author']+"  著";
+							document.getElementById("price"+i).innerHTML="￥"+result['data'][temp]['iPrice'];
+							document.getElementById("url"+i).href=document.getElementById("name"+i).href;
+							document.getElementById("picture"+i).src=result['data'][temp]['plmg'];
+							document.getElementById("box"+i).style.display="inline";
+						}
+					
+					}
+				}
+			});
+		}
 		document.getElementById("span0").style.display="none";
 		document.getElementById("shopnumber").innerHTML=1;
 		
-		for(var i=0;i<9;i++)
-		{
-			document.getElementById("name"+i).innerHTML=i;
-			document.getElementById("name"+i).href="shop";
-			document.getElementById("author"+i).innerHTML=i;
-			document.getElementById("price"+i).innerHTML=i;
-			//document.getElementById("box"+i).style.display="none";
-			document.getElementById("url"+i).href=changeUrlArg("sort",2);
-			document.getElementById("picture"+i).src="../static/images/pad.jpg";
 		
-		}
 		
 			
 		
@@ -120,6 +161,10 @@ function fiter()
 function  search(){
 	var item=document.getElementById("items").value;
 	location.href=changeUrlArg("itemid",item);	
+}
+function  swap(){
+	var page=document.getElementById("swappage").value;
+	location.href=changeUrlArg("page",page);	
 }
 </script>
 <body onload="fiter()">
@@ -129,11 +174,11 @@ function  search(){
 	<div class="topBar">
 		<div class="comWidth">
 			<div class="leftArea">
-				<a href="#" class="collection">收藏慕课</a>
+				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏本站</a>
 			</div>
 			<div class="rightArea">
-				欢迎来到慕课网！<a href="#">[登录]</a><a href="#">[免费注册]</a>
-			</div>
+					欢迎来到BookShop！<a href="/login" id="login">[登录]</a><a href="/register" id="register">[免费注册]</a>
+				</div>
 		</div>
 	</div>
 	<div class="logoBar">
@@ -214,111 +259,114 @@ function  search(){
 					<div class="img_item">
 						<a  id="url0"><img src="../static/images/pad.jpg" alt="" id="picture0"></a>
 					</div>
-					<p><a href="#" id="name0">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author0">作者</p>
-					<p class="money" id="price0">￥888</p>
+					<p><a href="#" id="name0"></a></p>
+					<p id="author0"></p>
+					<p class="money" id="price0"></p>
 					
 				</div>
 			</div>
 			<div class="item" id="box1">
 				<div class="item_cont">
 					<div class="img_item">
-						<a href="#" id="url1"><img src="../static/images/shopImg.jpg" alt="" id="picture1"></a>
+						<a href="#" id="url1"><img src="" alt="" id="picture1"></a>
 					</div>
-					<p><a href="#" id="name1">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author1">作者</p>
-					<p class="money" id="price1">￥888</p>
+					<p><a href="#" id="name1"></a></p>
+					<p id="author1"></p>
+					<p class="money" id="price1"></p>
 					
 				</div>
 			</div>
 			<div class="item" id="box2">
 				<div class="item_cont">
 					<div class="img_item">
-						<a href="#" id="url2"><img src="../static/images/shopImg.jpg" alt="" id="picture2"></a>
+						<a href="#" id="url2"><img src="" alt="" id="picture2"></a>
 					</div>
-					<p><a href="#" id="name2">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author2">作者</p>
-					<p class="money" id="price2">￥888</p>
+					<p><a href="#" id="name2"></a></p>
+					<p id="author2"></p>
+					<p class="money" id="price2"></p>
 					
 				</div>
 			</div>
 			<div class="item" id="box3">
 				<div class="item_cont">
 					<div class="img_item">
-						<a href="#" id="url3"><img src="../static/images/shopImg.jpg" alt="" id="picture3"></a>
+						<a href="#" id="url3"><img src="" alt="" id="picture3"></a>
 					</div>
-					<p><a href="#" id="name3">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author3">作者</p>
-					<p class="money" id="price3">￥888</p>
+					<p><a href="#" id="name3"></a></p>
+					<p id="author3"></p>
+					<p class="money" id="price3"></p>
 					
 				</div>
 			</div>
 			<div class="item" id="box4">
 				<div class="item_cont">
 					<div class="img_item">
-						<a href="#" id="url4"><img src="../static/images/shopImg.jpg" alt="" id="picture4"></a>
+						<a href="#" id="url4"><img src="" alt="" id="picture4"></a>
 					</div>
-					<p><a href="#" id="name4">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author4">作者</p>
-					<p class="money" id="price4">￥888</p>
+					<p><a href="#" id="name4"></a></p>
+					<p id="author4"></p>
+					<p class="money" id="price4"></p>
 					
 				</div>
 			</div>
 			<div class="item" id="box5">
 				<div class="item_cont">
 					<div class="img_item">
-						<a href="#" id="url5"><img src="../static/images/shopImg.jpg" alt="" id="picture5"></a>
+						<a href="#" id="url5"><img src="" alt="" id="picture5"></a>
 					</div>
-					<p><a href="#" id="name5">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author5">作者</p>
-					<p class="money" id="price5">￥888</p>
+					<p><a href="#" id="name5"></a></p>
+					<p id="author5"></p>
+					<p class="money" id="price5"></p>
 					
 				</div>
 			</div>
 			<div class="item" id="box6">
 				<div class="item_cont">
 					<div class="img_item">
-						<a href="#" id="url6"><img src="../static/images/shopImg.jpg" alt="" id="picture6"></a>
+						<a href="#" id="url6"><img src="" alt="" id="picture6"></a>
 					</div>
-					<p><a href="#" id="name6">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author6">作者</p>
-					<p class="money" id="price6">￥888</p>
+					<p><a href="#" id="name6"></a></p>
+					<p id="author6"></p>
+					<p class="money" id="price6"></p>
 					
 				</div>
 			</div>
 			<div class="item" id="box7">
 				<div class="item_cont">
 					<div class="img_item">
-						<a href="#" id="url7"><img src="../static/images/shopImg.jpg" alt="" id="picture7"></a>
+						<a href="#" id="url7"><img src="" alt="" id="picture7"></a>
 					</div>
-					<p><a href="#" id="name7">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author7">作者</p>
-					<p class="money" id="price7">￥888</p>
+					<p><a href="#" id="name7"></a></p>
+					<p id="author7"></p>
+					<p class="money" id="price7"></p>
 					
 				</div>
 			</div>
 			<div class="item" id="box8">
 				<div class="item_cont">
 					<div class="img_item">
-						<a href="#" id="url8"><img src="../static/images/shopImg.jpg" alt="" id="picture8"></a>
+						<a href="#" id="url8"><img src="" alt="" id="picture8"></a>
 					</div>
-					<p><a href="#" id="name8">文字介绍文字介绍文字介绍文字介绍文字介绍文字介绍</a></p>
-					<p id="author8">作者</p>
-					<p class="money" id="price8">￥888</p>
+					<p><a href="#" id="name8"></a></p>
+					<p id="author8"></p>
+					<p class="money" id="price8"></p>
 					
 				</div>
 			</div>
 		</div>
 		<div class="hr_25"></div>
 		<div class="page">
-			<a href="#">上一页</a><a href="#" id="page0">1</a><span class="hl" id="span0">...</span><a href="#" id="page1">2</a><a href="#" id="page2">3</a><a href="#" id="page3">4</a><a href="#" id="page4">5</a><a href="#" id="page5">6</a><span class="hl" id="span1">...</span><a href="#" id="page6">200</a><a href="#">下一页</a><span class="morePage" >共</span><span class="morePage" id="page">200</span><span class="morePage">页</span>，到第<input type="text" class="pageNum"><span class="ye">页</span><input type="button" value="确定" class="page_btn" ">
+			<input type="button" value="上一页"  style="cursor:pointer" onclick="location=changeUrlArg('page',GetQueryString('page')-1)" ></input>&nbsp&nbsp&nbsp&nbsp第
+			<input type="text" class="pageNum" id="swappage"></input><span class="ye">页&nbsp&nbsp&nbsp&nbsp</span>
+			<input type="button" value="跳转" style="cursor:pointer" class="page_btn" onclick="swap()"></input>&nbsp&nbsp&nbsp&nbsp
+			<input type="button" value="下一页"  style="cursor:pointer" onclick="location=changeUrlArg('page',parseInt(GetQueryString('page'))+1)" ></input>
 		</div>
 	</div>
 </div>
 <div class="hr_25"></div>
 <div class="footer">
-	<p><a href="#">慕课简介</a><i>|</i><a href="#">慕课公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
-	<p>Copyright &copy; 2006 - 2014 慕课版权所有&nbsp;&nbsp;&nbsp;京ICP备09037834号&nbsp;&nbsp;&nbsp;京ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
+	<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
+	<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
 	<p class="web"><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a></p>
 </div>
 </body>

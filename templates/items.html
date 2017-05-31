@@ -36,9 +36,16 @@
 			if (result["state"]=="success")
 			{
 			document.getElementById("itemname").innerHTML = result["data"]["itemname"];
-			document.getElementById("itemid").innerHTML = result["data"]["itemid"];
+			document.getElementById("itemname2").innerHTML = result["data"]["itemname"];
+			//document.getElementById("itemid").innerHTML = result["data"]["itemid"];
 			document.getElementById("itemcategory").innerHTML = result["data"]["itemcategory"];
-			document.getElementById("price").innerHTML = result["data"]["iprice"];
+			if(GetQueryString("user")!=null)  document.getElementById("shop").href = "shop?user="+GetQueryString("user");
+			else document.getElementById("shop").href = "shop?";
+			if(GetQueryString("user")!=null)  document.getElementById("itemcategory").href = "filter?find="+document.getElementById('itemcategory').innerHTML+"&user="+GetQueryString("user");
+			else document.getElementById("itemcategory").href = "filter?find="+document.getElementById('itemcategory').innerHTML;
+			document.getElementById("iprice").innerHTML = result["data"]["iprice"];
+			document.getElementById("mprice").innerHTML = result["data"]["mprice"];
+			document.getElementById("pubdate").innerHTML = result["data"]["pubdate"];
 			document.getElementById("author").innerHTML = result["data"]["author"];
 			document.getElementById("publisher").innerHTML = result["data"]["publisher"];
 			document.getElementById("itempic").src = result["data"]["itempic"];
@@ -46,36 +53,113 @@
 			document.getElementById("descpic").src = result["data"]["descpic"];
 			}
 				
+						
+						
 		}
 	});
-			<!-- result = { -->
-				<!-- "itemname": "追风筝的人", -->
-				<!-- "itemid": "0001", -->
-				<!-- "itemcategory": "畅销书", -->
-				<!-- "price": "17.8", -->
-				<!-- "author": "陈安哲", -->
-				<!-- "publisher": "机械工业出版社", -->
-				<!-- "itempic": "../static/images/goods/air2.jpg", -->
-				<!-- "description": "新一代小米旗舰", -->
-				<!-- "descpic": "../static/images/goods/air2.jpg", -->
-				<!-- "count": "999", -->
-			<!-- }; -->
+	findshopcartnum();
+			loader();
+			}
+			
+			
 
-			<!-- var reg = new RegExp("(^|&)" + 'id' + "=([^&]*)(&|$)", "i"); -->
-			<!-- var r = window.location.search.substr(1).match(reg); -->
-
-			<!-- document.getElementById("itemname").innerHTML = result["itemname"]; -->
-			<!-- document.getElementById("itemid").innerHTML = result["itemid"]; -->
-			<!-- document.getElementById("itemcategory").innerHTML = result["itemcategory"]; -->
-			<!-- document.getElementById("price").innerHTML = result["price"]; -->
-			<!-- document.getElementById("author").innerHTML = result["author"]; -->
-			<!-- document.getElementById("publisher").innerHTML = result["publisher"]; -->
-			<!-- document.getElementById("itempic").src = result["itempic"]; -->
-			<!-- document.getElementById("description").innerHTML = result["description"]; -->
-			<!-- document.getElementById("descpic").src = result["descpic"]; -->
-			<!-- //document.getElementById("count").innerHTML =result["count"]; -->
-
+		function findshopcartnum()
+		{
+		var reg = new RegExp("(^|&)" + 'user' + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+		if (r!=null)
+		{
+		 $.ajax({
+		type:'GET',
+		data:{"username":unescape(r[2])},
+		url:'/ajax/shopcartnum',
+		dataType:'json',
+		success:function (result) {
+				
+			document.getElementById("shopcart").innerHTML=result["num"];
 		}
+	});
+		}
+		}
+	function changeUrlArg(arg, val){
+		url=document.URL;
+		var pattern = arg+'=([^&]*)';
+		var replaceText = arg+'='+val;
+		return url.match(pattern) ? url.replace(eval('/('+ arg+'=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url+'&'+replaceText : url+'?'+replaceText);
+	}
+
+	function GetQueryString(arg)
+	{
+		var reg = new RegExp("(^|&)" + arg + "=([^&]*)(&|$)", "i");  
+		var l = decodeURI(window.location.search);  
+		var r = l.substr(1).match(reg);  
+		if (r != null) return unescape(r[2]);  
+		return null;  
+	}
+	
+	function  search(){
+		var href="filter?itemid="+document.getElementById('find').value;
+		if(GetQueryString("user")!=null)  href+="&user="+GetQueryString("user");
+		location.href=href;	
+	}
+	function  shopcart(){
+		var href="shopcart?user="+GetQueryString("user");
+		if(GetQueryString("user")==null)  href="login";
+		location.href=href;	
+	}
+	function  addshopcart(condition){
+		var href="shopcart?user="+GetQueryString("user");
+		if(GetQueryString("user")==null)  
+		{
+		href="login";
+		location.href=href;
+		}else if(document.getElementById("pname").value!='0')
+		{
+		itemid = GetQueryString("itemid")
+		itemname = document.getElementById("itemname").innerHTML
+		user = GetQueryString("user")
+		num = document.getElementById("pname").value
+		price = document.getElementById("iprice").innerHTML
+		 $.ajax({
+		type:'GET',
+		data:{"itemid":itemid,"itemname":itemname,"user":user,"num":num,"price":price,"condition":condition},
+		url:'/ajax/addorder',
+		dataType:'json',
+		success:function (result) {
+			if (result["msg"]=="true" &&condition=='0')
+			{
+			alert("加入购物车成功");
+			findshopcartnum();
+			}else if(result["msg"]=="true" &&condition=='1')
+			{
+				href="order?user="+GetQueryString("user")+"&itemid="+GetQueryString("itemid");
+				window.open(href);
+			}
+		}
+	});
+		}
+		
+	}
+	function minues()
+	{ 
+	a = document.getElementById("pname").value;
+	if (parseInt(a)>0){
+	document.getElementById("pname").value=parseInt(a)-1;
+	}else{
+	document.getElementById("pname").value=0;
+	}
+	
+	}
+	function add()
+	{ 
+	a = document.getElementById("pname").value;
+	if (parseInt(a)<=100  ){
+	document.getElementById("pname").value=parseInt(a)+1;
+	}else{
+	document.getElementById("pname").value =1;
+	}
+	
+	}
 	</script>
 
 
@@ -86,10 +170,10 @@
 		<div class="topBar">
 			<div class="comWidth">
 				<div class="leftArea">
-					<a href="#" class="collection">收藏慕课</a>
-				</div>
+				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏本站</a>
+			</div>
 				<div class="rightArea">
-					欢迎来到慕课网！<a href="#">[登录]</a><a href="#">[免费注册]</a>
+					欢迎来到BookShop！<a href="/login" id="login">[登录]</a><a href="/register" id="register">[免费注册]</a>
 				</div>
 			</div>
 		</div>
@@ -99,135 +183,37 @@
 					<a href="#"><img src="../static/images/logo.jpg" alt="慕课网"></a>
 				</div>
 				<div class="search_box fl">
-					<input type="text" class="search_text fl">
-					<input type="button" value="搜 索" class="search_btn fr">
+					<input type="text" class="search_text fl" id="find">
+					<input type="button" value="搜 索" class="search_btn fr" style="cursor:pointer" onclick="search()">
 				</div>
 				<div class="shopCar fr">
-					<span class="shopText fl">购物车</span>
-					<span class="shopNum fl">0</span>
+					<span class="shopText fl" style="cursor:pointer" onclick="shopcart()">购物车</span>
+					<span class="shopNum fl" id="shopcart">0</span>
 				</div>
 			</div>
 		</div>
-		<div class="navBox">
-			<div class="comWidth clearfix">
-				<div class="shopClass fl">
-					<h3>全部商品分类<i class="shopClass_icon"></i></h3>
-					<div class="shopClass_show hide">
-						<dl class="shopClass_item">
-							<dt><a href="#" class="b">手机</a> <a href="#" class="b">数码</a> <a href="#" class="aLink">合约机</a></dt>
-							<dd><a href="#">荣耀3X</a> <a href="#">单反</a> <a href="#">智能设备</a></dd>
-						</dl>
-						<dl class="shopClass_item">
-							<dt><a href="#" class="b">手机</a> <a href="#" class="b">数码</a> <a href="#" class="aLink">合约机</a></dt>
-							<dd><a href="#">荣耀3X</a> <a href="#">单反</a> <a href="#">智能设备</a></dd>
-						</dl>
-						<dl class="shopClass_item">
-							<dt><a href="#" class="b">手机</a> <a href="#" class="b">数码</a> <a href="#" class="aLink">合约机</a></dt>
-							<dd><a href="#">荣耀3X</a> <a href="#">单反</a> <a href="#">智能设备</a></dd>
-						</dl>
-						<dl class="shopClass_item">
-							<dt><a href="#" class="b">手机</a> <a href="#" class="b">数码</a> <a href="#" class="aLink">合约机</a></dt>
-							<dd><a href="#">荣耀3X</a> <a href="#">单反</a> <a href="#">智能设备</a></dd>
-						</dl>
-						<dl class="shopClass_item">
-							<dt><a href="#" class="b">手机</a> <a href="#" class="b">数码</a> <a href="#" class="aLink">合约机</a></dt>
-							<dd><a href="#">荣耀3X</a> <a href="#">单反</a> <a href="#">智能设备</a></dd>
-						</dl>
-					</div>
-					<div class="shopClass_list hide">
-						<div class="shopClass_cont">
-							<dl class="shopList_item">
-								<dt>电脑装机</dt>
-								<dd>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-								</dd>
-							</dl>
-							<dl class="shopList_item">
-								<dt>电脑装机</dt>
-								<dd>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-									<a href="#">文字啊</a>
-								</dd>
-							</dl>
-							<dl class="shopList_item">
-								<dt>电脑装机</dt>
-								<dd>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-									<a href="#">文字啊</a>
-								</dd>
-							</dl>
-							<dl class="shopList_item">
-								<dt>电脑装机</dt>
-								<dd>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-									<a href="#">文字啊</a>
-								</dd>
-							</dl>
-							<dl class="shopList_item">
-								<dt>电脑装机</dt>
-								<dd>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-									<a href="#">文字啊</a><a href="#">文字字啊</a><a href="#">文字字字啊</a><a href="#">文字啊</a><a href="#">文字</a><a href="#">文字啊</a>
-									<a href="#">文字啊</a>
-								</dd>
-							</dl>
-							<div class="shopList_links">
-								<a href="#">文字测试内容等等<span></span></a><a href="#">文字容等等<span></span></a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<ul class="nav fl">
-					<li><a href="#" class="active">数码城</a></li>
-					<li><a href="#">天黑黑</a></li>
-					<li><a href="#">团购</a></li>
-					<li><a href="#">发现</a></li>
-					<li><a href="#">二手特卖</a></li>
-					<li><a href="#">名品会</a></li>
-				</ul>
-			</div>
-		</div>
+	
 	</div>
 	<div class="userPosition comWidth">
-		<strong><a href="#">首页</a></strong>
+		<strong><a href="#" id="shop">首页</a></strong>
 		<span>&nbsp;&gt;&nbsp;</span>
-		<a href="#" id="itemcategory">平板电脑</a>
+		<a href="#" id="itemcategory">  </a>
 		<span>&nbsp;&gt;&nbsp;</span>
-		<em id="itemid">MD531CH/A</em>
+		<em id="itemname">  </em>
 	</div>
 	<div class="description_info comWidth">
 		<div class="description clearfix">
 			<div class="leftArea">
 				<div class="description_imgs">
 					<div class="big">
-						<img style="display:block;width:100%;" id="itempic" src="../static/images/des_big.jpg" alt="">
+						<img width="280px" height="330px" id="itempic" src="  " alt="">
 					</div>
-					<ul class="des_smimg clearfix">
-						<li>
-							<a href="#"><img src="../static/images/des_sm.jpg" class="active" alt=""></a>
-						</li>
-						<li>
-							<a href="#"><img src="../static/images/des_sm2.jpg" alt=""></a>
-						</li>
-						<li>
-							<a href="#"><img src="../static/images/des_sm.jpg" alt=""></a>
-						</li>
-						<li>
-							<a href="#"><img src="../static/images/des_sm2.jpg" alt=""></a>
-						</li>
-						<li>
-							<a href="#"><img src="../static/images/des_sm.jpg" alt=""></a>
-						</li>
-					</ul>
+						
 				</div>
 			</div>
 			<div class="rightArea">
 				<div class="des_content">
-					<h3 class="des_content_tit" id="itemname">全网底价 Apple 苹果 iPad mini 16G wifi版 平板电脑 前白后银 MD531CH/A 银白两色生 产批次不同混合发货
-					</h3>
+					<h3 class="des_content_tit" id="itemname2">  </h3>
 
 
 
@@ -239,11 +225,11 @@
 
 
 					<div class="des_content">
+						<div class="divcss5">作者:<a id="author">卡勒德·胡赛尼</a> &nbsp出版社:<a id="publisher">上海人民出版社</a> &nbsp出版日期:<a id="pubdate">2001年10月</a></div>
 
-						<div class="divcss5">价格 <span class="des_money"><em>￥</em></span><span class="des_money" id="price">999.00</span></div>
-						<div class="divcss5">作者:<a id="author">卡勒德·胡赛尼</a> </div>
-
-						<div class="divcss5">出版社:<a id="publisher">上海人民出版社</a></div>
+						<div class="divcss5" >市场价 <span style="color:#6699ff" class="des_money"><em>￥</em></span><span class="des_money" style="color:#6699ff" id="mprice">999.00</span></div>
+						<div class="divcss5">网站价 <span class="des_money"><em>￥</em></span><span class="des_money" id="iprice">199.00</span></div>
+						
 					</div>
 
 
@@ -267,14 +253,14 @@
 
 
 						<div class="dl">
-							<div class="dt des_num">数量</div>
+							<div class="dt des_num" >数量</div>
 							<div class="dd clearfix">
 								<div class="des_number">
-									<div class="reduction">-</div>
+									<div class="reduction" style="cursor:pointer" onclick = 'minues()' id = '-'>-</div>
 									<div class="des_input">
-										<input type="text">
+										<input type="text" id="pname" value = "0">
 									</div>
-									<div class="plus">+</div>
+									<div class="plus" style="cursor:pointer" onclick = 'add()' id = '+'>+</div>
 								</div>
 
 							</div>
@@ -282,15 +268,13 @@
 					</div>
 
 					
-					<a href="javascript:;" class="btn btn_red"  go-uri="//shopping.dangdang.com/shoppingcart/cart_append_new?product_ids=" ddt-src="addChart1" style="display: block;"><i class="cart"></i>加入购物车</a>
-					
-					<a href="javascript:;"  class="btn btn_b btn_b_red"  style="" go-uri="//checkoutb.dangdang.com/checkout.aspx?checkout_type=10&amp;" ddt-src="buyNow1" ddt-expose="on">立即购买</a>
+				
 					
 					
 					<div class="shop_buy">
-						<a href="#" class="shopping_btn"></a>
+						<a href="#" class="shopping_btn" onclick = "addshopcart(0)"></a>
 						<span class="line"></span>
-						<a href="#" class="buy_btn"></a>
+						<a href="#" class="buy_btn" onclick = "addshopcart(1)"></a>
 					</div>
 
 				</div>
@@ -311,12 +295,12 @@
 					<h3>强烈推荐</h3>
 					<h4>货比三家，还选BookShop</h4>
 				</div>
-				<p id="description">现在就是买mini的好时候！换代清仓直降，但苹果品质不变！A5双核，内置Lightning闪电接口，正反可插，方便人性。小身材，炫丽的7.9英寸显示屏，7.2mm的厚度，薄如铅笔。女生包包随身携带更时尚！facetime视频通话，与密友24小时畅聊不断线。微信倾力打造，你的智能助理。苹果的牌子就不用我说了，1111补仓，存货不多哦！</p>
+				<p id="description">  </p>
 
 
 
 				<div class="hr_45"></div>
-				<img style="display:block;width:100%;" id="descpic" src="../static/images/pad.jpg" class="center">
+				<img style="display:block;width:100%;" id="descpic" src="  " class="center">
 				<div class="hr_45"></div>
 			</div>
 		</div>
@@ -338,7 +322,7 @@
 					<div class="score_num">
 						4.7<i></i>
 					</div>
-					<p>共18939位慕课网友参与评分</p>
+					<p>共18939位BookShop会员参与评分</p>
 				</div>
 			</div>
 			<div class="review_tab">
@@ -357,7 +341,7 @@
 					<div class="review_userHead fl">
 						<div class="review_user">
 							<img src="../static/images/userhead.jpg" alt="">
-							<p>61***42</p>
+							<p>91***42</p>
 							<p>金色会员</p>
 						</div>
 					</div>
@@ -368,7 +352,7 @@
 							</div>
 							<span class="stars_text fl">5分 满意</span>
 						</div>
-						<p>赖慕课挺不错的信赖慕课挺不错的，信赖慕课</p>
+						<p>书非常好看，卖家发货很快！</p>
 						<p><a href="#" class="ding">顶(0)</a><a href="#" class="cai">踩(0)</a></p>
 					</div>
 				</div>
@@ -376,7 +360,7 @@
 					<div class="review_userHead fl">
 						<div class="review_user">
 							<img src="../static/images/userhead.jpg" alt="">
-							<p>61***42</p>
+							<p>84***21</p>
 							<p>金色会员</p>
 						</div>
 					</div>
@@ -387,7 +371,7 @@
 							</div>
 							<span class="stars_text fl">5分 满意</span>
 						</div>
-						<p>赖慕课挺不错的信赖慕课挺不错的，信赖慕课</p>
+						<p>非常赞，比市场便宜好多！</p>
 						<p><a href="#" class="ding">顶(0)</a><a href="#" class="cai">踩(0)</a></p>
 					</div>
 				</div>
@@ -398,8 +382,8 @@
 	</div>
 	<div class="hr_25"></div>
 	<div class="footer">
-		<p><a href="#">慕课简介</a><i>|</i><a href="#">慕课公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
-		<p>Copyright &copy; 2006 - 2014 慕课版权所有&nbsp;&nbsp;&nbsp;京ICP备09037834号&nbsp;&nbsp;&nbsp;京ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
+		<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
+		<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
 		<p class="web">
 			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
 			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
