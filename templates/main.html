@@ -51,7 +51,10 @@ function change()
 		 document.getElementById("good9").href=changeUrlArg('itemid',document.getElementById("good9").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		 document.getElementById("good10").href=changeUrlArg('itemid',document.getElementById("good10").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		document.getElementById("first1").href =changeUrlArg('itemid',document.getElementById("first1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
-		
+		document.getElementById("a1").href =changeUrlArg('itemid',document.getElementById("a1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		document.getElementById("a2").href =changeUrlArg('itemid',document.getElementById("a2").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		document.getElementById("a3").href =changeUrlArg('itemid',document.getElementById("a3").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		document.getElementById("a4").href =changeUrlArg('itemid',document.getElementById("a4").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 }	 
 	<!-- function turn() -->
 	<!-- {var i=1; -->
@@ -72,7 +75,7 @@ function change()
  function fuck(id,pic_id,url,b1,a1,a2,a3,a4)
  {
 	
-	document.getElementById(b1+'1').href = changeUrlArg('itemid',document.URL.replace('?','').replace('#','').replace(window.location.pathname,'/items?')+"&itemid="+id;
+	document.getElementById(b1+'1').href = document.getElementById(b1+'1').href.replace(document.getElementById(b1+'1').href.split('itemid=')[1],pic_id);
 	document.getElementById(b1).src = url ;
 	if(id == 1)
 	{
@@ -190,7 +193,7 @@ function change()
 			<li><a href={{pic_id1}} id = "first1"><img  id = "first" src = {{pic_url1}} alt="banner"></a></li>
 		</ul>
 		<div class="imgNum">
-			<a href="#" onmouseover = 'fuck(1,"{{pic_id1}}","{{pic_url1}}","first","a1","a2","a3","a4")'id = 'a1'></a><a href="#"onmouseover = 'fuck(2,"{{pic_id2}}","{{pic_url2}}","first","a1","a2","a3","a4")'id = 'a2'></a><a href="#"onmouseover = 'fuck(3,"{{pic_id3}}","{{pic_url3}}","first","a1","a2","a3","a4")'id = 'a3'></a><a href="#"onmouseover = 'fuck(4,"{{pic_id4}}","{{pic_url4}}","first","a1","a2","a3","a4")'id = 'a4'></a>
+			<a href="{{pic_id1}}" onmouseover = 'fuck(1,"{{pic_id1}}","{{pic_url1}}","first","a1","a2","a3","a4")'id = 'a1'></a><a href="{{pic_id2}}"onmouseover = 'fuck(2,"{{pic_id2}}","{{pic_url2}}","first","a1","a2","a3","a4")'id = 'a2'></a><a href="{{pic_id3}}"onmouseover = 'fuck(3,"{{pic_id3}}","{{pic_url3}}","first","a1","a2","a3","a4")'id = 'a3'></a><a href="{{pic_id4}}"onmouseover = 'fuck(4,"{{pic_id4}}","{{pic_url4}}","first","a1","a2","a3","a4")'id = 'a4'></a>
 		</div>
 	</div>
 </div>
