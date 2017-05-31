@@ -37,7 +37,7 @@ function registers() {
 			if (result['state']=="true")
 			{
 				alert(result["text"]);
-				self.location('/login');
+				location.href = '/login';
 			}
 			else
 				alert(result["text"]);
@@ -56,7 +56,7 @@ function login() {
 		success:function (result) {
 			if (result['state']=="true") {
 				alert(result['text']);
-				 location.href="/shop?user="+username
+				 location.href="/shop?user="+username;
 			}
 			else{
 				alert(result['text']);

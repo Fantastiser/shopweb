@@ -24,7 +24,8 @@ function change()
 		{
          document.getElementById("my").innerHTML =unescape(r[2]);
 		 }
-		 a = document.URL.replace(window.location.pathname,'/filter');
+		 a = document.URL.replace('?','').replace('#','').replace(window.location.pathname,'/filter?');
+		 
 		 $("#titlename1src").attr("href",a+"&find="+document.getElementById("titlename1").innerHTML); 
 		 $("#titlename1src1").attr("href",a+"&find="+document.getElementById("titlename1").innerHTML); 
 		 $("#titlename2src").attr("href",a+"&find="+document.getElementById("titlename2").innerHTML); 
@@ -39,17 +40,17 @@ function change()
 		 document.getElementById("varity8").href=a+"&find="+document.getElementById("varity8").innerHTML;
 		 document.getElementById("varity9").href=a+"&find="+document.getElementById("varity9").innerHTML;
 		 document.getElementById("varity10").href=a+"&find="+document.getElementById("varity10").innerHTML;
-		 document.getElementById("good1").href=changeUrlArg('itemid',document.getElementById("good1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good2").href=changeUrlArg('itemid',document.getElementById("good2").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good3").href=changeUrlArg('itemid',document.getElementById("good3").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good4").href=changeUrlArg('itemid',document.getElementById("good4").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good5").href=changeUrlArg('itemid',document.getElementById("good5").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good6").href=changeUrlArg('itemid',document.getElementById("good6").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good7").href=changeUrlArg('itemid',document.getElementById("good7").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good8").href=changeUrlArg('itemid',document.getElementById("good8").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good9").href=changeUrlArg('itemid',document.getElementById("good9").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		 document.getElementById("good10").href=changeUrlArg('itemid',document.getElementById("good10").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items');
-		
+		 document.getElementById("good1").href=changeUrlArg('itemid',document.getElementById("good1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good2").href=changeUrlArg('itemid',document.getElementById("good2").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good3").href=changeUrlArg('itemid',document.getElementById("good3").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good4").href=changeUrlArg('itemid',document.getElementById("good4").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good5").href=changeUrlArg('itemid',document.getElementById("good5").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good6").href=changeUrlArg('itemid',document.getElementById("good6").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good7").href=changeUrlArg('itemid',document.getElementById("good7").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good8").href=changeUrlArg('itemid',document.getElementById("good8").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good9").href=changeUrlArg('itemid',document.getElementById("good9").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		 document.getElementById("good10").href=changeUrlArg('itemid',document.getElementById("good10").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		document.getElementById("first1").href =changeUrlArg('itemid',document.getElementById("first1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		
 }	 
 	<!-- function turn() -->
@@ -68,12 +69,13 @@ function change()
 
 </script>
  <script type="text/javascript"> 
- function fuck(id,url,b1,a1,a2,a3,a4)
+ function fuck(id,pic_id,url,b1,a1,a2,a3,a4)
  {
 	
+	document.getElementById(b1+'1').href = changeUrlArg('itemid',document.URL.replace('?','').replace('#','').replace(window.location.pathname,'/items?')+"&itemid="+id;
+	document.getElementById(b1).src = url ;
 	if(id == 1)
 	{
-	document.getElementById(b1).src = url ;
 	document.getElementById(a1).className='active';
 	document.getElementById(a2).className='';
 	document.getElementById(a3).className='';
@@ -81,7 +83,6 @@ function change()
 	}
 	else if(id == 2)
 	{
-	document.getElementById(b1).src = url ;
 	document.getElementById(a2).className='active';
 	document.getElementById(a1).className='';
 	document.getElementById(a3).className='';
@@ -89,7 +90,6 @@ function change()
 	}
 	else if(id == 3)
 	{
-	document.getElementById(b1).src = url;
 	document.getElementById(a3).className='active';
 	document.getElementById(a2).className='';
 	document.getElementById(a1).className='';
@@ -97,7 +97,6 @@ function change()
 	}
 	else if(id == 4)
 	{
-	document.getElementById(b1).src = url;
 	document.getElementById(a4).className='active';
 	document.getElementById("a2").className='';
 	document.getElementById("a3").className='';
@@ -188,10 +187,10 @@ function change()
 <div class="banner comWidth clearfix">
 	<div class="banner_bar banner_big">
 		<ul class="imgBox">
-			<li><a href="#"id = "first1"><img  id = "first" src = {{pic_url1}} alt="banner"></a></li>
+			<li><a href={{pic_id1}} id = "first1"><img  id = "first" src = {{pic_url1}} alt="banner"></a></li>
 		</ul>
 		<div class="imgNum">
-			<a href="#" onmouseover = 'fuck(1,"{{pic_url1}}","first","a1","a2","a3","a4")'id = 'a1'></a><a href="#"onmouseover = 'fuck(2,"{{pic_url2}}","first","a1","a2","a3","a4")'id = 'a2'></a><a href="#"onmouseover = 'fuck(3,"{{pic_url3}}","first","a1","a2","a3","a4")'id = 'a3'></a><a href="#"onmouseover = 'fuck(4,"{{pic_url4}}","first","a1","a2","a3","a4")'id = 'a4'></a>
+			<a href="#" onmouseover = 'fuck(1,"{{pic_id1}}","{{pic_url1}}","first","a1","a2","a3","a4")'id = 'a1'></a><a href="#"onmouseover = 'fuck(2,"{{pic_id2}}","{{pic_url2}}","first","a1","a2","a3","a4")'id = 'a2'></a><a href="#"onmouseover = 'fuck(3,"{{pic_id3}}","{{pic_url3}}","first","a1","a2","a3","a4")'id = 'a3'></a><a href="#"onmouseover = 'fuck(4,"{{pic_id4}}","{{pic_url4}}","first","a1","a2","a3","a4")'id = 'a4'></a>
 		</div>
 	</div>
 </div>

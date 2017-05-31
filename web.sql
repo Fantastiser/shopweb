@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-05-29 19:21:20
+Date: 2017-05-31 13:44:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,10 +45,10 @@ CREATE TABLE `album` (
 -- ----------------------------
 -- Records of album
 -- ----------------------------
-INSERT INTO `album` VALUES ('1', '1', '../static/images/goods/去旅行.jpg');
-INSERT INTO `album` VALUES ('2', '33', '../static/images/goods/生活家.jpg');
-INSERT INTO `album` VALUES ('3', '19', '../static/images/goods/周星驰.jpg');
-INSERT INTO `album` VALUES ('4', '18', '../static/images/goods/外婆的道歉信.jpg');
+INSERT INTO `album` VALUES ('1', '17', '../static/images/goods/qulvxing.jpg');
+INSERT INTO `album` VALUES ('2', '33', '../static/images/goods/shenghuojia.jpg');
+INSERT INTO `album` VALUES ('3', '19', '../static/images/goods/zxc.jpg');
+INSERT INTO `album` VALUES ('4', '18', '../static/images/goods/waipo.jpg');
 
 -- ----------------------------
 -- Table structure for item
@@ -61,8 +61,8 @@ CREATE TABLE `item` (
   `pSn` varchar(10) DEFAULT NULL,
   `cld` varchar(5) DEFAULT NULL,
   `pNum` varchar(10) DEFAULT NULL,
-  `mPrice` varchar(20) DEFAULT NULL,
-  `iPrice` varchar(20) DEFAULT NULL,
+  `mPrice` float(20,0) DEFAULT NULL,
+  `iPrice` float(20,0) DEFAULT NULL,
   `pDesc` varchar(10000) DEFAULT NULL,
   `plmg` varchar(50) DEFAULT NULL,
   `publisher` varchar(30) DEFAULT NULL,
@@ -74,46 +74,46 @@ CREATE TABLE `item` (
 -- ----------------------------
 -- Records of item
 -- ----------------------------
-INSERT INTO `item` VALUES ('1', '《三体》', '00', '1', '1', '49', '38.00', '29.88', '【2017新款iPad现货】港版，国行北京现货秒发！顺丰包邮！', '../static/images/goods/air2.jpg', '中国人民出版社', '2014/10/17', '1', '100');
-INSERT INTO `item` VALUES ('2', '《史记》', '司马迁', '2', '4', '99', '40.00', '31.88', '华为mate9新品火热上市，官方发售时间为11月14日，本店与官网同步发售!', '../static/images/goods/mate9.jpg', '中国人民出版社', '2016/11/17', '1', '100');
-INSERT INTO `item` VALUES ('3', '《考点》', '11', '3', '5', '199', '78.50', '66.66', '铝合金车架 26寸27/30速 一体轮', '../static/images/goods/bicycle.jpg', '中国人民出版社', '2015/3/27', '0', '100');
-INSERT INTO `item` VALUES ('4', '《五年高考三年模拟》', '22', '4', '5', '999', '57.00', '50.68', '40L多功能徒步旅行运动双肩背包男女', '../static/images/goods/bag.jpg', '中国人民出版社', '2015/3/1', '1', '100');
-INSERT INTO `item` VALUES ('5', '《相对论》', '爱因斯坦', '5', '3', '999', '34.00', '26.66', '男潮流拼接撞色五分裤潮男士中裤', '../static/images/goods/shorts.jpg', '中国人民出版社', '2017/4/23', '1', '100');
-INSERT INTO `item` VALUES ('6', '《时间简史》', '霍金', '6', '3', '999', '40.00', '35.66', '翻领t恤青年珠地纯棉保罗体恤男韩版休闲修身', '../static/images/goods/polo.jpg', '中国人民出版社', '2017/5/1', '1', '100');
-INSERT INTO `item` VALUES ('7', '《龙族4》', '江南', '7', '1', '99', '39.00', '30.00', 'RZ09-0195笔记本Blade Pro 14/17寸电脑美行正品', '../static/images/goods/razer.jpg', '中国人民出版社', '2017/4/1', '1', '90');
-INSERT INTO `item` VALUES ('8', '《朝花夕拾》', '鲁迅', '8', '2', '999', '23.00', '15.00', '小镇姗姗 芳影寻觅 原创自制优雅小性感修身显瘦', '../static/images/goods/dessert.jpg', '中国人民出版社', '2017/5/1', '1', '100');
-INSERT INTO `item` VALUES ('9', '《家》', '巴金', '9', '2', '999', '28.00', '20.00', '2017夏装新款韩版纯棉短袖T恤女显瘦打底衫白色t学生体恤修身上衣', '../static/images/goods/T-shirt.jpg', '中国人民出版社', '2017/5/1', '1', '100');
-INSERT INTO `item` VALUES ('10', '《资治通鉴》', '司马光', '10', '4', '999', '30.00', '24.00', '全网通新品小米6手机尊享版', '../static/images/goods/mi6.jpg', '中国人民出版社', '2017/4/11', '1', '100');
-INSERT INTO `item` VALUES ('11', '《资本论》', '马克思', '11', '6', '999', '28.00', '19.00', '2017夏季新款女士凉鞋中跟粗跟一字带简约通勤凉鞋女', '../static/images/goods/womanshoe.jpg', '中国人民出版社', '2017/5/1', '1', '100');
-INSERT INTO `item` VALUES ('12', '《经济学人》', '英国人', '12', '6', '999', '30.00', '22.00', '男复古靴低帮英伦大头皮鞋韩版潮流男鞋百搭工装鞋', '../static/images/goods/manshoe.jpg', '中国人民出版社', '2017/4/1 ', '1', '100');
-INSERT INTO `item` VALUES ('13', '《知音漫客》', '33', '13', '9', '999', '10.00', '6.00', '傻子王香辣原味零食 正宗手撕风干肉250g*2袋', '../static/images/goods/charqui.jpg', '中国人民出版社', '2017/4/15', '1', '100');
-INSERT INTO `item` VALUES ('14', '《漫画party》', '44', '14', '9', '999', '5.00', '4.00', '四川正宗丑橘 丑柑 不知火 丑八怪桔子', '../static/images/goods/uglyorange.jpg', '中国人民出版社', '2017/5/25', '1', '100');
-INSERT INTO `item` VALUES ('15', '《完美世界》', '辰东', '15', '10', '999', '20.00', '18.88', '辰东作品', '../static/images/goods/去旅行.jpg', '中国人民出版社', '2017/1/1', '1', '100');
-INSERT INTO `item` VALUES ('16', '《龙王传说》', '唐家三少', '16', '10', '999', '22.00', '19.99', '好看的小说', '../static/images/goods/去旅行.jpg', '中国人民出版社', '2017/1/1', '1', '100');
-INSERT INTO `item` VALUES ('17', '《去旅行》', '傅雷', '17', '7', '999', '73.44', '52.90', '入选法国教育部向5-8岁儿童推荐书目，被赞“了解世界的旅行百科书”！傅雷翻译奖大师翻译,《博物》《环球科学》主编推荐！人文、地理、历史、政治尽在其中！赠情景模拟硫酸纸卡，开拓孩子眼界的12种有趣方式', '../static/images/goods/去旅行.jpg', '中国人民出版社', '2017/5/25', '1', '100');
-INSERT INTO `item` VALUES ('18', '《外婆的道歉信》', '55', '18', '7', '999', '32.30', '26.86', '外婆说，要大笑要做梦要与众不同。人生是一场伟大的冒险。作者巴克曼位列美国亚马逊文学榜首，当选瑞典年度作家。该书上市后连续霸占《纽约时报》畅销榜50周。巴克曼让我们爱上这个活泼过头的外婆，也重新爱上生活', '../static/images/goods/外婆的道歉信.jpg', '中国人民出版社', '2017年03月 ', '../static/images/goods/外婆的道歉信_desc.jpg', '90');
-INSERT INTO `item` VALUES ('19', '《周星驰 》', '橙花', '19', '8', '999', '39.80', '¥26.50', '他是几代人喜欢的影星，真正的喜剧之王，在中国乃至世界拥有无数影迷', '../static/images/goods/周星驰.jpg', '华文出版社', '2017年03月 ', '1', '100');
-INSERT INTO `item` VALUES ('20', '《钢铁是怎样练成的》', '尼古拉·奥斯特洛夫斯基', '20', '1', '49', '48.00', '39.88', '【2017新款iPad现货】港版，国行北京现货秒发！顺丰包邮！', '../static/images/goods/air2.jpg', '中国人民出版社', '2014/10/17', '1', '98');
-INSERT INTO `item` VALUES ('21', '《三国演义》', '罗贯中', '21', '1', '49', '38.00', '29.88', '【2017新款iPad现货】港版，国行北京现货秒发！顺丰包邮！', '../static/images/goods/air2.jpg', '中国人民出版社', '2014/10/17', '1', '99');
-INSERT INTO `item` VALUES ('22', '《彷徨》', '鲁迅', '22', '2', '999', '23.00', '15.00', '小镇姗姗 芳影寻觅 原创自制优雅小性感修身显瘦', '../static/images/goods/dessert.jpg', '中国人民出版社', '2017/5/1', '1', '100');
-INSERT INTO `item` VALUES ('23', '《呐喊》', '鲁迅', '23', '2', '999', '23.00', '15.00', '小镇姗姗 芳影寻觅 原创自制优雅小性感修身显瘦', '../static/images/goods/dessert.jpg', '中国人民出版社', '2017/5/1', '1', '100');
-INSERT INTO `item` VALUES ('24', '《相对论1》', '爱因斯坦', '24', '3', '999', '34.00', '26.66', '男潮流拼接撞色五分裤潮男士中裤', '../static/images/goods/shorts.jpg', '中国人民出版社', '2017/4/23', '1', '100');
-INSERT INTO `item` VALUES ('25', '《时间简史1》', '霍金', '25', '3', '999', '40.00', '35.66', '翻领t恤青年珠地纯棉保罗体恤男韩版休闲修身', '../static/images/goods/polo.jpg', '中国人民出版社', '2017/5/1', '1', '100');
-INSERT INTO `item` VALUES ('26', '《东周列国志》', '司马迁', '26', '4', '99', '40.00', '31.88', '华为mate9新品火热上市，官方发售时间为11月14日，本店与官网同步发售!', '../static/images/goods/mate9.jpg', '中国人民出版社', '2016/11/17', '1', '100');
-INSERT INTO `item` VALUES ('27', '《明史》', 'xx', '27', '4', '99', '40.00', '31.88', '华为mate9新品火热上市，官方发售时间为11月14日，本店与官网同步发售!', '../static/images/goods/mate9.jpg', '中国人民出版社', '2016/11/17', '1', '100');
-INSERT INTO `item` VALUES ('28', '《实验班》', '11', '28', '5', '199', '78.50', '66.66', '铝合金车架 26寸27/30速 一体轮', '../static/images/goods/bicycle.jpg', '中国人民出版社', '2015/3/27', '0', '100');
-INSERT INTO `item` VALUES ('29', '《教材同步解答 英语》', '22', '29', '5', '999', '57.00', '50.68', '40L多功能徒步旅行运动双肩背包男女', '../static/images/goods/bag.jpg', '中国人民出版社', '2015/3/1', '1', '100');
-INSERT INTO `item` VALUES ('31', '《经济学人1》', '英国人', '31', '6', '999', '30.00', '22.00', '男复古靴低帮英伦大头皮鞋韩版潮流男鞋百搭工装鞋', '../static/images/goods/manshoe.jpg', '中国人民出版社', '2017/4/1 ', '1', '100');
-INSERT INTO `item` VALUES ('30', '《资本论1》', '马克思', '30', '6', '999', '28.00', '19.00', '2017夏季新款女士凉鞋中跟粗跟一字带简约通勤凉鞋女', '../static/images/goods/womanshoe.jpg', '中国人民出版社', '2017/5/1', '1', '100');
-INSERT INTO `item` VALUES ('32', '《去旅行1》', '傅雷', '32', '7', '999', '73.44', '52.90', '入选法国教育部向5-8岁儿童推荐书目，被赞“了解世界的旅行百科书”！傅雷翻译奖大师翻译,《博物》《环球科学》主编推荐！人文、地理、历史、政治尽在其中！赠情景模拟硫酸纸卡，开拓孩子眼界的12种有趣方式', '../static/images/goods/去旅行.jpg', '中国人民出版社', '2017/5/25', '1', '100');
-INSERT INTO `item` VALUES ('33', '《生活家》', '55', '33', '7', '999', '32.30', '26.86', '', '../static/images/goods/生活家.jpg', '中国人民出版社', '2017年03月 ', '1', '90');
-INSERT INTO `item` VALUES ('34', '《五柳先生传 》', '陶渊明', '34', '8', '999', '10.00', '¥7.50', '他是几代人喜欢的影星，真正的喜剧之王，在中国乃至世界拥有无数影迷', '../static/images/goods/周星驰.jpg', '华文出版社', '2017年03月 ', '1', '100');
-INSERT INTO `item` VALUES ('35', '《周星驰1 》', '橙花', '35', '8', '999', '39.80', '¥26.50', '他是几代人喜欢的影星，真正的喜剧之王，在中国乃至世界拥有无数影迷', '../static/images/goods/周星驰.jpg', '华文出版社', '2017年03月 ', '1', '100');
-INSERT INTO `item` VALUES ('36', '《周星驰 2》', '橙花', '36', '8', '999', '39.80', '¥26.50', '他是几代人喜欢的影星，真正的喜剧之王，在中国乃至世界拥有无数影迷', '../static/images/goods/周星驰.jpg', '华文出版社', '2017年03月 ', '1', '100');
-INSERT INTO `item` VALUES ('37', '《知音漫客1》', '33', '37', '9', '999', '10.00', '6.00', '傻子王香辣原味零食 正宗手撕风干肉250g*2袋', '../static/images/goods/charqui.jpg', '中国人民出版社', '2017/4/15', '1', '100');
-INSERT INTO `item` VALUES ('38', '《漫画party1》', '44', '38', '9', '999', '5.00', '4.00', '四川正宗丑橘 丑柑 不知火 丑八怪桔子', '../static/images/goods/uglyorange.jpg', '中国人民出版社', '2017/5/25', '1', '100');
-INSERT INTO `item` VALUES ('40', '《诛仙》', '萧鼎', '40', '10', '999', '22.00', '19.99', '好看的小说', '../static/images/goods/去旅行.jpg', '中国人民出版社', '2017/1/1', '1', '100');
-INSERT INTO `item` VALUES ('39', '《大主宰》', '天蚕土豆', '39', '10', '999', '20.00', '18.88', '辰东作品', '../static/images/goods/去旅行.jpg', '中国人民出版社', '2017/1/1', '1', '100');
+INSERT INTO `item` VALUES ('1', '《三体》', '00', '1', '1', '49', '38', '30', '【2017新款iPad现货】港版，国行北京现货秒发！顺丰包邮！', '../static/images/goods/air2.jpg', '中国人民出版社', '2014/10/17', '1', '100');
+INSERT INTO `item` VALUES ('2', '《史记》', '司马迁', '2', '4', '99', '40', '32', '华为mate9新品火热上市，官方发售时间为11月14日，本店与官网同步发售!', '../static/images/goods/mate9.jpg', '中国人民出版社', '2016/11/17', '1', '100');
+INSERT INTO `item` VALUES ('3', '《考点》', '11', '3', '5', '199', '78', '67', '铝合金车架 26寸27/30速 一体轮', '../static/images/goods/bicycle.jpg', '中国人民出版社', '2015/3/27', '0', '100');
+INSERT INTO `item` VALUES ('4', '《五年高考三年模拟》', '22', '4', '5', '999', '57', '51', '40L多功能徒步旅行运动双肩背包男女', '../static/images/goods/bag.jpg', '中国人民出版社', '2015/3/1', '1', '100');
+INSERT INTO `item` VALUES ('5', '《相对论》', '爱因斯坦', '5', '3', '999', '34', '27', '男潮流拼接撞色五分裤潮男士中裤', '../static/images/goods/shorts.jpg', '中国人民出版社', '2017/4/23', '1', '100');
+INSERT INTO `item` VALUES ('6', '《时间简史》', '霍金', '6', '3', '999', '40', '36', '翻领t恤青年珠地纯棉保罗体恤男韩版休闲修身', '../static/images/goods/polo.jpg', '中国人民出版社', '2017/5/1', '1', '100');
+INSERT INTO `item` VALUES ('7', '《龙族4》', '江南', '7', '1', '99', '39', '30', 'RZ09-0195笔记本Blade Pro 14/17寸电脑美行正品', '../static/images/goods/razer.jpg', '中国人民出版社', '2017/4/1', '1', '90');
+INSERT INTO `item` VALUES ('8', '《朝花夕拾》', '鲁迅', '8', '2', '999', '23', '15', '小镇姗姗 芳影寻觅 原创自制优雅小性感修身显瘦', '../static/images/goods/dessert.jpg', '中国人民出版社', '2017/5/1', '1', '100');
+INSERT INTO `item` VALUES ('9', '《家》', '巴金', '9', '2', '999', '28', '20', '2017夏装新款韩版纯棉短袖T恤女显瘦打底衫白色t学生体恤修身上衣', '../static/images/goods/T-shirt.jpg', '中国人民出版社', '2017/5/1', '1', '100');
+INSERT INTO `item` VALUES ('10', '《资治通鉴》', '司马光', '10', '4', '999', '30', '24', '全网通新品小米6手机尊享版', '../static/images/goods/mi6.jpg', '中国人民出版社', '2017/4/11', '1', '100');
+INSERT INTO `item` VALUES ('11', '《资本论》', '马克思', '11', '6', '999', '28', '19', '2017夏季新款女士凉鞋中跟粗跟一字带简约通勤凉鞋女', '../static/images/goods/womanshoe.jpg', '中国人民出版社', '2017/5/1', '1', '100');
+INSERT INTO `item` VALUES ('12', '《经济学人》', '英国人', '12', '6', '999', '30', '22', '男复古靴低帮英伦大头皮鞋韩版潮流男鞋百搭工装鞋', '../static/images/goods/manshoe.jpg', '中国人民出版社', '2017/4/1 ', '1', '100');
+INSERT INTO `item` VALUES ('13', '《知音漫客》', '33', '13', '9', '999', '10', '6', '傻子王香辣原味零食 正宗手撕风干肉250g*2袋', '../static/images/goods/charqui.jpg', '中国人民出版社', '2017/4/15', '1', '100');
+INSERT INTO `item` VALUES ('14', '《漫画party》', '44', '14', '9', '999', '5', '4', '四川正宗丑橘 丑柑 不知火 丑八怪桔子', '../static/images/goods/uglyorange.jpg', '中国人民出版社', '2017/5/25', '1', '100');
+INSERT INTO `item` VALUES ('15', '《完美世界》', '辰东', '15', '10', '999', '20', '19', '辰东作品', '../static/images/goods/qulvxing.jpg', '中国人民出版社', '2017/1/1', '1', '100');
+INSERT INTO `item` VALUES ('16', '《龙王传说》', '唐家三少', '16', '10', '999', '22', '20', '好看的小说', '../static/images/goods/qulvxing.jpg', '中国人民出版社', '2017/1/1', '1', '100');
+INSERT INTO `item` VALUES ('17', '《去旅行》', '傅雷', '17', '7', '999', '73', '53', '入选法国教育部向5-8岁儿童推荐书目，被赞“了解世界的旅行百科书”！傅雷翻译奖大师翻译,《博物》《环球科学》主编推荐！人文、地理、历史、政治尽在其中！赠情景模拟硫酸纸卡，开拓孩子眼界的12种有趣方式', '../static/images/goods/qulvxing.jpg', '中国人民出版社', '2017/5/25', '1', '100');
+INSERT INTO `item` VALUES ('18', '《外婆的道歉信》', '55', '18', '7', '999', '32', '27', '外婆说，要大笑要做梦要与众不同。人生是一场伟大的冒险。作者巴克曼位列美国亚马逊文学榜首，当选瑞典年度作家。该书上市后连续霸占《纽约时报》畅销榜50周。巴克曼让我们爱上这个活泼过头的外婆，也重新爱上生活', '../static/images/goods/waipo.jpg', '中国人民出版社', '2017年03月 ', '../static/images/goods/waipo_desc.jpg', '90');
+INSERT INTO `item` VALUES ('19', '《周星驰》', '橙花', '19', '8', '999', '40', '26', '他是几代人喜欢的影星，真正的喜剧之王，在中国乃至世界拥有无数影迷', '../static/images/goods/zxc.jpg', '华文出版社', '2017年03月 ', '1', '100');
+INSERT INTO `item` VALUES ('20', '《钢铁是怎样练成的》', '尼古拉·奥斯特洛夫斯基', '20', '1', '49', '48', '40', '【2017新款iPad现货】港版，国行北京现货秒发！顺丰包邮！', '../static/images/goods/air2.jpg', '中国人民出版社', '2014/10/17', '1', '98');
+INSERT INTO `item` VALUES ('21', '《三国演义》', '罗贯中', '21', '1', '49', '38', '30', '【2017新款iPad现货】港版，国行北京现货秒发！顺丰包邮！', '../static/images/goods/air2.jpg', '中国人民出版社', '2014/10/17', '1', '99');
+INSERT INTO `item` VALUES ('22', '《彷徨》', '鲁迅', '22', '2', '999', '23', '15', '小镇姗姗 芳影寻觅 原创自制优雅小性感修身显瘦', '../static/images/goods/dessert.jpg', '中国人民出版社', '2017/5/1', '1', '100');
+INSERT INTO `item` VALUES ('23', '《呐喊》', '鲁迅', '23', '2', '999', '23', '15', '小镇姗姗 芳影寻觅 原创自制优雅小性感修身显瘦', '../static/images/goods/dessert.jpg', '中国人民出版社', '2017/5/1', '1', '100');
+INSERT INTO `item` VALUES ('24', '《相对论1》', '爱因斯坦', '24', '3', '999', '34', '27', '男潮流拼接撞色五分裤潮男士中裤', '../static/images/goods/shorts.jpg', '中国人民出版社', '2017/4/23', '1', '100');
+INSERT INTO `item` VALUES ('25', '《时间简史1》', '霍金', '25', '3', '999', '40', '36', '翻领t恤青年珠地纯棉保罗体恤男韩版休闲修身', '../static/images/goods/polo.jpg', '中国人民出版社', '2017/5/1', '1', '100');
+INSERT INTO `item` VALUES ('26', '《东周列国志》', '司马迁', '26', '4', '99', '40', '32', '华为mate9新品火热上市，官方发售时间为11月14日，本店与官网同步发售!', '../static/images/goods/mate9.jpg', '中国人民出版社', '2016/11/17', '1', '100');
+INSERT INTO `item` VALUES ('27', '《明史》', 'xx', '27', '4', '99', '40', '32', '华为mate9新品火热上市，官方发售时间为11月14日，本店与官网同步发售!', '../static/images/goods/mate9.jpg', '中国人民出版社', '2016/11/17', '1', '100');
+INSERT INTO `item` VALUES ('28', '《实验班》', '11', '28', '5', '199', '78', '67', '铝合金车架 26寸27/30速 一体轮', '../static/images/goods/bicycle.jpg', '中国人民出版社', '2015/3/27', '0', '100');
+INSERT INTO `item` VALUES ('29', '《教材同步解答 英语》', '22', '29', '5', '999', '57', '51', '40L多功能徒步旅行运动双肩背包男女', '../static/images/goods/bag.jpg', '中国人民出版社', '2015/3/1', '1', '100');
+INSERT INTO `item` VALUES ('31', '《经济学人1》', '英国人', '31', '6', '999', '30', '22', '男复古靴低帮英伦大头皮鞋韩版潮流男鞋百搭工装鞋', '../static/images/goods/manshoe.jpg', '中国人民出版社', '2017/4/1 ', '1', '100');
+INSERT INTO `item` VALUES ('30', '《资本论1》', '马克思', '30', '6', '999', '28', '19', '2017夏季新款女士凉鞋中跟粗跟一字带简约通勤凉鞋女', '../static/images/goods/womanshoe.jpg', '中国人民出版社', '2017/5/1', '1', '100');
+INSERT INTO `item` VALUES ('32', '《去旅行1》', '傅雷', '32', '7', '999', '73', '53', '入选法国教育部向5-8岁儿童推荐书目，被赞“了解世界的旅行百科书”！傅雷翻译奖大师翻译,《博物》《环球科学》主编推荐！人文、地理、历史、政治尽在其中！赠情景模拟硫酸纸卡，开拓孩子眼界的12种有趣方式', '../static/images/goods/qulvxing.jpg', '中国人民出版社', '2017/5/25', '1', '100');
+INSERT INTO `item` VALUES ('33', '《生活家》', '55', '33', '7', '999', '32', '27', '', '../static/images/goods/shenghuojia.jpg', '中国人民出版社', '2017年03月 ', '1', '90');
+INSERT INTO `item` VALUES ('34', '《五柳先生传 》', '陶渊明', '34', '8', '999', '10', '7', '他是几代人喜欢的影星，真正的喜剧之王，在中国乃至世界拥有无数影迷', '../static/images/goods/zxc.jpg', '华文出版社', '2017年03月 ', '1', '100');
+INSERT INTO `item` VALUES ('35', '《周星驰1》', '橙花', '35', '8', '999', '21', '16', '他是几代人喜欢的影星，真正的喜剧之王，在中国乃至世界拥有无数影迷', '../static/images/goods/zxc.jpg', '华文出版社', '2017年03月 ', '1', '100');
+INSERT INTO `item` VALUES ('36', '《周星驰2》', '橙花', '36', '8', '999', '35', '26', '他是几代人喜欢的影星，真正的喜剧之王，在中国乃至世界拥有无数影迷', '../static/images/goods/zxc.jpg', '华文出版社', '2017年03月 ', '1', '100');
+INSERT INTO `item` VALUES ('37', '《知音漫客1》', '33', '37', '9', '999', '10', '6', '傻子王香辣原味零食 正宗手撕风干肉250g*2袋', '../static/images/goods/charqui.jpg', '中国人民出版社', '2017/4/15', '1', '100');
+INSERT INTO `item` VALUES ('38', '《漫画party1》', '44', '38', '9', '999', '5', '4', '四川正宗丑橘 丑柑 不知火 丑八怪桔子', '../static/images/goods/uglyorange.jpg', '中国人民出版社', '2017/5/25', '1', '100');
+INSERT INTO `item` VALUES ('40', '《诛仙》', '萧鼎', '40', '10', '999', '22', '20', '好看的小说', '../static/images/goods/qulvxing.jpg', '中国人民出版社', '2017/1/1', '1', '100');
+INSERT INTO `item` VALUES ('39', '《大主宰》', '天蚕土豆', '39', '10', '999', '20', '19', '辰东作品', '../static/images/goods/qulvxing.jpg', '中国人民出版社', '2017/1/1', '1', '100');
 
 -- ----------------------------
 -- Table structure for kinds
@@ -122,22 +122,23 @@ DROP TABLE IF EXISTS `kinds`;
 CREATE TABLE `kinds` (
   `id` int(5) NOT NULL,
   `kind` varchar(10) DEFAULT NULL,
+  `kindpic` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of kinds
 -- ----------------------------
-INSERT INTO `kinds` VALUES ('1', '小说');
-INSERT INTO `kinds` VALUES ('2', '人文');
-INSERT INTO `kinds` VALUES ('3', '科学');
-INSERT INTO `kinds` VALUES ('4', '历史');
-INSERT INTO `kinds` VALUES ('5', '教育');
-INSERT INTO `kinds` VALUES ('6', '经济');
-INSERT INTO `kinds` VALUES ('7', '生活');
-INSERT INTO `kinds` VALUES ('8', '传记');
-INSERT INTO `kinds` VALUES ('9', '漫画书');
-INSERT INTO `kinds` VALUES ('10', '电子书');
+INSERT INTO `kinds` VALUES ('1', '小说', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('2', '人文', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('3', '科学', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('4', '历史', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('5', '教育', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('6', '经济', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('7', '生活', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('8', '传记', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('9', '漫画书', '../static/images/kinds/novel.jpg');
+INSERT INTO `kinds` VALUES ('10', '电子书', null);
 
 -- ----------------------------
 -- Table structure for order
@@ -151,10 +152,6 @@ CREATE TABLE `order` (
   `regtime` varchar(20) DEFAULT NULL,
   `price` varchar(5) DEFAULT NULL,
   `amount` varchar(10) DEFAULT NULL,
-  `shuxing1` varchar(10) DEFAULT NULL,
-  `shuxing2` varchar(10) DEFAULT NULL,
-  `shuxing3` varchar(10) DEFAULT NULL,
-  `shuxing4` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -9,8 +9,8 @@ class Start(tornado.web.RequestHandler):
             b = random.randint(1, a - 1)
         else:
             b = random.randint(a + 1, 10)
-        titlename1= tools.searchDB('kinds', ['kind'], where="id = '" + str(a) + "'")[0][0]
-        titlename2 = tools.searchDB('kinds', ['kind'], where="id = '" + str(b) + "'")[0][0]
+        titlename1= tools.searchDB('kinds', ['kind','kindpic'], where="id = '" + str(a) + "'")[0]
+        titlename2 = tools.searchDB('kinds', ['kind','kindpic'], where="id = '" + str(b) + "'")[0]
         theme1 = tools.searchDB(sql='select pName,mPrice,iPrice,plmg ,id from item where cld = {0} ORDER BY isHot DESC '.format(str(a)))
         theme2 = tools.searchDB(sql='select pName,mPrice,iPrice,plmg ,id from item where cld = {0} ORDER BY isHot DESC '.format(str(b)))
         pic_url = tools.searchDB(sql='select itemid,albumpath from album ')
@@ -20,8 +20,12 @@ class Start(tornado.web.RequestHandler):
             pic_url2 = pic_ul[1][1],
             pic_url3=pic_ul[2][1],
             pic_url4=pic_ul[3][1],
-            titlename1=titlename1,
-            background1 = '../static/images/goods/mi6.jpg',
+            pic_id1=pic_ul[0][0],
+            pic_id2=pic_ul[1][0],
+            pic_id3=pic_ul[2][0],
+            pic_id4=pic_ul[3][0],
+            titlename1=titlename1[0],
+            background1 = titlename1[1],
             part1_src1=theme1[0][3],
             part1_name1 = theme1[0][0],
             part1_iprice1 =theme1[0][2],
@@ -46,8 +50,8 @@ class Start(tornado.web.RequestHandler):
             part1_name4=theme1[3][0],
             part1_iprice4=theme1[3][2],
             part1_mprice4=theme1[3][1],
-            titlename2=titlename2,
-            background2='../static/images/goods/mi6.jpg',
+            titlename2=titlename2[0],
+            background2=titlename2[1],
             part2_src1=theme2[0][3],
             part2_name1=theme2[0][0],
             part2_iprice1=theme2[0][2],

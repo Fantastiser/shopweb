@@ -82,8 +82,8 @@ class RegisterWeb(tornado.web.RequestHandler):
                 else:
                     max1 = max
                 today = datetime.date.today()
-                listOfvalues = [str(max1+1),username, password1, password2,str(today),str(None),str(None)]
-                listOfColumns = ['id', 'username', 'password', 'email', 'regtime','address','shopcart']
+                listOfvalues = [str(max1+1),username, password1, password2,str(None),str(None),str(today)]
+                listOfColumns = ['id', 'username', 'password', 'email', 'phonenum','address','regtime']
                 if password1==password2 :
                     tools.insertDB('users',listOfColumns,listOfvalues)
                     result = {"state":"true","text":"注册成功"}
@@ -154,10 +154,22 @@ class FilterWeb(tornado.web.RequestHandler):
 
         else:
             k = ['pName', 'PDec']
-            for i in k:
+            if name!='':
+                for i in k:
+                    sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '" + str(
+                        vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice) + "and" + str(
+                        i) + " like'%" + str(name) + "%'"
+                    data = tools.searchDB(sql=sql)
+                    if data != ():
+                        for ges in data:
+                            dict = {}
+                            for it in range(0, len(list0_1)):
+                                dict[list0_1[it]] = str(ges[it])
+                            if dict not in list1:
+                                list1.append(dict)
+            else:
                 sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '" + str(
-                    vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice) + "and" + str(
-                    i) + " like'%" + str(name) + "%'"
+                    vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice)
                 data = tools.searchDB(sql=sql)
                 if data != ():
                     for ges in data:
