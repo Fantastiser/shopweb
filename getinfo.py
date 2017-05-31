@@ -10,12 +10,12 @@ def filter():
     # from item, kinds
     # where
     # kinds.kind = "小说" and item.cld = kinds.id and 20 <= iprice <= 50
-    name = "小说"
+    name = "三"
     # 书的类型
-    vary = ''
-    sort = '2'
-    minprice = '20'
-    maxprice = '50'
+    vary = "小说"
+    sort = "0"
+    minprice = "20"
+    maxprice = "50"
     result = {}
     list0_1 = ['itemid', 'name', 'author', 'iPrice', 'plmg','pubTime']
     list1 = []
@@ -52,17 +52,32 @@ def filter():
                             list1.append(dict)
 
     else:
-        k = ['pName','PDec']
-        for i in k:
-            sql=  "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '"+str(vary)+" 'and item.cld = kinds.id and "+str(minprice)+"<iPrice<"+str(maxprice)+"and"+str(i) + " like'%" + str(name) + "%'"
+        k = ['pName', 'PDesc']
+        if name != '':
+            for i in k:
+                sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '{0} 'and item.cld = kinds.id and {1}<iPrice< {2} and {3} like'%{4}%'".format(
+                     str(vary), str(minprice), str(maxprice), str(i), str(name))
+                data= tools.searchDB(sql=sql.decode('utf8'))
+                if data != ():
+                    for ges in data:
+                        dict = {}
+                        for it in range(0, len(list0_1)):
+                            dict[list0_1[it]] = str(ges[it])
+                        if dict not in list1:
+                            list1.append(dict)
+        else:
+            sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '" + str(
+                vary) + " 'and item.cld = kinds.id and " + str(minprice) + "<iPrice<" + str(maxprice)
+
             data = tools.searchDB(sql=sql)
-            if data!=():
+            if data != ():
                 for ges in data:
                     dict = {}
                     for it in range(0, len(list0_1)):
                         dict[list0_1[it]] = str(ges[it])
                     if dict not in list1:
                         list1.append(dict)
+    print list1
     if sort =='0':
         result ['data'] =list1
     elif sort == '3':
@@ -74,7 +89,11 @@ def filter():
     elif sort == '2':
         result['data'] = sorted(list1, key=lambda list1: list1['pubTime'],reverse=True)
 
-filter()
+
+
+ # sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '小说 'and item.cld = kinds.id and 20<iPrice<50 and pName like'%小说%'"
+# data = tools.searchDB(sql=sql)
+# print data
  # result['data'] = list1
 # x= [{'name':'Homer', 'age':39}, {'name':'Bart', 'age':10}]
 # sorted_x = sorted(x, key=operator.itemgetter('name'))

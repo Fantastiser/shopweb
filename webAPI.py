@@ -116,7 +116,7 @@ class FilterWeb(tornado.web.RequestHandler):
         result = {}
         list0_1 = ['itemid', 'name', 'author', 'iPrice', 'plmg', 'pubTime']
         list1 = []
-        if vary == "":
+        if vary == "null":
             list0 = ['id', 'pName', 'writer', 'iPrice', 'plmg', 'pubTime']
             list = ['pName', 'cld', 'pSn', 'PDesc']
             for i in list:
@@ -153,7 +153,7 @@ class FilterWeb(tornado.web.RequestHandler):
                                 list1.append(dict)
 
         else:
-            k = ['pName', 'PDec']
+            k = ['pName', 'PDesc']
             if name!='':
                 for i in k:
                     sql = "SELECT pName, writer, iPrice, plmg, item.id, pubTime from item, kinds where kinds.kind = '" + str(
