@@ -7,6 +7,9 @@
 <link type="text/css" rel="stylesheet" href="../static/css/carousel.css">
 <link type="text/css" rel="stylesheet" href="../static/css/reset.css">
 <link type="text/css" rel="stylesheet" href="../static/css/main.css">
+
+
+
 <!--[if IE 6]>
 <script type="text/javascript" src="js/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript" src="js/ie6Fixpng.js"></script>
@@ -17,6 +20,7 @@
 <script src="/static/js/init.js" type="text/javascript"></script>
 <script src="/static/js/jquery.js" type="text/javascript"></script>
 
+
 <script type="text/javascript">
 function change()
 {
@@ -26,6 +30,7 @@ function change()
 		document.getElementById("register").innerHTML = "个人中心";
 		document.getElementById("login").href ="#"
 		document.getElementById("register").href = "/person";
+		document.getElementById("logout").style.display = "inline";
 		$.ajax({
 		type:'GET',
 		data:{"username":login},
@@ -34,7 +39,7 @@ function change()
 		success:function (result) {
 			document.getElementById("shopcart").innerHTML=result["num"];
 		}
-	});}
+	});}else document.getElementById("logout").style.display = "none";
 		
 		 a = document.URL.replace('?','').replace('#','').replace(window.location.pathname,'/filter?');
 		 
@@ -65,8 +70,15 @@ function change()
 		
 
 		}	 
-
-
+function shopcart() {
+	var name = document.getElementById("login").innerHTML;
+	if(name != "[登录]" ){
+	window.open('/shopcart');
+	} else{
+		window.open('/login');
+	}
+}
+	
 </script>
  <script type="text/javascript"> 
 
@@ -75,16 +87,17 @@ function change()
 </head>
 
 <body onload="change()">
+
 <div class="headerBar">
 	<div class="topBar">
 		<div class="comWidth">
 			<div class="leftArea">
-				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏本站</a>
+				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏BookShop</a>
 			</div>
 			<div class="rightArea">
 					欢迎来到BookShop！<a href="/login" id="login">{{user}}</a>
-    <input type="submit" value="退出登录" style="cursor:pointer" onclick="logout()"></br>
 	<a href="/register" id="register" >[免费注册]</a>
+	<input type="submit" value="退出登录" style="cursor:pointer" onclick="logout()" id="logout"></input>
 			</div>
 		</div>
 	</div>
@@ -106,7 +119,7 @@ function change()
 	<div class="navBox">
 		<div class="comWidth clearfix">
 			<div class="shopClass fl">
-				<h3>全部图书分类<i class="shopClass_icon"></i></h3>
+				<h3>全部图书分类</h3>
 				<div class="shopClass_show">
 					{% block body %}{% end %}
 				</div>
@@ -315,15 +328,25 @@ function change()
 		</div>
 	</div>
 </div>
+
+
+
 <div class="hr_25"></div>
+
+
 <div class="footer">
 	<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
 	<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
 	<p class="web"><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a></p>
 </div>
+
+
+
 <script src="../static/js/jquery.carousel.js"></script>
     <script>
         Caroursel.init($('.caroursel'))
     </script>
+	
+	
 </body>
 </html>

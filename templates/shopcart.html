@@ -11,21 +11,33 @@
 <![endif]-->
 </head>
 <script type="text/javascript" src="../static/js/test.js"></script>
+<script src="/static/js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
 var length;//全局变量
 var k=0;
 var checked=[];
 var flag=0;
-var result=[{"username":"zby","pic":"../static/images/des_sm.jpg","name":"追风筝的人","info":"作者陈安哲","stdprice":"68","price":"58.1","number":"5","amount":"290.5"}, 
-		{"username":"zby","pic":"../static/images/des_sm.jpg","name":"高等数学","info":"同济大学","stdprice":"18","price":"12.4","number":"3","amount":"37.2"},
-		{"username":"zby","pic":"../static/images/des_sm.jpg","name":"线性代数","info":"哈尔滨工业大学","stdprice":"28","price":"2.4","number":"3","amount":"7.2"},
-		{"username":"zby","pic":"../static/images/des_sm.jpg","name":"线性代数","info":"哈尔滨工业大学","stdprice":"28","price":"2.7","number":"3","amount":"8.1"}
-		];
+var results=[];
 
 function insert()
 {	
-	length=result.length;
+	 login = document.getElementById("login").innerHTML;
+	   if(login !="[登录]")
+	   {
+		document.getElementById("register").innerHTML = "个人中心";
+		document.getElementById("login").href ="#"
+		document.getElementById("register").href = "/person";
+	}
+	$.ajax({
+				type:'GET',
+				data:{"username":login,"condition":0},
+				url:'/ajax/checkorder',
+				dataType:'json',
+				success:function (result){
+					results=result["data"];
+					length=results.length;
 	if(length!=0){
+	
 		var insertText=[
 '<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_checkbox"><input type="checkbox" id="check0"></div><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic0" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name0">商品链接</a></p><p class="cart_info" id="info0">商品信息</p></div></div></div><div class="cart_item t_standardprice1" id="stdprice0">￥15</div><div class="cart_item t_price1" id="price0">￥10</div><div class="cart_item t_num1" id="number0">2</div><div class="cart_item t_subtotal1 t_red" id="amount0">￥20</div></div></div>',
 '<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_checkbox"><input type="checkbox" id="check1"></div><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic1" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name1">商品链接</a></p><p class="cart_info" id="info1">商品信息</p></div></div></div><div class="cart_item t_standardprice1" id="stdprice1">￥15</div><div class="cart_item t_price1" id="price1">￥10</div><div class="cart_item t_num1" id="number1">2</div><div class="cart_item t_subtotal1 t_red" id="amount1">￥20</div></div></div>',
@@ -46,31 +58,34 @@ function insert()
 		var e= document.getElementById("shoppingCart_content");	
 		e.parentNode.removeChild(e);
 		alert("购物车空空如也，快去加点东西吧！");
-		var insertButton='<a href="main.html"><input type="button" class="back_btn" value="返回首页" align="center"></a>';
+		var insertButton='<a href="/shop"><input type="button" class="back_btn" value="返回首页" style="cursor:pointer" align="center"></a>';
 		document.getElementById("back").innerHTML=insertButton;
-	}	
-}
-function change(){
-    var reg = new RegExp("(^|&)" + 'user' + "=([^&]*)(&|$)", "i");
-    var r = window.location.search.substr(1).match(reg); 
-	document.getElementById("username").innerHTML =result[0]["username"]; 
-	document.getElementById("pic").src=result[0]["pic"];
-	document.getElementById("name").innerHTML =result[0]["name"];
-	document.getElementById("info").innerHTML =result[0]["info"];
-	document.getElementById("stdprice").innerHTML ="￥"+result[0]["stdprice"];
-	document.getElementById("price").innerHTML ="￥"+result[0]["price"];
-	document.getElementById("number").innerHTML =result[0]["number"];
-	document.getElementById("amount").innerHTML ="￥"+result[0]["amount"];
+	}
+	document.getElementById("pic").src=results[0]["pic"];
+	document.getElementById("name").innerHTML =results[0]["name"];
+	document.getElementById("info").innerHTML =results[0]["info"];
+	document.getElementById("stdprice").innerHTML ="￥"+results[0]["stdprice"];
+	document.getElementById("price").innerHTML ="￥"+results[0]["price"];
+	document.getElementById("number").innerHTML =results[0]["number"];
+	document.getElementById("amount").innerHTML ="￥"+results[0]["amount"];
+	document.getElementById("name").href ="/items?itemid="+results[0]["id"];
 	for(var i=1;i<length;i++){
-		document.getElementById("pic"+i).src=result[i]["pic"];
-		document.getElementById("name"+i).innerHTML =result[i]["name"];
-		document.getElementById("info"+i).innerHTML =result[i]["info"];
-		document.getElementById("stdprice"+i).innerHTML ="￥"+result[i]["stdprice"];
-		document.getElementById("price"+i).innerHTML ="￥"+result[i]["price"];
-		document.getElementById("number"+i).innerHTML =result[i]["number"];
-		document.getElementById("amount"+i).innerHTML ="￥"+result[i]["amount"];
+		document.getElementById("pic"+i).src=results[i]["pic"];
+		document.getElementById("name"+i).innerHTML =results[i]["name"];
+		document.getElementById("info"+i).innerHTML =results[i]["info"];
+		document.getElementById("stdprice"+i).innerHTML ="￥"+results[i]["stdprice"];
+		document.getElementById("price"+i).innerHTML ="￥"+results[i]["price"];
+		document.getElementById("number"+i).innerHTML =results[i]["number"];
+		document.getElementById("amount"+i).innerHTML ="￥"+results[i]["amount"];
+		document.getElementById("name"+i).href ="/items?itemid="+results[i]["id"];
 	}	
+				}
+	});
+	
+	
+	
 }
+
 function settleaccount(){
 	k=0;
 	var total=0;
@@ -87,12 +102,12 @@ function settleaccount(){
 	if(k>0||flag==1){		
 		for(var i=0;i<k;i++){
 			id=checked[i];
-			total+=parseFloat(result[id]["amount"]);
+			total+=parseFloat(results[id]["amount"]);
 		}
 		if(flag==1){
-			total+=parseFloat(result[0]["amount"]);
+			total+=parseFloat(results[0]["amount"]);
 		}	
-		var insertText='<div class="hr_25"></div><div class="shopping_item"><h3 class="shopping_tit">总计</h3><div class="shopping_cont padding_shop clearfix"><div class="cart_count fr"><div class="cart_rmb"><i>总计：</i><span id= "total" ></span></div><div class="cart_btnBox"><input type="button" class="cart_btn" value="立即结账"></div></div></div></div>';
+		var insertText='<div class="hr_25"></div><div class="shopping_item"><h3 class="shopping_tit">总计</h3><div class="shopping_cont padding_shop clearfix"><div class="cart_count fr"><div class="cart_rmb"><i>总计：</i><span id= "total" ></span></div><div class="cart_btnBox"><input type="button" class="cart_btn" value="立即结账" onclick="commit()" style="cursor:pointer"></div></div></div></div>';
 		document.getElementById("insertTotalBox").innerHTML=insertText;
 		document.getElementById("total").innerHTML ="￥"+total.toFixed(2).toString();
 	}
@@ -114,7 +129,6 @@ function SelectAll(){
 		document.getElementById("check"+i).checked=true;
 	}
 	document.getElementById("check").checked=true;
-	//setInterval('for(var i=1;i<length;i++){document.getElementById("check"+i).checked=true;}document.getElementById("check").checked=true;',10);
 }
 function cancelselect(){	
 	document.getElementById("check").checked=false;	
@@ -125,73 +139,81 @@ function cancelselect(){
 }
 function deletedata(){
 	k=0;
-	var id=0;
+	flag=0
+	var id = new Array();
 	for(var i=1;i<length;i++){
 		if(document.getElementById("check"+i).checked){
-			checked[k]=i;
+			flag=1
+			id.push(document.getElementById("name"+i).href.split("/items?itemid=")[1])
 			k++;
 		}
 	}
 	if(document.getElementById("check").checked){
-		flag=1;	
+		flag=1
+		id.push(document.getElementById("name").href.split("/items?itemid=")[1])
 	}
 	if(k>0||flag==1){
-		if(flag==1){
-			result.splice(0,1);//(起始位置,删除个数);	
-			for(var i=0;i<k;i++){
-				checked[i]--;
-			}
-		}
-		for(var i=0;i<k;i++){
-			id=checked[i];
-			result.splice(id,1);//(起始位置,删除个数);
-			for(var j=i+1;j<k;j++){
-				checked[j]--;
-			}
-		}
-			
-	}else{
-	alert("您还未选择商品！");
+	
+		$.ajax({
+				type:'GET',
+				data:{"username":document.getElementById("login").innerHTML,"id":id.join(";"),condition:'0'},
+				url:'/ajax/changeorder',
+				dataType:'json',
+				success:function (result){
+					if (result["data"]=="true")
+					location.href=location.href
+					else
+					alert("删除失败")
+				}
+		});
+	
 	}
 	
-	var element;
-	for(var i=1;i<10;i++){
-		e= document.getElementById("insert"+i);
-		e.parentNode.removeChild(e);
-	}
-	var oldNode = document.getElementById("oldNode");
-	var newNode = document.createElement("p");
-	newNode.innerHTML = '<div id="insert1"></div><div id="insert2"></div><div id="insert3"></div><div id="insert4"></div><div id="insert5"></div><div id="insert6"></div><div id="insert7"></div><div id="insert8"></div><div id="insert9"></div>';
-	oldNode.insertBefore(newNode,oldNode.childNodes[0]);  
-	insert();
-	change();
-	for(var i=1;i<length;i++){
-		document.getElementById("check"+i).checked=false;
-	}
-	document.getElementById("check").checked=false;
-	flag=0;
 }
+function commit(){
+	k=0;
+	flag=0
+	var id = new Array();
+	for(var i=1;i<length;i++){
+		if(document.getElementById("check"+i).checked){
+			flag=1
+			id.push(document.getElementById("name"+i).href.split("/items?itemid=")[1])
+			k++;
+		}
+	}
+	if(document.getElementById("check").checked){
+		flag=1
+		id.push(document.getElementById("name").href.split("/items?itemid=")[1])
+	}
+	if(k>0||flag==1){
+		$.ajax({
+				type:'GET',
+				traditional: true,
+				data:{"username":document.getElementById("login").innerHTML,"id":id.join(";"),condition:1},
+				url:'/ajax/changeorder',
+				dataType:'json',
+				success:function (result){
+					if (result["data"]=="true")	
+					location.href="/checkorder";
+					else
+					alert("结算失败")
+				}
+		});
 	
-		<!-- $.ajax({ -->
-		<!-- type:'GET', -->
-		<!-- data:{"information":username}, -->
-		<!-- url:'/ajax/shop', -->
-		<!-- dataType:'json', -->
-		<!-- success:function (result) { 
-			<!-- } -->
-				
-		<!-- } -->
-	<!-- }); -->	 
+	}
+}
 </script>
-<body onload="insert();change();">
+<body onload="insert();">
 <div class="headerBar">
 	<div class="topBar">
 		<div class="comWidth">
 			<div class="leftArea">
-				<a href="#" class="collection">收藏BookShop</a>
+				<a onclick="AddFavorite('/shop')"href="javascript:void(0)" class="collection">收藏BookShop</a>
 			</div>
 			<div class="rightArea">
-				欢迎来到Bookshop！<a href="#" id="username">[登录]</a><a href="#">[免费注册]</a>
+					欢迎来到BookShop！<a href="/login" id="login">{{user}}</a>
+	<a href="/register" id="register" >[免费注册]</a>
+	<input type="submit" value="退出登录" style="cursor:pointer" onclick="logout()" id="logout"></input>
 			</div>
 		</div>
 	</div>
@@ -204,7 +226,7 @@ function deletedata(){
 				<div class="step1"></div>
 				<ul class="step_text">
 					<li class="s01 active">我的购物车</li>
-					<li class="s02">填写核对订单</li>
+					<li class="s02">核对订单</li>
 					<li class="s03">订单提交成功</li>
 				</ul>
 			</div>
@@ -212,7 +234,7 @@ function deletedata(){
 	</div>
 </div>
 <div class="shoppingCart comWidth" id="shoppingCart_content">
-	<input type="button" class="cart_btn" id="selectall_btn" value="全选" onclick="onclick_all()">
+	<input type="button" class="cart_btn" id="selectall_btn" value="全选" onclick="onclick_all()"style="cursor:pointer">
 	<div class="shopping_item">
 		<h3 class="shopping_tit">购物车清单</h3>	
 		<div class="shopping_cont">
@@ -256,8 +278,8 @@ function deletedata(){
 	<div id="insert9"></div>
 	<div id="oldNode" ></div>
 	<div class="hr_25"></div>	
-	<input type="button" class="cart_btn" value="结算" onclick="settleaccount()">
-	<input type="button" class="cart_btn" value="删除" onclick="deletedata()">
+	<input type="button" class="cart_btn" value="结算" onclick="settleaccount()"style="cursor:pointer">
+	<input type="button" class="cart_btn" value="删除" onclick="deletedata()"style="cursor:pointer">
 	<div class="hr_25"></div>
 	<!-- <div class="shopping_item"> -->
 		<!-- <h3 class="shopping_tit">总计</h3> -->
@@ -278,9 +300,14 @@ function deletedata(){
 <div id="back"></div>
 <div class="hr_25"></div>
 <div class="footer">
-	<p><a href="#">慕课简介</a><i>|</i><a href="#">慕课公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
-	<p>Copyright &copy; 2006 - 2014 慕课版权所有&nbsp;&nbsp;&nbsp;京ICP备09037834号&nbsp;&nbsp;&nbsp;京ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
-	<p class="web"><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a></p>
-</div>
+		<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
+		<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
+		<p class="web">
+			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
+			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
+			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
+			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
+		</p>
+	</div>
 </body>
 </html>

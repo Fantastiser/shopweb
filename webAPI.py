@@ -33,7 +33,7 @@ class LoginWeb(BaseHandler):
                     if password_0!=():
                         password0 = password_0[0][0]
                     if password0 ==password:
-                        self.set_secure_cookie("user", username)
+                        self.set_secure_cookie("user", username,expires_days = None)
                         result = {"state": "true", "text": "登录成功"}
                     else:
                         result = {"state": "false", "text": "用户名或密码错误"}
@@ -94,8 +94,8 @@ class RegisterWeb(tornado.web.RequestHandler):
                 else:
                     max1 = max
                 today = datetime.date.today()
-                listOfvalues = [str(max1+1),username, password1, email,str(None),str(None),str(today)]
-                listOfColumns = ['id', 'username', 'password', 'email', 'phonenum','address','regtime']
+                listOfvalues = [str(max1+1),username, password1, email,str(None),str(None),str(None),str(today)]
+                listOfColumns = ['id', 'username', 'password', 'email', 'phonenum','receiver','address','regtime']
                 if password1==password2 :
                     tools.insertDB('users',listOfColumns,listOfvalues)
                     result = {"state":"true","text":"注册成功"}
@@ -259,12 +259,89 @@ class addorder(tornado.web.RequestHandler):
         price = self.get_argument("price")
         condition = self.get_argument("condition")
         amount = float(num)*float(price)
-        max = tools.searchDB('orders', ['max(id)'])[0][0]
-        if max == None:
-            max1 = 0
+        number = tools.searchDB('orders',['num'],where = "itemid='{0}' and username ='{1}' and conditions ='{2}'".format(str(itemid),str(user),str(condition)))
+        if number==():
+            max = tools.searchDB('orders', ['max(id)'])[0][0]
+            if max == None:
+                max1 = 0
+            else:
+                max1 = max
+            sql = "insert  into orders (id,itemid,itemname,username,num,regtime,price,amount,conditions) values ('%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(str(int(max1)+1),str(itemid),str(name),str(user),str(num),str(regtime),str(price),str(amount),str(condition))
+            tools.insertDB(sql=sql)
         else:
-            max1 = max
-        sql = "insert  into orders (id,itemid,itemname,username,num,regtime,price,amount,conditions) values ('%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(str(int(max1)+1),str(itemid),str(name),str(user),str(num),str(regtime),str(price),str(amount),str(condition))
-        tools.insertDB(sql=sql)
+            nums=int(number[0][0])+int(num)
+            amount = float(nums)*float(price)
+            sql = "UPDATE orders SET amount= '{0}',num='{1}'".format(str(amount),str(nums))+" where itemid ='{0}' and username='{1}' and conditions='{2}'".format(str(itemid),str(user),str(condition))
+            tools.insertDB(sql = sql)
+        result["msg"]="true"
+        self.write(escape.json_decode(json.dumps(result)))
+
+class checkorder(tornado.web.RequestHandler):
+    def get(self):
+        list1=[]
+        list0 = ["pic","name","info","stdprice","price","number","amount","id"]
+        name = self.get_argument("username")
+        condition = self.get_argument("condition")
+        datas = tools.searchDB(
+            sql="SELECT plmg,pName,writer,mPrice,iPrice,num,amount,item.id from orders,item where orders.itemid =item.id and username= '{0}' and conditions = '{1}'".format(
+                str(name), str(condition)))
+
+        for data in datas:
+            dict = {}
+            for i in xrange(0, len(list0)):
+                dict[list0[i]] = str(data[i])
+            list1.append(dict)
+        result = {"data": list1}
+        if str(condition)=='1':
+            sql="SELECT users.username,receiver,address,phonenum from users,orders where users.username = orders.username and conditions ='{0}' and users.username ='{1}'".format(str(condition),str(name))
+            datas = tools.searchDB(sql = sql)[0]
+            receiver = datas[1]
+            address = datas[2]
+            phonenum = datas[3]
+            if str(datas[1])=="None":
+                receiver =""
+            if str(datas[2])=="None":
+                address =""
+            result["user"] ={"username":str(datas[0]),"receiver":receiver,"address":address,"tel":phonenum}
+        self.write(escape.json_decode(json.dumps(result)))
+class changeorder(tornado.web.RequestHandler):
+    def get(self):
+        result={}
+        name = self.get_argument("username")
+        id0 = self.get_argument("id")
+        id = id0.split(';')
+        condition = self.get_argument("condition")
+        if str(condition) =='0':
+            try:
+                for i in id:
+                    tools.deleteDB('orders',where="username='{0}' and conditions='{1}' and itemid = '{2}'".format(str(name),str(condition),str(i)))
+                result = {"data":"true"}
+            except:
+                result = {"data": "false"}
+        elif(str(condition)=='1' or str(condition)=='2'):
+            try:
+                for i in id:
+                    sql = "UPDATE orders SET conditions='{0}' where itemid ='{1}'and username='{2}'".format(str(condition),
+                                                                                                            str(i),
+                                                                                                         str(name))
+                    tools.insertDB(sql = sql)
+                result = {"data": "true"}
+            except:
+                result = {"data": "false"}
+
+        self.write(escape.json_decode(json.dumps(result)))
+
+class changeaddress(tornado.web.RequestHandler):
+    def get(self):
+        result={}
+        username = self.get_argument("username")
+        receiver = self.get_argument("receiver")
+        tel = self.get_argument("tel")
+        address = self.get_argument("address")
+        regtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sql = "UPDATE users SET receiver= '{0}',phonenum='{1}',address='{2}'".format(str(receiver),str(tel),str(address))+" where username='{0}'".format(str(username))
+        tools.insertDB(sql = sql)
+        sql1 = "UPDATE orders SET regtime= '{0}'".format(str(regtime)) + " where username='{0}'".format(str(username))
+        tools.insertDB(sql=sql1)
         result["msg"]="true"
         self.write(escape.json_decode(json.dumps(result)))

@@ -1,7 +1,7 @@
 import os
 import tornado.web
-from views import Start,HelloModule,Login,Register,Filter,Item,Shopcart,checkorder
-from webAPI import LoginWeb,Move,RegisterWeb,FilterWeb,ItemsWeb,shopcartnum,addorder,LogoutHandler
+from views import Start,HelloModule,Login,Register,Filter,Item,Shopcart,checkorders
+from webAPI import LoginWeb,Move,RegisterWeb,FilterWeb,ItemsWeb,shopcartnum,addorder,LogoutHandler,checkorder,changeorder,changeaddress
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 SETTINGS = {
@@ -20,7 +20,7 @@ HANDLERS = [
     (r"/register",Register),
     (r"/items",Item),
     (r"/shopcart",Shopcart),
-    (r"/checkorder",checkorder),
+    (r"/checkorder",checkorders),
 	(r"/ajax/shop", Move),
     (r"/ajax/login", LoginWeb),
     (r'/ajax/logout', LogoutHandler),
@@ -29,6 +29,9 @@ HANDLERS = [
     (r"/ajax/items",ItemsWeb),
     (r"/ajax/shopcartnum",shopcartnum),
     (r"/ajax/addorder",addorder),
+    (r"/ajax/checkorder",checkorder),
+(r"/ajax/changeorder",changeorder),
+(r"/ajax/changeaddress",changeaddress),
     (r".*", PageNotFoundHandler),
 ]
 

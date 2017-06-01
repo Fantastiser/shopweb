@@ -44,10 +44,10 @@ def searchDB(tableName=None, columns = [], where = None,sql =None):
 
 def deleteDB(tableName,where = None):
 	if where == None :
-		sql = "delete * from {0}".format(tableName)
+		sql = "delete  from {0}".format(tableName)
 	else:
-		sql = "delete * from {0} where {1}".format(tableName, where)
+		sql = "delete  from {0} where {1}".format(tableName, where)
 	cur = conn.cursor()
 	cur.execute(sql)
-	results = cur.fetchall()
-	return results
+	conn.commit()
+	cur.close()

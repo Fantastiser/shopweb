@@ -5,6 +5,7 @@ import random
 from webAPI import BaseHandler
 class Start(BaseHandler):
     def get(self):
+
         if self.current_user ==None:
             self.current_user ="[登录]"
         a = random.randint(1, 10)
@@ -76,11 +77,17 @@ class Login(BaseHandler):
 
 class Shopcart(BaseHandler):
     def get(self):
+        if self.current_user == None:
+            self.current_user = "[登录]"
         self.render('shopcart.html',
+                    user=self.current_user,
 		)
-class checkorder(BaseHandler):
+class checkorders(BaseHandler):
     def get(self):
+        if self.current_user == None:
+            self.current_user = "[登录]"
         self.render('checkorder.html',
+                    user=self.current_user,
 		)
 class Register(tornado.web.RequestHandler):
     def get(self):

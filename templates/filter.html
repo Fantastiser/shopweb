@@ -14,6 +14,7 @@
 </head>
 
 <script type="text/javascript">
+
 function changeUrlArg(arg, val){
 	url=document.URL;
     var pattern = arg+'=([^&]*)';
@@ -57,6 +58,7 @@ function fiter()
 		document.getElementById("register").innerHTML = "个人中心";
 		document.getElementById("login").href ="#"
 		document.getElementById("register").href = "/person";
+		document.getElementById("logout").style.display = "inline";
 		$.ajax({
 		type:'GET',
 		data:{"username":login},
@@ -66,7 +68,8 @@ function fiter()
 			document.getElementById("shopcart").innerHTML=result["num"];
 		}
 	});
-	}
+	}else document.getElementById("logout").style.display = "none";
+	
 		for(var i=0;i<9;i++)
 		{
 			document.getElementById("box"+i).style.display="none";				
@@ -149,8 +152,7 @@ function fiter()
 						if(temp>=result['data'].length) document.getElementById("box"+i).style.display="none";
 						else{
 							document.getElementById("name"+i).innerHTML=result['data'][temp]['name'];
-							if(GetQueryString("user")==null)document.getElementById("name"+i).href="items?itemid="+result['data'][temp]['itemid'];
-							else document.getElementById("name"+i).href="items?itemid="+result['data'][temp]['itemid']+"&user="+GetQueryString("user");
+							document.getElementById("name"+i).href="items?itemid="+result['data'][temp]['itemid'];
 							document.getElementById("author"+i).innerHTML=result['data'][temp]['author']+"  著";
 							document.getElementById("price"+i).innerHTML="￥"+result['data'][temp]['iPrice'];
 							document.getElementById("url"+i).href=document.getElementById("name"+i).href;
@@ -175,6 +177,16 @@ function  swap(){
 	var page=document.getElementById("swappage").value;
 	location.href=changeUrlArg("page",page);	
 }
+function shopcart() {
+	var name = document.getElementById("login").innerHTML;
+	if(name != "[登录]" ){
+	window.open('/shopcart');
+	} else{
+		window.open('/login');
+	}
+
+	
+}
 </script>
 <body onload="fiter()">
 
@@ -183,14 +195,16 @@ function  swap(){
 	<div class="topBar">
 		<div class="comWidth">
 			<div class="leftArea">
-				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏本站</a>
+				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏BookShop</a>
 			</div>
 			<div class="rightArea">
 					欢迎来到BookShop！<a href="/login" id="login">{{user}}</a>
-    <input type="submit" value="退出登录" style="cursor:pointer" onclick="logout()"></br>
 	<a href="/register" id="register">[免费注册]</a>
+	<input type="submit" value="退出登录" style="cursor:pointer" onclick="logout()" id="logout"></input>
 			</div>
+		</div>
 	</div>
+	
 	<div class="logoBar">
 		<div class="comWidth">
 			<div class="logo fl">

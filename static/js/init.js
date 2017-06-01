@@ -13,14 +13,3 @@ function logout()
 		}
 	});
 }
-// ??????§Ø???????????????
-function shopcart() {
-	var name = document.getElementById("login").innerHTML;
-	if(name == "[???]" ){
-	window.open('/shopcart');
-	} else{
-		window.open('/login');
-	}
-
-	
-}

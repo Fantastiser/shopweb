@@ -144,7 +144,23 @@ def item(id=''):
         result['data']['description'] = sqlresult[0][10]
     else:
         result['msg'] = 'fail'
+def order():
 
+
+    list0 = ["pic", "name", "info", "stdprice", "price", "number", "amount"]
+    list1 = []
+    name = '1'
+    condition = '0'
+    datas = tools.searchDB(
+        sql="SELECT plmg,pName,writer,mPrice,iPrice,num,amount from orders,item where orders.itemid =item.id and username= '{0}' and conditions = '{1}'".format(
+            str(name), str(condition)))
+    for data in datas:
+        dict = {}
+        for i in xrange(0,len(list0)):
+                dict[list0[i]] = str(data[i])
+        list1.append(dict)
+    print list1
+order()
 # 插入图片
 # import MySQLdb as mdb
 #
