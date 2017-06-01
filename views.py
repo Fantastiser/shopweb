@@ -2,8 +2,11 @@
 import tornado.web
 import tools
 import random
-class Start(tornado.web.RequestHandler):
+from webAPI import BaseHandler
+class Start(BaseHandler):
     def get(self):
+        if self.current_user ==None:
+            self.current_user ="[登录]"
         a = random.randint(1, 10)
         if a > 5:
             b = random.randint(1, a - 1)
@@ -16,6 +19,7 @@ class Start(tornado.web.RequestHandler):
         pic_url = tools.searchDB(sql='select itemid,albumpath from album ')
         pic_ul = random.sample(pic_url, 3)
         self.render('index.html',
+            user = self.current_user,
             pic_url1= pic_ul[0][1],
             pic_url2 = pic_ul[1][1],
             pic_url3=pic_ul[2][1],
@@ -65,23 +69,30 @@ class Start(tornado.web.RequestHandler):
             part2_mprice4=theme2[3][1],
         )
 
-class Login(tornado.web.RequestHandler):
+class Login(BaseHandler):
     def get(self):
         self.render('login.html',
 		)
+
 
 class Register(tornado.web.RequestHandler):
     def get(self):
         self.render('register.html',
 		)
 
-class Filter(tornado.web.RequestHandler):
+class Filter(BaseHandler):
     def get(self):
+        if self.current_user == None:
+            self.current_user = "[登录]"
         self.render('filter.html',
+                    user=self.current_user,
 		)
-class Item(tornado.web.RequestHandler):
+class Item(BaseHandler):
     def get(self):
+        if self.current_user == None:
+            self.current_user = "[登录]"
         self.render('items.html',
+                    user=self.current_user,
 		)
 class HelloModule(tornado.web.UIModule):
     def render(self):

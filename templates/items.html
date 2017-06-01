@@ -14,10 +14,27 @@
 	<script type="text/javascript" src="/static/js/DD_belatedPNG_0.0.8a-min.js"></script>
 	<script type="text/javascript" src="/static/js/ie6Fixpng.js"></script>
 	<script src="/static/js/test.js" type="text/javascript"></script>
+	<script src="/static/js/init.js" type="text/javascript"></script>
 	<script src="/static/js/jquery.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	
 	function change() {
+	login = document.getElementById("login").innerHTML;
+	   if(login !="[登录]")
+	   {
+		document.getElementById("register").innerHTML = "个人中心";
+		document.getElementById("login").href ="#"
+		document.getElementById("register").href = "/person";
+		$.ajax({
+		type:'GET',
+		data:{"username":login},
+		url:'/ajax/shopcartnum',
+		dataType:'json',
+		success:function (result) {
+			document.getElementById("shopcart").innerHTML=result["num"];
+		}
+	});
+	}
 		 var reg = new RegExp("(^|&)" + 'itemid' + "=([^&]*)(&|$)", "i");  
     var l = decodeURI(window.location.search);  
     var r = l.substr(1).match(reg);
@@ -58,7 +75,6 @@
 		}
 	});
 	findshopcartnum();
-			loader();
 			}
 			
 			
@@ -102,11 +118,7 @@
 		if(GetQueryString("user")!=null)  href+="&user="+GetQueryString("user");
 		location.href=href;	
 	}
-	function  shopcart(){
-		var href="shopcart?user="+GetQueryString("user");
-		if(GetQueryString("user")==null)  href="login";
-		location.href=href;	
-	}
+
 	function  addshopcart(condition){
 		var href="shopcart?user="+GetQueryString("user");
 		if(GetQueryString("user")==null)  
@@ -173,8 +185,10 @@
 				<a onclick="AddFavorite(window.location,document.title)"href="javascript:void(0)" class="collection">收藏本站</a>
 			</div>
 				<div class="rightArea">
-					欢迎来到BookShop！<a href="/login" id="login">[登录]</a><a href="/register" id="register">[免费注册]</a>
-				</div>
+					欢迎来到BookShop！<a href="/login" id="login">{{user}}</a>
+    <input type="submit" value="退出登录" style="cursor:pointer" onclick="logout()"></br>
+	<a href="/register" id="register">[免费注册]</a>
+			</div>
 			</div>
 		</div>
 		<div class="logoBar">

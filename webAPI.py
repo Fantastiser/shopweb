@@ -8,7 +8,18 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-class LoginWeb(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
+    def get_current_user(self):
+        return self.get_secure_cookie("user")
+
+class LogoutHandler(BaseHandler):
+    def post(self):
+        if (self.get_argument("logout")!=None):
+            self.clear_cookie("user")
+            self.current_user = "[登录]"
+        result = {"state": "true", "text": "退出登录成功"}
+        self.write(escape.json_decode(json.dumps(result)))
+class LoginWeb(BaseHandler):
     def get(self):
         username = self.get_argument("username")
         password = self.get_argument("password")
@@ -22,6 +33,7 @@ class LoginWeb(tornado.web.RequestHandler):
                     if password_0!=():
                         password0 = password_0[0][0]
                     if password0 ==password:
+                        self.set_secure_cookie("user", username)
                         result = {"state": "true", "text": "登录成功"}
                     else:
                         result = {"state": "false", "text": "用户名或密码错误"}

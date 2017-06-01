@@ -24,7 +24,6 @@ function moves() {
 	window.open(a+'&itemid='+name);
 	} else{
 		window.open(a+'?&itemid='+name);
-		
 	}
 
 	
@@ -63,7 +62,7 @@ function login() {
 		success:function (result) {
 			if (result['state']=="true") {
 				alert(result['text']);
-				 location.href="/shop?user="+username;
+				 location.href="/shop";
 			}
 			else{
 				alert(result['text']);
@@ -87,11 +86,6 @@ function GetQueryString(arg)
     if (r != null) return unescape(r[2]);  
     return null;  
 }
-function loader(){
-		if(GetQueryString("user")!=null) {
-			document.getElementById("login").style.display="none";
-			document.getElementById("register").style.display="none";
-		}
-	}
+
 
 	
