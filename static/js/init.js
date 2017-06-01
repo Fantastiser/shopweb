@@ -1,11 +1,3 @@
-function  shopcart(){
-		var href="shopcart";
-		 a = document.getElementById("login").innerHTML;
-		if(a=="[µÇÂ¼]")  href="login";
-		else href ="shopcart"
-		location.href=href;	
-	}
-	
 function logout()
 {
 	$.ajax({
@@ -21,9 +13,10 @@ function logout()
 		}
 	});
 }
+// ??????§Ø???????????????
 function shopcart() {
 	var name = document.getElementById("login").innerHTML;
-	if(name == "[µÇÂ¼]" ){
+	if(name == "[???]" ){
 	window.open('/shopcart');
 	} else{
 		window.open('/login');
