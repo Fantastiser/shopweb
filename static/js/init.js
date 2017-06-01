@@ -16,8 +16,18 @@ function logout()
 		success:function (result) {
 			if (result['state']=="true") {
 				alert(result['text']);
-				 location.href=location.href;
+				 location.reload();
 			}
 		}
 	});
+}
+function shopcart() {
+	var name = document.getElementById("login").innerHTML;
+	if(name == "[µÇÂ¼]" ){
+	window.open('/shopcart');
+	} else{
+		window.open('/login');
+	}
+
+	
 }

@@ -20,11 +20,7 @@ function moves() {
 	var name = $("#information").val();
 	var a;
 	a = document.URL.replace(window.location.pathname,'/filter');
-	if(a.indexOf("?") == 0 ){
 	window.open(a+'&itemid='+name);
-	} else{
-		window.open(a+'?&itemid='+name);
-	}
 
 	
 }

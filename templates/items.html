@@ -56,10 +56,8 @@
 			document.getElementById("itemname2").innerHTML = result["data"]["itemname"];
 			//document.getElementById("itemid").innerHTML = result["data"]["itemid"];
 			document.getElementById("itemcategory").innerHTML = result["data"]["itemcategory"];
-			if(GetQueryString("user")!=null)  document.getElementById("shop").href = "shop?user="+GetQueryString("user");
-			else document.getElementById("shop").href = "shop?";
-			if(GetQueryString("user")!=null)  document.getElementById("itemcategory").href = "filter?find="+document.getElementById('itemcategory').innerHTML+"&user="+GetQueryString("user");
-			else document.getElementById("itemcategory").href = "filter?find="+document.getElementById('itemcategory').innerHTML;
+			
+			document.getElementById("itemcategory").href = "filter?find="+document.getElementById('itemcategory').innerHTML;
 			document.getElementById("iprice").innerHTML = result["data"]["iprice"];
 			document.getElementById("mprice").innerHTML = result["data"]["mprice"];
 			document.getElementById("pubdate").innerHTML = result["data"]["pubdate"];
@@ -81,9 +79,8 @@
 
 		function findshopcartnum()
 		{
-		var reg = new RegExp("(^|&)" + 'user' + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-		if (r!=null)
+		r = document.getElementById("login").innerHTML;
+		if (r!="[登录]")
 		{
 		 $.ajax({
 		type:'GET',
@@ -95,6 +92,8 @@
 			document.getElementById("shopcart").innerHTML=result["num"];
 		}
 	});
+		}else{
+		document.getElementById("shopcart").innerHTML=0;
 		}
 		}
 	function changeUrlArg(arg, val){
@@ -115,21 +114,20 @@
 	
 	function  search(){
 		var href="filter?itemid="+document.getElementById('find').value;
-		if(GetQueryString("user")!=null)  href+="&user="+GetQueryString("user");
 		location.href=href;	
 	}
 
 	function  addshopcart(condition){
-		var href="shopcart?user="+GetQueryString("user");
-		if(GetQueryString("user")==null)  
+		login = document.getElementById("login").innerHTML;
+		if(login=="[登录]")  
 		{
 		href="login";
-		location.href=href;
+		window.open(href);
 		}else if(document.getElementById("pname").value!='0')
 		{
 		itemid = GetQueryString("itemid")
 		itemname = document.getElementById("itemname").innerHTML
-		user = GetQueryString("user")
+		user = login ;
 		num = document.getElementById("pname").value
 		price = document.getElementById("iprice").innerHTML
 		 $.ajax({
@@ -144,7 +142,7 @@
 			findshopcartnum();
 			}else if(result["msg"]=="true" &&condition=='1')
 			{
-				href="order?user="+GetQueryString("user")+"&itemid="+GetQueryString("itemid");
+				href="order"+"&itemid="+GetQueryString("itemid");
 				window.open(href);
 			}
 		}
@@ -194,7 +192,7 @@
 		<div class="logoBar">
 			<div class="comWidth">
 				<div class="logo fl">
-					<a href="#"><img src="../static/images/logo.jpg" alt="慕课网"></a>
+					<a href="/shop"><img src="../static/images/logo.jpg" alt="BookShop"></a>
 				</div>
 				<div class="search_box fl">
 					<input type="text" class="search_text fl" id="find">
@@ -209,7 +207,7 @@
 	
 	</div>
 	<div class="userPosition comWidth">
-		<strong><a href="#" id="shop">首页</a></strong>
+		<strong><a href="/shop" id="shop">首页</a></strong>
 		<span>&nbsp;&gt;&nbsp;</span>
 		<a href="#" id="itemcategory">  </a>
 		<span>&nbsp;&gt;&nbsp;</span>

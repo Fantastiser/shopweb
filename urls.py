@@ -1,6 +1,6 @@
 import os
 import tornado.web
-from views import Start,HelloModule,Login,Register,Filter,Item
+from views import Start,HelloModule,Login,Register,Filter,Item,Shopcart,checkorder
 from webAPI import LoginWeb,Move,RegisterWeb,FilterWeb,ItemsWeb,shopcartnum,addorder,LogoutHandler
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -15,15 +15,17 @@ class PageNotFoundHandler(tornado.web.RequestHandler):
 HANDLERS = [
     (r"/", tornado.web.RedirectHandler, {"url": "/shop"}),
     (r"/login", Login),
+	(r"/shop", Start),
+    (r"/filter",Filter),
+    (r"/register",Register),
+    (r"/items",Item),
+    (r"/shopcart",Shopcart),
+    (r"/checkorder",checkorder),
+	(r"/ajax/shop", Move),
     (r"/ajax/login", LoginWeb),
     (r'/ajax/logout', LogoutHandler),
-	(r"/shop", Start),
-	(r"/ajax/shop", Move),
-	(r"/register",Register),
 	(r"/ajax/register",RegisterWeb),
-    (r"/filter",Filter),
     (r"/ajax/filter",FilterWeb),
-    (r"/items",Item),
     (r"/ajax/items",ItemsWeb),
     (r"/ajax/shopcartnum",shopcartnum),
     (r"/ajax/addorder",addorder),

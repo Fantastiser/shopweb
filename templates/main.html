@@ -62,10 +62,7 @@ function change()
 		 document.getElementById("good8").href=changeUrlArg('itemid',document.getElementById("good8").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		 document.getElementById("good9").href=changeUrlArg('itemid',document.getElementById("good9").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
 		 document.getElementById("good10").href=changeUrlArg('itemid',document.getElementById("good10").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
-		document.getElementById("a1").href =changeUrlArg('itemid',document.getElementById("a1").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
-		document.getElementById("a2").href =changeUrlArg('itemid',document.getElementById("a2").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
-		document.getElementById("a3").href =changeUrlArg('itemid',document.getElementById("a3").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
-		document.getElementById("a4").href =changeUrlArg('itemid',document.getElementById("a4").href.replace(window.location.protocol+"//"+window.location.host+'/','')).replace(window.location.pathname,'/items').replace('#','');
+		
 
 		}	 
 
@@ -74,42 +71,7 @@ function change()
  <script type="text/javascript"> 
 
 </script>
- <script type="text/javascript"> 
- function fuck(id,pic_id,url,b1,a1,a2,a3,a4)
- {
-	
-	document.getElementById(b1+'1').href = document.getElementById(b1+'1').href.replace(document.getElementById(b1+'1').href.split('itemid=')[1],pic_id);
-	document.getElementById(b1).src = url ;
-	if(id == 1)
-	{
-	document.getElementById(a1).className='active';
-	document.getElementById(a2).className='';
-	document.getElementById(a3).className='';
-	document.getElementById(a4).className='';
-	}
-	else if(id == 2)
-	{
-	document.getElementById(a2).className='active';
-	document.getElementById(a1).className='';
-	document.getElementById(a3).className='';
-	document.getElementById(a4).className='';
-	}
-	else if(id == 3)
-	{
-	document.getElementById(a3).className='active';
-	document.getElementById(a2).className='';
-	document.getElementById(a1).className='';
-	document.getElementById(a4).className='';
-	}
-	else if(id == 4)
-	{
-	document.getElementById(a4).className='active';
-	document.getElementById("a2").className='';
-	document.getElementById("a3").className='';
-	document.getElementById("a1").className='';
-	}
- }
- </script> 
+
 </head>
 
 <body onload="change()">

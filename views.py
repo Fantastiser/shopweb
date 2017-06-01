@@ -74,7 +74,14 @@ class Login(BaseHandler):
         self.render('login.html',
 		)
 
-
+class Shopcart(BaseHandler):
+    def get(self):
+        self.render('shopcart.html',
+		)
+class checkorder(BaseHandler):
+    def get(self):
+        self.render('checkorder.html',
+		)
 class Register(tornado.web.RequestHandler):
     def get(self):
         self.render('register.html',

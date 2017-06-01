@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>核对订单</title>
+<link type="text/css" rel="stylesheet" href="../static/css/reset.css">
+<link rel="stylesheet" href="../static/css/city.css" />
+<link type="text/css" rel="stylesheet" href="../static/css/main.css">
+<!--[if IE 6]>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+<script type="text/javascript" src="js/ie6Fixpng.js"></script>
+<![endif]-->
+</head>
+<script type="text/javascript" src="../static/js/test.js"></script>
+<script type="text/javascript">
+var length;//全局变量
+var result=[{"username":"zby","pic":"../static/images/des_sm.jpg","name":"追风筝的人","info":"作者陈安哲","stdprice":"68","price":"58.1","number":"5","amount":"290.5"}, 
+		{"username":"zby","pic":"../static/images/des_sm.jpg","name":"高等数学","info":"同济大学","stdprice":"18","price":"12.4","number":"3","amount":"37.2"},
+		{"username":"zby","pic":"../static/images/des_sm.jpg","name":"线性代数","info":"哈尔滨工业大学","stdprice":"28","price":"2.4","number":"3","amount":"7.2"},
+		{"username":"zby","pic":"../static/images/des_sm.jpg","name":"线性代数","info":"哈尔滨工业大学","stdprice":"28","price":"2.7","number":"3","amount":"8.1"}
+		];
+var data={
+			"username":"赵博宇",//用户名
+			"receiver":"赵博宇",//收货人
+			"address":"山东省威海市高区文化西路2号哈尔滨工业大学",//收货地址
+			"tel":"17862702222",//手机号码
+			"ordernumber":"123456",//订单编号
+			"ordertime":"2017年5月31日"//创建订单时间
+		};
+		data["ordertime"]=new Date().toLocaleString();
+
+
+length=result.length;
+function insert()
+{			
+	var insertText=[
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic0" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name0">商品链接</a></p><p class="cart_info" id="info0">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice0">￥15</div><div class="cart_item t_price" id="price0">￥10</div><div class="cart_item t_num" id="number0">2</div><div class="cart_item t_subtotal t_red" id="amount0">￥20</div></div></div>',	
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic1" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name1">商品链接</a></p><p class="cart_info" id="info1">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice1">￥15</div><div class="cart_item t_price" id="price1">￥10</div><div class="cart_item t_num" id="number1">2</div><div class="cart_item t_subtotal t_red" id="amount1">￥20</div></div></div>',
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic2" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name2">商品链接</a></p><p class="cart_info" id="info2">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice2">￥15</div><div class="cart_item t_price" id="price2">￥10</div><div class="cart_item t_num" id="number2">2</div><div class="cart_item t_subtotal t_red" id="amount2">￥20</div></div></div>',	
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic3" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name3">商品链接</a></p><p class="cart_info" id="info3">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice3">￥15</div><div class="cart_item t_price" id="price3">￥10</div><div class="cart_item t_num" id="number3">2</div><div class="cart_item t_subtotal t_red" id="amount3">￥20</div></div></div>',	
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic4" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name4">商品链接</a></p><p class="cart_info" id="info4">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice4">￥15</div><div class="cart_item t_price" id="price4">￥10</div><div class="cart_item t_num" id="number4">2</div><div class="cart_item t_subtotal t_red" id="amount4">￥20</div></div></div>',	
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic5" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name5">商品链接</a></p><p class="cart_info" id="info5">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice5">￥15</div><div class="cart_item t_price" id="price5">￥10</div><div class="cart_item t_num" id="number5">2</div><div class="cart_item t_subtotal t_red" id="amount5">￥20</div></div></div>',	
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic6" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name6">商品链接</a></p><p class="cart_info" id="info6">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice6">￥15</div><div class="cart_item t_price" id="price6">￥10</div><div class="cart_item t_num" id="number6">2</div><div class="cart_item t_subtotal t_red" id="amount6">￥20</div></div></div>',	
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic7" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name7">商品链接</a></p><p class="cart_info" id="info7">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice7">￥15</div><div class="cart_item t_price" id="price7">￥10</div><div class="cart_item t_num" id="number7">2</div><div class="cart_item t_subtotal t_red" id="amount7">￥20</div></div></div>',	
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic8" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name8">商品链接</a></p><p class="cart_info" id="info8">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice8">￥15</div><div class="cart_item t_price" id="price8">￥10</div><div class="cart_item t_num" id="number8">2</div><div class="cart_item t_subtotal t_red" id="amount8">￥20</div></div></div>',	
+'<div class="shopping_item"><div class="shopping_cont cart_inner"><div class="cart_head"><div class="cart_item t_name">商品名称</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic9" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name9">商品链接</a></p><p class="cart_info" id="info9">商品信息</p></div></div></div><div class="cart_item t_standardprice" id="stdprice9">￥15</div><div class="cart_item t_price" id="price9">￥10</div><div class="cart_item t_num" id="number9">2</div><div class="cart_item t_subtotal t_red" id="amount9">￥20</div></div></div>'];		
+	for(var i=1;i<length;i++)
+	{
+		document.getElementById("insert"+i).innerHTML=insertText[i];
+	}		
+}
+function change(){
+    var reg = new RegExp("(^|&)" + 'user' + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg); 
+	
+	document.getElementById("username").innerHTML =result[0]["username"]; 
+	//alert(document.getElementById("name").innerHTML);
+	document.getElementById("receiver").value =data["receiver"]; 
+	document.getElementById("tel").value =data["tel"]; 
+	document.getElementById("address").value=data["address"]; 
+	
+	document.getElementById("pic").src=result[0]["pic"];
+	document.getElementById("name").innerHTML =result[0]["name"];
+	document.getElementById("info").innerHTML =result[0]["info"];
+	document.getElementById("stdprice").innerHTML ="￥"+result[0]["stdprice"];
+	document.getElementById("price").innerHTML ="￥"+result[0]["price"];
+	document.getElementById("number").innerHTML =result[0]["number"];
+	document.getElementById("amount").innerHTML ="￥"+result[0]["amount"];
+	
+
+	for(var i=1;i<length;i++){
+		document.getElementById("pic"+i).src=result[i]["pic"];
+		document.getElementById("name"+i).innerHTML =result[i]["name"];
+		document.getElementById("info"+i).innerHTML =result[i]["info"];
+		document.getElementById("stdprice"+i).innerHTML ="￥"+result[i]["stdprice"];
+		document.getElementById("price"+i).innerHTML ="￥"+result[i]["price"];
+		document.getElementById("number"+i).innerHTML =result[i]["number"];
+		document.getElementById("amount"+i).innerHTML ="￥"+result[i]["amount"];
+	}	
+	var total=0;
+	for(var i=0;i<length;i++){		
+		total+=parseFloat(result[i]["amount"]);
+	}
+	document.getElementById("total").innerHTML ="￥"+total.toString();
+}		
+	<!-- $.ajax({ -->
+	<!-- type:'GET', -->
+	<!-- data:{"information":username}, -->
+	<!-- url:'/ajax/shop', -->
+	<!-- dataType:'json', -->
+	<!-- success:function (result) {		 -->
+		<!-- }				 -->
+	<!-- });	 -->
+</script>
+<body onload="insert();change();">
+<div class="headerBar">
+	<div class="topBar">
+		<div class="comWidth">
+			<div class="leftArea">
+				<a href="#" class="collection">收藏BookShop</a>
+			</div>
+			<div class="rightArea">
+				欢迎来到Bookshop！<a href="#" id="username">[登录]</a><a href="#">[免费注册]</a>
+			</div>
+		</div>
+	</div>
+<div class="logoBar">
+		<div class="comWidth">
+			<div class="logo fl">
+				<a href="#"><img src="../static/images/logo.jpg" alt="慕课网"></a>
+			</div>
+			<div class="stepBox fr">
+				<div class="step1"></div>
+				<ul class="step_text">
+					<li class="s01 active">我的购物车</li>
+					<li class="s02">填写核对订单</li>
+					<li class="s03">订单提交成功</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="shoppingCart comWidth">
+	<div class="shopping_item">
+		<h3 class="shopping_tit">收货地址</h3>
+		<div class="shopping_cont padding_shop">
+			<ul class="shopping_list">
+				<li><span class="shopping_list_text" ><em>*</em>收 货 人：</span><input id="receiver" type="text" value="1" class="input"></li>
+				<li><span class="shopping_list_text" ><em>*</em>手	机：</span><input  id="tel" type="text" value="2" class="input"></li>
+				
+				<li><div class="input">
+					<div class="xiala">
+						<h1><span><em>*</em>选择地区：</span></h1>
+					</div>
+				</div></li>		
+				
+				<script src="../static/js/diquxuanze.js"></script>
+				<li><span class="shopping_list_text" ><em>*</em>详细地址：</span><input  id="address" type="text" value="3" class="input input_b"></li>
+				<li><input type="button" class="affirm"></li>
+			</ul>
+		</div>
+	</div>
+	<div class="hr_25"></div>
+	<div class="shopping_item">
+		<h3 class="shopping_tit">订单</h3>
+		<div class="shopping_cont">
+			<div class="cart_inner">
+				<div class="cart_head">
+					<div class="cart_item t_name">商品名称</div>
+					<div class="cart_item t_standardprice">标价</div>
+					<div class="cart_item t_price">现价</div>
+					<div class="cart_item t_num">数量</div>
+					<div class="cart_item t_subtotal">小计</div>
+				</div>
+				<div class="cart_cont clearfix">
+					<div class="cart_item t_name">
+						<div class="cart_shopInfo">
+							<img id="pic" src="../static/images/des_sm.jpg" alt="">
+							<div class="cart_shopInfo_cont">
+								<p class="cart_link"><a href="#" id="name">商品链接</a></p>
+								<p class="cart_info" id="info">商品信息</p>
+							</div>
+						</div>
+					</div>
+					<div class="cart_item t_standardprice" id="stdprice">
+						￥15
+					</div>
+					<div class="cart_item t_price" id="price">￥10</div>
+					<div class="cart_item t_num" id="number">2</div>
+					<div class="cart_item t_subtotal t_red" id="amount">￥20</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+	<div id="insert1"></div>
+	<div id="insert2"></div>
+	<div id="insert3"></div>
+	<div id="insert4"></div>
+	<div id="insert5"></div>
+	<div id="insert6"></div>
+	<div id="insert7"></div>
+	<div id="insert8"></div>
+	<div id="insert9"></div>
+	<div class="hr_25"></div>
+	<div class="shopping_item">
+		<h3 class="shopping_tit">支付方式</h3>
+		<div class="shopping_cont padding_shop">
+			<ul class="shopping_list">
+			
+				<li><input type="radio" name="r1" value="wechatpay" />微信支付</li>
+				<li><input type="radio" name="r1" value="Alipay" />支付宝支付</li>
+			</ul>
+		</div>
+	</div>
+	<div class="hr_25"></div>
+	<div class="shopping_item">
+		<h3 class="shopping_tit">总计</h3>
+		<div class="shopping_cont padding_shop clearfix">
+			<div class="cart_count fr">
+				<div class="cart_rmb">
+					<i>总计：</i><span id= "total" >￥145.00</span>
+				</div>
+				<div class="cart_btnBox">
+					<input type="button" class="cart_btn" value="提交订单">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="hr_25"></div>
+<div class="footer">
+	<p><a href="#">慕课简介</a><i>|</i><a href="#">慕课公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
+	<p>Copyright &copy; 2006 - 2014 慕课版权所有&nbsp;&nbsp;&nbsp;京ICP备09037834号&nbsp;&nbsp;&nbsp;京ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
+	<p class="web"><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a></p>
+</div>
+</body>
+</html>
