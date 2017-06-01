@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+﻿	@charset "utf-8";
 /* CSS Document */
 
 /*公用*/
@@ -295,7 +295,9 @@
 .review_cont p{line-height:30px;}
 /*购物车*/
 .stepBox{width:396px; padding-top:26px;}
-.step{background:url(../images/step.jpg) left top no-repeat; height:19px;}
+.step1{background:url(../images/step1.jpg) left top no-repeat; height:19px;}
+.step2{background:url(../images/step2.jpg) left top no-repeat; height:19px;}
+.step3{background:url(../images/step3.jpg) left top no-repeat; height:19px;}
 .step_text{color:#FFF; font-size:12px; line-height:30px;}
 .step_text li{float:left;}
 .s01,.s03{width:30%;}
@@ -323,20 +325,31 @@
 .cart_head{padding-top:5px;}
 .cart_head .cart_item{line-height:28px;}
 .cart_item{border-bottom:#CCC solid 1px; float:left;}
-.t_name{width:440px; padding-left:30px;}
-.t_price{width:134px;}
-.t_return{width:136px;}
-.t_num{width:135px;}
-.t_subtotal{width:123px;}
+.t_name{width:440px; padding-left:15px;}
+.t_standardprice{width:132px;}
+.t_price{width:132px;}
+.t_num{width:131px;}
+.t_subtotal{width:131px;}
+
+.t_standardprice1{width:128px;padding-left:12px}
+.t_price1{width:131px;padding-left:5px}
+.t_num1{width:122px;padding-left:5px}
+.t_subtotal1{width:125px;padding-left:5px}
 .t_red{color:red;}
+.delete_btn{width:40px; height:23px; background:url(../images/icon/delete_btn.jpg) left top no-repeat;}
+.selectall_btn{width:40px; height:23px; background:url(../images/icon/delete_btn.jpg) left top no-repeat;}
 /*商品信息*/
 .cart_cont{border-bottom:solid 1px #ccc;}
 .cart_cont .cart_item{border-bottom:none;}
+.cart_cont .t_standardprice,
 .cart_cont .t_price,
-.cart_cont .t_return,
 .cart_cont .t_num,
-.cart_cont .t_subtotal{line-height:37px;}
-.cart_shopInfo img{width:90px; height:100px; display:block; float:left;}
+.cart_cont .t_subtotal,
+.cart_cont .t_standardprice1,
+.cart_cont .t_price1,
+.cart_cont .t_num1,
+.cart_cont .t_subtotal1{line-height:50px;}
+.cart_shopInfo img{width:105px; height:100px; display:block; float:left;}
 .cart_shopInfo_cont{padding-left:90px; font-size:12px;}
 .cart_link{line-height:37px; margin-bottom:30px;}
 .cart_link a:hover{text-decoration:underline;}
@@ -351,6 +364,7 @@
 .cart_rmb span{font:bold 24px/1 Verdana; color:red;}
 .cart_btnBox{text-align:right;}
 .cart_btn{width:165px; height:33px; background-color:#E50007; font:18px/33px "Microsoft YaHei", "微软雅黑"; color:#FFF;}
+.back_btn{width:165px; height:33px; background-color:#E50007; font:18px/33px "Microsoft YaHei", "微软雅黑"; color:#FFF;}
 /*登陆*/
 .login_logo .comWidth{width:460px;}
 .welcome_title{font:22px/85px "Microsoft YaHei", "微软雅黑"; color:#FFF; float:left; padding-left:24px;}
