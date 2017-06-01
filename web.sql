@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : web
+Source Server         : test
 Source Server Version : 50713
 Source Host           : localhost:3306
 Source Database       : web
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-06-01 23:32:20
+Date: 2017-06-02 04:57:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -141,23 +141,27 @@ INSERT INTO `kinds` VALUES ('9', '漫画书', '../static/images/kinds/comic.jpg'
 INSERT INTO `kinds` VALUES ('10', '电子书', '../static/images/kinds/ebook.jpg');
 
 -- ----------------------------
--- Table structure for order
+-- Table structure for orders
 -- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
-  `id` int(10) NOT NULL,
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` varchar(10) DEFAULT NULL,
+  `itemid` varchar(255) DEFAULT NULL,
   `itemname` varchar(30) DEFAULT NULL,
   `username` varchar(30) DEFAULT NULL,
-  `num` int(5) DEFAULT NULL,
+  `num` varchar(5) DEFAULT NULL,
   `regtime` varchar(20) DEFAULT NULL,
   `price` varchar(5) DEFAULT NULL,
   `amount` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `conditions` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of order
+-- Records of orders
 -- ----------------------------
+INSERT INTO `orders` VALUES ('2', '18', '《外婆的道歉信》', '1', '1', '2017-06-02 04:55:34', '27.0', '27.0', '1');
+INSERT INTO `orders` VALUES ('3', '20', '《钢铁是怎样练成的》', '1', '6', '2017-06-02 04:55:34', '40.0', '240.0', '1');
+INSERT INTO `orders` VALUES ('4', '20', '《钢铁是怎样练成的》', '1', '6', '2017-06-02 04:55:34', '40.0', '240.0', '1');
 
 -- ----------------------------
 -- Table structure for picture
@@ -185,6 +189,7 @@ CREATE TABLE `users` (
   `password` varchar(30) DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
   `phonenum` varchar(30) DEFAULT NULL,
+  `receiver` varchar(255) DEFAULT NULL,
   `address` varchar(50) DEFAULT NULL,
   `regtime` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -193,4 +198,5 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'z', 'z', 'z', 'None', 'None', '2017-06-01');
+INSERT INTO `users` VALUES ('1', 'z', 'z', 'z', 'None', null, 'None', '2017-06-01');
+INSERT INTO `users` VALUES ('2', '1', '1', '1', '1110', '', '威海', '2017-06-01');
