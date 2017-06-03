@@ -187,6 +187,12 @@ function shopcart() {
 
 	
 }
+function EnterPress(e){ //传入 event
+	var e = e || window.event;
+	if(e.keyCode == 13){
+		search();
+	}
+}
 </script>
 <body onload="fiter()">
 
@@ -211,7 +217,7 @@ function shopcart() {
 				<a href="/shop"><img src="../static/images/logo.jpg" alt="BookShop"></a>
 			</div>
 			<div class="search_box fl" >
-				<input type="text" class="search_text fl" id="items" >
+				<input type="text" class="search_text fl" id="items" onkeydown="EnterPress()" >
 				<input type="button" value="搜 索" class="search_btn fr"  style="cursor:pointer" onclick="search()">
 			</div>
 			<div class="shopCar fr">
@@ -277,7 +283,7 @@ function shopcart() {
 				</span>
 			</div>
 		</div>
-		<div class="products_list screening_list_more clearfix" >
+		<div class="products_list screening_list_more clearfix"  style="text-align:center">
 			<div class="item" id="box0">
 				<div class="item_cont">
 					<div class="img_item">
@@ -391,7 +397,6 @@ function shopcart() {
 <div class="footer">
 	<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
 	<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
-	<p class="web"><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a></p>
-</div>
+	</div>
 </body>
 </html>

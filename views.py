@@ -24,6 +24,9 @@ class Start(BaseHandler):
             pic_url1= pic_ul[0][1],
             pic_url2 = pic_ul[1][1],
             pic_url3=pic_ul[2][1],
+			pic_src1= pic_ul[0][0],
+            pic_src2 = pic_ul[1][0],
+            pic_src3=pic_ul[2][0],
             titlename1=titlename1[0],
             background1 = titlename1[1],
             part1_src1=theme1[0][3],
@@ -80,6 +83,13 @@ class Shopcart(BaseHandler):
         if self.current_user == None:
             self.current_user = "[登录]"
         self.render('shopcart.html',
+                    user=self.current_user,
+		)
+class person(BaseHandler):
+    def get(self):
+        if self.current_user == None:
+            self.current_user = "[登录]"
+        self.render('personalcenter.html',
                     user=self.current_user,
 		)
 class checkorders(BaseHandler):

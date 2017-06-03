@@ -1,0 +1,368 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>个人中心</title>
+<link type="text/css" rel="stylesheet" href="../static/css/reset.css">
+<link type="text/css" rel="stylesheet" href="../static/css/main.css">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script src="/static/js/jquery.js" type="text/javascript"></script>
+<style type="text/css"> 
+*{ margin:0; padding:0;}
+h1.tit-h1 { font-size:38px; text-align:center; margin:30px 0 15px; color:#f60;}
+.wrap{border:1px dashed #ccc; background:#f8f8f8; padding:20px;}
+
+/* 本案例需要的css样式 */
+ul,li{ list-style:none;}
+.tab{ width:1120px; margin:0 auto 50px;}
+.tab-hd { background:#1468c2; overflow:hidden; zoom:1;}
+.tab-hd li{ float:left; width:180px; padding: 6px;color:#fff; font-size:16px;text-align:center; cursor:pointer;}
+.tab-hd li.active{ background:#4594fd;}
+.tab-bd li{display:none; border:1px solid #ddd; border-top:0 none; font-size:16px;}
+.tab-bd li.thisclass{ display:list-item;}
+</style> 
+
+</head>
+<script type="text/javascript" src="../static/js/test.js"></script>
+<script type="text/javascript" src="../static/js/init.js"></script>
+<script type="text/javascript">
+var length;//全局变量
+var result=[];
+var data=[];
+function insert(){
+	 login = document.getElementById("login").innerHTML;
+	   if(login !="[登录]")
+	   {
+		document.getElementById("register").innerHTML = "个人中心";
+		document.getElementById("login").href ="#"
+		document.getElementById("register").href = "/person";
+	}
+	$.ajax({
+				type:'GET',
+				data:{"username":login,"condition":3},
+				url:'/ajax/checkorder',
+				dataType:'json',
+				success:function (results){
+				if (results["msg"]=="success"){
+					result=results["data"];
+					data =results["user"];
+	length=result.length; 
+	if(length!=0){
+		for (var i=length-1;i>=0;i--){			
+			var oldNode = document.getElementById("oldNode");
+			var newNode = document.createElement("p");	
+			newNode.innerHTML = '<div class="shopping_item"><div class="shopping_cont"><div class="cart_inner"><div class="cart_head"><div class="cart_item t_name" id="ordernum'+i+'">订单编号：1</div><div class="cart_item t_standardprice">标价</div><div class="cart_item t_price">现价</div><div class="cart_item t_num">数量</div><div class="cart_item t_subtotal">小计</div><div class="cart_item t_subtotal">订单状态</div></div><div class="cart_cont clearfix"><div class="cart_item t_name"><div class="cart_shopInfo"><img id="pic'+i+'" src="../static/images/des_sm.jpg" alt=""><div class="cart_shopInfo_cont"><p class="cart_link"><a href="#" id="name'+i+'">《演讲口才》</a></p><p class="cart_info" id="info'+i+'">讲述卡耐基魅力口才与说话技巧的书</p></div></div></div><div class="cart_item t_standardprice" id="stdprice'+i+'">￥15</div><div class="cart_item t_price" id="price'+i+'">￥10</div><div class="cart_item t_num" id="number'+i+'">2</div><div class="cart_item t_subtotal t_red" id="amount'+i+'">￥20</div><div class="cart_item t_subtotal " id="status'+i+'">已完成</div></div></div></div></div>'; 		
+			oldNode.insertBefore(newNode,oldNode.childNodes[0]); 
+		}	
+	}
+	
+		document.getElementById("receiver").value =data["receiver"]; 
+	document.getElementById("tel").value =data["tel"]; 
+	document.getElementById("address").value=data["address"]; 
+	document.getElementById("stdprice").innerHTML =login;
+	document.getElementById("amount").innerHTML = data["address"];
+	for(var i=0;i<length;i++){
+		document.getElementById("ordernum"+i).innerHTML ="订单编号："+result[i]["ordernum"];
+		document.getElementById("pic"+i).src=result[i]["pic"];
+		document.getElementById("name"+i).href = "/items?itemid="+result[i]["id"]
+		document.getElementById("name"+i).innerHTML =result[i]["name"];
+		document.getElementById("info"+i).innerHTML =result[i]["info"];
+		document.getElementById("stdprice"+i).innerHTML ="￥"+result[i]["stdprice"];
+		document.getElementById("price"+i).innerHTML ="￥"+result[i]["price"];
+		document.getElementById("number"+i).innerHTML =result[i]["number"];
+		document.getElementById("amount"+i).innerHTML ="￥"+result[i]["amount"];
+		document.getElementById("status"+i).innerHTML =result[i]["status"];
+	}
+	
+}
+else {
+alert("请登录");
+location.href = "/login"
+}
+}
+});
+}
+function affirm()
+{
+a = document.getElementById("receiver").value ; 
+	b= document.getElementById("tel").value ; 
+	c = document.getElementById("address").value; 
+	$.ajax({
+				type:'GET',
+				data:{"username":document.getElementById("login").innerHTML,"receiver":a,"tel":b,"address":c},
+				url:'/ajax/changeaddress',
+				dataType:'json',
+				success:function (result){
+				if (result["msg"]=="true")
+				{
+				alert("修改成功")
+				}
+				}
+		});
+}
+</script>
+<body onload="insert();">
+<div class="headerBar">
+	<div class="topBar">
+		<div class="comWidth">
+			<div class="leftArea">
+				<a onclick="AddFavorite('/shop')"href="javascript:void(0)" class="collection">收藏BookShop</a>
+			</div>
+			<div class="rightArea">
+					欢迎来到BookShop！<a href="/login" id="login">{{user}}</a>
+	<a href="/register" id="register" >[免费注册]</a>
+	<input type="submit" value="退出登录" style="cursor:pointer" onclick="logout()" id="logout"></input>
+			</div>
+		</div>
+	</div>
+<div class="logoBar">
+		<div class="comWidth">
+			<div class="logo fl">
+				<a href="/shop"><img src="../static/images/logo.jpg" alt="BookShop"></a>
+			</div>
+			<h3 class="welcome_title">个人中心</h3>
+		</div>
+		
+	</div>
+</div>
+<div class="wrap">
+
+	<div class="tab">
+		<ul class="tab-hd"><li class="active">我的资料</li><li>地址管理</li><li>评价管理</li></ul>
+		<ul class="tab-bd">
+			<li class="thisclass">
+				<div class="shopping_item"> <!-- 我的资料 -->
+		<div class="shopping_cont">
+			<div class="cart_inner">
+				<div class="cart_head">
+					<div class="cart_item t_name">&nbsp;</div>
+					<div class="cart_item t_standardprice">用户名</div>
+					<div class="cart_item t_price">年龄</div>
+					<div class="cart_item t_num">性别</div>
+					<div class="cart_item t_subtotal">地区</div>
+					<div class="cart_item t_subtotal">会员等级</div>
+				</div>
+				<div class="cart_cont clearfix">
+					<div class="cart_item t_name">
+						<div class="cart_shopInfo">
+							<img id="pic" src="../static/images/photo.jpg" alt="">
+							<div class="cart_shopInfo_cont">
+								<p class="cart_link"><a href="#" id="name">.</a></p>
+								<p class="cart_info" id="info">.</p>
+							</div>
+						</div>
+					</div>
+					<div class="cart_item t_standardprice" id="stdprice">赵博宇</div>
+					<div class="cart_item t_price" id="price">20</div>
+					<div class="cart_item t_num" id="number">男</div>
+					<div class="cart_item t_subtotal " id="amount">河南郑州</div>
+					<div class="cart_item t_subtotal " id="status">lv.2</div>
+				</div>
+			</div>
+		</div>
+	</div>
+				</li>
+			<li><!-- 地址管理 -->
+				<!-- <div class="shopping_item"> -->
+					<!-- <h3 class="shopping_tit">收货地址</h3> -->
+					<div class="shopping_cont padding_shop">
+						<ul class="shopping_list">
+							<Br><span class="shopping_list_text" ><em>*</em>收货人：</span><input id="receiver" type="text" value="" class="input"></Br>
+							<Br><span class="shopping_list_text" ><em>*</em>手机：</span><input  id="tel" type="text" value="" class="input"></Br>
+							<Br><span class="shopping_list_text" ><em>*</em>地址：</span><input  id="address" type="text" value="" class="input input_b"></Br>
+							<Br><input type="button" style="cursor:pointer"class="affirm" onclick="affirm()"></Br>
+						</ul>
+					</div>
+				<!-- </div>						 -->
+			</li>
+			<li><!-- 评价管理 -->
+				<div class="shopping_item">							<!-- 我的订单 -->
+					<div class="shopping_cont">
+						<div class="cart_inner">
+							<div class="cart_head">
+								<div class="cart_item t_name">书名：《高等数学》</div>
+								<div class="cart_item t_standardprice">金额</div>
+								<div class="cart_item t_price">图书质量</div>
+								<div class="cart_item t_num">服务评价</div>
+								<div class="cart_item t_subtotal">物流评价</div>
+								<div class="cart_item t_standardprice">总体评价</div>
+							</div>
+							<div class="cart_cont clearfix">
+								<div class="cart_item t_name">
+									<div class="cart_shopInfo">
+										<img id="pic" src="../static/images/des_sm.jpg" alt="">
+										<div class="cart_shopInfo_cont">
+											<p class="cart_link"><a href="#" id="name">《高等数学》统计大学第七版</a></p>
+											<p class="cart_info" id="info">书是正版，物流很给力，好评！</p>
+										</div>
+									</div>
+								</div>
+								<div class="cart_item t_standardprice" id="stdprice">￥45</div>
+								<div class="cart_item t_price" id="price">好评</div>
+								<div class="cart_item t_num" id="number">好评</div>
+								<div class="cart_item t_subtotal " id="amount">好评</div>
+								<div class="cart_item t_subtotal " id="status">好评</div>
+							</div>
+						</div>
+					</div>
+				</div>								
+			</li>
+			</ul>
+	</div>
+
+	<div class="tab">
+		<ul class="tab-hd"><li class="active">我的足迹</li><li>我的订单</li><li>我的快递</li></ul>
+		<ul class="tab-bd"><li class="thisclass">
+			<div class="shopping_item">					
+				<div class="shopping_cont">
+					<div class="cart_inner">
+						<div class="cart_head">
+							<div class="cart_item t_name">&nbsp;</div>
+							<div class="cart_item t_standardprice">标价</div>
+							<div class="cart_item t_price">现价</div>
+							<div class="cart_item t_num">&nbsp;</div>
+							<div class="cart_item t_subtotal">&nbsp;</div>
+							<div class="cart_item t_subtotal">&nbsp;</div>
+						</div>
+						<div class="cart_cont clearfix">
+							<div class="cart_item t_name">
+								<div class="cart_shopInfo">
+									<img id="pic" src="../static/images/des_sm.jpg" alt="">
+									<div class="cart_shopInfo_cont">
+										<p class="cart_link"><a href="#" id="name">《演讲口才》</a></p>
+										<p class="cart_info" id="info">卡耐基魅力口才与说话技巧的书</p>
+									</div>
+								</div>
+							</div>
+							<div class="cart_item t_standardprice" id="stdprice">￥28</div>
+							<div class="cart_item t_price" id="price">￥20</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li><!-- 我的订单 -->
+		<div id="oldNode"></div>
+		
+			<!-- <div class="shopping_item">	 -->
+				<!-- <div class="shopping_cont"> -->
+					<!-- <div class="cart_inner"> -->
+						<!-- <div class="cart_head"> -->
+							<!-- <div class="cart_item t_name">&nbsp;</div> -->
+							<!-- <div class="cart_item t_standardprice">标价</div> -->
+							<!-- <div class="cart_item t_price">现价</div> -->
+							<!-- <div class="cart_item t_num">数量</div> -->
+							<!-- <div class="cart_item t_subtotal">小计</div> -->
+							<!-- <div class="cart_item t_subtotal">订单状态</div> -->
+						<!-- </div> -->
+						<!-- <div class="cart_cont clearfix"> -->
+							<!-- <div class="cart_item t_name"> -->
+								<!-- <div class="cart_shopInfo"> -->
+									<!-- <img id="pic" src="../static/images/des_sm.jpg" alt=""> -->
+									<!-- <div class="cart_shopInfo_cont"> -->
+										<!-- <p class="cart_link"><a href="#" id="name">《演讲口才》</a></p> -->
+										<!-- <p class="cart_info" id="info">订单编号：237857935756</p> -->
+									<!-- </div> -->
+								<!-- </div> -->
+							<!-- </div> -->
+							<!-- <div class="cart_item t_standardprice" id="stdprice">￥15</div> -->
+							<!-- <div class="cart_item t_price" id="price">￥10</div> -->
+							<!-- <div class="cart_item t_num" id="number">2</div> -->
+							<!-- <div class="cart_item t_subtotal t_red" id="amount">￥20</div> -->
+							<!-- <div class="cart_item t_subtotal " id="status">已完成</div> -->
+						<!-- </div> -->
+					<!-- </div> -->
+				<!-- </div> -->
+			<!-- </div> -->
+		</li>
+		<li><!-- 我的快递 -->
+			<div class="shopping_item">	
+				<div class="shopping_cont">
+					<div class="cart_inner">
+						<div class="cart_head">
+							<div class="cart_item t_name">订单编号:1</div>
+							<div class="cart_item t_standardprice">下单时间</div>
+							<div class="cart_item t_num">发货时间</div>
+							<div class="cart_item t_subtotal">当前状态</div>
+							<div class="cart_item t_subtotal">最新物流</div>		
+							<div class="cart_item t_subtotal">&nbsp</div>	
+						</div>
+						<div class="cart_cont clearfix">
+							<div class="cart_item t_name">
+								<div class="cart_shopInfo">
+									<img id="pic" src="../static/images/des_sm.jpg" alt="">
+									<div class="cart_shopInfo_cont">
+										<p class="cart_link" id="name">顺丰快递</p>
+										<p class="cart_info" id="info">快递单号：237857935756</p>
+									</div>
+								</div>
+							</div>
+							<div class="cart_item t_standardprice" id="stdprice">2017-05-28 &thinsp;&thinsp;&thinsp; 17：23:56</div>
+							<div class="cart_item t_price" id="price">2017-05-28 &thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;19：41:38</div>
+							<div class="cart_item t_num" id="number">待收货</div>
+							<div class="cart_item t_subtotal" id="amount">快件已到达济南转运中心</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function(e) {
+					var h = $(".about4_main ul br:first-child").height()/2;<!--第一个li高度的一半-->
+					var h1 = $(".about4_main ul br:last-child").height()/2;<!--最后一个li高度的一半-->
+					$(".line").css("top",h);
+					$(".line").height($(".about4_main").height()-h1-h);
+				});
+			</script>				
+			<div class="about4">
+				<div class="about4_ch">详细物流信息：</div>
+				<div class="about4_main">
+					<div class="line"></div>
+					<ul>
+						<br>
+							[济南市]2017-06-01 09:35:24 快件已到达济南转运中心，即将发往威海转运中心。
+						</br>
+						<br>
+							[上海市]2017-05-31 21:55:42 快件已到达上海转运中心，即将发往济南转运中心。
+						</br>
+						<br>
+							[上海市]2017-05-31 18:45:27 快递员已揽件。
+						</br>
+						<br>
+							2017-05-31 18:16:23您的订单已出库。
+						</br>
+						<br>
+							2017-05-31 17:56:34 您的订单开始处理。
+						</br>
+					</ul>
+				</div>
+			</div>
+			<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+		</li></ul>
+	</div>
+
+    
+</div>
+
+<script type="text/javascript" src="../static/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    function tabs(tabTit,on,tabCon){
+        $(tabTit).children().hover(function(){
+            $(this).addClass(on).siblings().removeClass(on);
+            var index = $(tabTit).children().index(this);
+           	$(tabCon).children().eq(index).show().siblings().hide();
+    	});
+	};
+    tabs(".tab-hd","active",".tab-bd");
+});
+</script>
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+</div>
+<div class="footer">
+		<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
+		<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
+	
+	</div>
+</body> 
+</html>

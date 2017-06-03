@@ -22,6 +22,7 @@
 
 
 <script type="text/javascript">
+
 function change()
 {
        login = document.getElementById("login").innerHTML;
@@ -78,6 +79,12 @@ function shopcart() {
 		window.open('/login');
 	}
 }
+function EnterPress(e){ //传入 event
+	var e = e || window.event;
+	if(e.keyCode == 13){
+		moves();
+	}
+}
 	
 </script>
  <script type="text/javascript"> 
@@ -107,7 +114,7 @@ function shopcart() {
 				<a href="/shop"><img src="../static/images/logo.jpg" alt="BookShop"></a>
 			</div>
 			<div class="search_box fl">
-				<input type="text" class="search_text fl" id="information">
+				<input type="text" class="search_text fl" id="information" onkeydown="EnterPress()">
 				<input type="button" value="搜 索" class="search_btn fr" onClick="moves('/filter')"alt="banner" style="cursor:pointer">
 			</div>
 			<div class="shopCar fr">
@@ -136,17 +143,17 @@ function shopcart() {
 	<div class="shopList rightArea">
 	<div class = "caroursel poster-main" data-setting = '{
 	        "width":790,
-	        "height":330,
-	        "posterWidth":330,
-	        "posterHeight":330,
+	        "height":320,
+	        "posterWidth":310,
+	        "posterHeight":320,
 	        "scale":0.7,
 	        "dealy":"2000",
 	        "algin":"center"
 	    }'>
 	        <ul class = "poster-list">
-	            <li class = "poster-item"><img src = {{pic_url1}} width = "100%" height="100%"></li>
-	            <li class = "poster-item"><img src= {{pic_url2}} width = "100%" height="100%"></li>
-	            <li class = "poster-item"><img src= {{pic_url3}} width = "100%" height="100%"></li>
+	            <li class = "poster-item"><a href="/items?itemid={{pic_src1}}"><img src = {{pic_url1}} width = "100%" height="100%"></a></li>
+	            <li class = "poster-item"><a href="/items?itemid={{pic_src2}}"><img src= {{pic_url2}} width = "100%" height="100%"></a></li>
+	            <li class = "poster-item"><a href="/items?itemid={{pic_src3}}"><img src= {{pic_url3}} width = "100%" height="100%"></a></li>
 	            
 	        
 	            
@@ -262,7 +269,7 @@ function shopcart() {
 				<div class="shop_img">
 					<a href="/items?itemid={{part2_namesrc1}}"><img src="{{part2_src1}}" title={{part2_name1}}></a>
 				</div>
-				<h3>{{part1_name2}}</h3>
+				<h3>{{part2_name1}}</h3>
 				<p>BS价格:￥{{part2_iprice1}}</p>
 			</div>
 			<div class="shop_item">
@@ -336,8 +343,8 @@ function shopcart() {
 
 <div class="footer">
 	<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
-	<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
-	<p class="web"><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a><a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a></p>
+	<p>Copyright &copy; 2016 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp</p>
+
 </div>
 
 

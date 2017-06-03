@@ -248,6 +248,7 @@ class shopcartnum(tornado.web.RequestHandler):
         else:
             result['num'] = 0
         self.write(escape.json_decode(json.dumps(result)))
+
 class addorder(tornado.web.RequestHandler):
     def get(self):
         result={}
@@ -260,13 +261,16 @@ class addorder(tornado.web.RequestHandler):
         condition = self.get_argument("condition")
         amount = float(num)*float(price)
         number = tools.searchDB('orders',['num'],where = "itemid='{0}' and username ='{1}' and conditions ='{2}'".format(str(itemid),str(user),str(condition)))
+        if str(condition)=="1":
+            sql0 = "delete from orders  where conditions='{1}'and username='{0}'".format(str(name), '1')
+            tools.insertDB(sql=sql0)
         if number==():
             max = tools.searchDB('orders', ['max(id)'])[0][0]
             if max == None:
                 max1 = 0
             else:
                 max1 = max
-            sql = "insert  into orders (id,itemid,itemname,username,num,regtime,price,amount,conditions) values ('%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(str(int(max1)+1),str(itemid),str(name),str(user),str(num),str(regtime),str(price),str(amount),str(condition))
+            sql = "insert  into orders (id,itemid,itemname,username,receiver,tel,address,num,regtime,price,amount,conditions) values ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(str(int(max1)+1),str(itemid),str(name),str(user),str("None"),str("None"),str("None"),str(num),str(regtime),str(price),str(amount),str(condition))
             tools.insertDB(sql=sql)
         else:
             nums=int(number[0][0])+int(num)
@@ -279,31 +283,84 @@ class addorder(tornado.web.RequestHandler):
 class checkorder(tornado.web.RequestHandler):
     def get(self):
         list1=[]
-        list0 = ["pic","name","info","stdprice","price","number","amount","id"]
         name = self.get_argument("username")
         condition = self.get_argument("condition")
-        datas = tools.searchDB(
-            sql="SELECT plmg,pName,writer,mPrice,iPrice,num,amount,item.id from orders,item where orders.itemid =item.id and username= '{0}' and conditions = '{1}'".format(
-                str(name), str(condition)))
+        if str(condition)=="3":
+            sql = "SELECT receiver,address,phonenum from users where users.username ='{0}'".format( str(name))
+            data1 = tools.searchDB(sql=sql)
+            if data1!=():
+                datas = data1[0]
+                receiver = datas[0]
+                address = datas[1]
+                phonenum = datas[2]
+                if str(datas[0]) == "None":
+                    receiver =""
+                if str(datas[1]) == "None":
+                    address = ""
+                if str(datas[2]) == "None":
+                    phonenum = ""
+                user = { "receiver": receiver, "address": address, "tel": phonenum}
+                list0 = ["pic", "name", "info", "stdprice", "price", "number", "amount", "id","status","ordernum"]
+                datas = tools.searchDB(
+                    sql="SELECT plmg,pName,writer,mPrice,iPrice,num,amount,item.id,conditions,orders.id from orders,item where orders.itemid =item.id and username= '{0}' and conditions != '{1}'".format(
+                        str(name), str(0)))
 
-        for data in datas:
-            dict = {}
-            for i in xrange(0, len(list0)):
-                dict[list0[i]] = str(data[i])
-            list1.append(dict)
-        result = {"data": list1}
-        if str(condition)=='1':
-            sql="SELECT users.username,receiver,address,phonenum from users,orders where users.username = orders.username and conditions ='{0}' and users.username ='{1}'".format(str(condition),str(name))
-            datas = tools.searchDB(sql = sql)[0]
-            receiver = datas[1]
-            address = datas[2]
-            phonenum = datas[3]
-            if str(datas[1])=="None":
-                receiver =""
-            if str(datas[2])=="None":
-                address =""
-            result["user"] ={"username":str(datas[0]),"receiver":receiver,"address":address,"tel":phonenum}
+                for data in datas:
+                    dict = {}
+                    for i in xrange(0, len(list0)):
+                        if list0[i] =="status":
+                            if str(data[i])=='1':
+                                dict[list0[i]] = "待下单"
+                            elif str(data[i])=='2':
+                                dict[list0[i]] = "已付款"
+                            elif str(data[i]) == '3':
+                                dict[list0[i]] = "已发货"
+                            elif str(data[i]) == '4':
+                                dict[list0[i]] = "已完成"
+                        else:
+                            dict[list0[i]] = str(data[i])
+                    list1.append(dict)
+                result = {"msg":"success","data": list1,"user":user}
+            else:
+                result ={"msg":"fail"}
+        else:
+            sql = "SELECT phonenum from users where username ='{0}'".format(str(name))
+            data1 = tools.searchDB(sql=sql)
+            if data1 != ():
+                list0 = ["pic", "name", "info", "stdprice", "price", "number", "amount", "id"]
+                datas = tools.searchDB(
+                    sql="SELECT plmg,pName,writer,mPrice,iPrice,num,amount,item.id from orders,item where orders.itemid =item.id and username= '{0}' and conditions = '{1}'".format(
+                        str(name), str(condition)))
+
+                for data in datas:
+                    dict = {}
+                    for i in xrange(0, len(list0)):
+                        dict[list0[i]] = str(data[i])
+                    list1.append(dict)
+                result = {"data": list1}
+                result["msg"] = "success"
+                if str(condition)=='1':
+                    sql="SELECT users.username,users.receiver,users.address,phonenum from users,orders where users.username = orders.username and conditions ='{0}' and users.username ='{1}'".format(str(condition),str(name))
+
+                    data1 = tools.searchDB(sql = sql)
+                    if data1 != ():
+                        datas = data1[0]
+                        receiver = datas[1]
+                        address = datas[2]
+                        phonenum = datas[3]
+                        if str(datas[0]) == "None":
+                            receiver = ""
+                        if str(datas[1]) == "None":
+                            address = ""
+                        if str(datas[2]) == "None":
+                            phonenum = ""
+                        result["user"] = {"username": str(datas[0]), "receiver": receiver, "address": address,
+                                          "tel": phonenum}
+                        result["msg"] = "success"
+            else:
+                result = {"msg" :"fail"}
         self.write(escape.json_decode(json.dumps(result)))
+
 class changeorder(tornado.web.RequestHandler):
     def get(self):
         result={}
@@ -318,18 +375,53 @@ class changeorder(tornado.web.RequestHandler):
                 result = {"data":"true"}
             except:
                 result = {"data": "false"}
-        elif(str(condition)=='1' or str(condition)=='2'):
+        elif(str(condition)=='1'):
             try:
+                sql0 = "delete from orders  where conditions='{1}'and username='{0}'".format(str(name),'1')
+                tools.insertDB(sql=sql0)
                 for i in id:
                     sql = "UPDATE orders SET conditions='{0}' where itemid ='{1}'and username='{2}'".format(str(condition),
                                                                                                             str(i),
-                                                                                                         str(name))
+                                                                                                       str(name))
                     tools.insertDB(sql = sql)
                 result = {"data": "true"}
             except:
                 result = {"data": "false"}
 
         self.write(escape.json_decode(json.dumps(result)))
+class commit(tornado.web.RequestHandler):
+    def get(self):
+        result = {}
+        name = self.get_argument("username")
+        condition = self.get_argument("condition")
+        if (str(condition) == '2'):
+            try:
+                answer = tools.searchDB('users', ['receiver', 'phonenum', 'address'],
+                                        where="username ='{0}'".format(str(name)))
+                id = tools.searchDB('orders', ['itemid','num'],
+                                        where="conditions ='{0}'and username='{1}'".format("1",str(name)))
+                for i in id:
+                    sql0 = "UPDATE item SET isHot=isHot+'{0}' where id ='{1}'".format(str(i[1]),str(i[0]))
+                    tools.insertDB(sql = sql0)
+                sql = "UPDATE orders SET conditions='{0}',receiver='{3}',tel='{4}',address ='{5}'  where conditions ='{1}'and username='{2}'".format(
+                    str(condition),
+                    "1",
+                    str(name), str(answer[0][0]), str(answer[0][1]), str(answer[0][2]))
+                tools.insertDB(sql=sql)
+
+                result = {"data": "2", "text": "支付成功"}
+            except:
+                result = {"data": "false"}
+
+        elif(str(condition) == '1'):
+            try:
+                sql0 = "UPDATE orders SET conditions='{0}' where username='{1}'".format('0', str(name))
+                tools.insertDB(sql=sql0)
+                result = {"data": "1", "text": "取消订单成功"}
+            except:
+                result = {"data": "false"}
+        self.write(escape.json_decode(json.dumps(result)))
+
 
 class changeaddress(tornado.web.RequestHandler):
     def get(self):

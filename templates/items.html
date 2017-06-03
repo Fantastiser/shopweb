@@ -178,6 +178,12 @@
 	}
 	
 	}
+	function EnterPress(e){ //传入 event
+		var e = e || window.event;
+		if(e.keyCode == 13){
+			search();
+		}
+	}
 	</script>
 
 
@@ -203,7 +209,7 @@
 					<a href="/shop"><img src="../static/images/logo.jpg" alt="BookShop"></a>
 				</div>
 				<div class="search_box fl">
-					<input type="text" class="search_text fl" id="find">
+					<input type="text" class="search_text fl" id="find"  onkeydown="EnterPress()">
 					<input type="button" value="搜 索" class="search_btn fr" style="cursor:pointer" onclick="search()">
 				</div>
 				<div class="shopCar fr">
@@ -280,7 +286,7 @@
 								<div class="des_number">
 									<div class="reduction" style="cursor:pointer" onclick = 'minues()' id = '-'>-</div>
 									<div class="des_input">
-										<input type="text" id="pname" value = "0">
+										<input type="text" id="pname" value = "1">
 									</div>
 									<div class="plus" style="cursor:pointer" onclick = 'add()' id = '+'>+</div>
 								</div>
@@ -415,12 +421,7 @@
 	<div class="footer">
 		<p><a href="#">BookShop简介</a><i>|</i><a href="#">BookShop公告</a><i>|</i> <a href="#">招纳贤士</a><i>|</i><a href="#">联系我们</a><i>|</i>客服热线：400-675-1234</p>
 		<p>Copyright &copy; 2017 - 2017 BookShop版权所有&nbsp;&nbsp;&nbsp;鲁ICP备09037834号&nbsp;&nbsp;&nbsp;鲁ICP证B1034-8373号&nbsp;&nbsp;&nbsp;某市公安局XX分局备案编号：123456789123</p>
-		<p class="web">
-			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
-			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
-			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
-			<a href="#"><img src="../static/images/webLogo.jpg" alt="logo"></a>
-		</p>
+		
 	</div>
 </body>
 
